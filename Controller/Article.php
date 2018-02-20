@@ -1,0 +1,166 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: alex
+ * Date: 12/02/2018
+ * Time: 17:19
+ */
+namespace Controller;
+
+class Article
+{
+
+    protected $id;
+    protected $title;
+    protected $creationDate;
+    protected $editDate;
+    protected $headerText;
+    protected $content;
+    protected $idUser;
+    protected $idCategory;
+
+
+    public function __construct($data = null)
+    {
+        $this->id = $data['id'];
+        $this->title = $data['title'];
+        $this->creationDate = $data['creation_date'];
+        $this->editDate = $data['editDate'];
+        $this->headerText = $data['header_text'];
+        $this->content = $data['content'];
+        $this->idUser = $data['idUser'];
+        $this->idCategory = $data['idCategory'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdCategory()
+    {
+        return $this->idCategory;
+    }
+
+    /**
+     * @param mixed $idCategory
+     */
+    public function setIdCategory($idCategory)
+    {
+        $this->idCategory = $idCategory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEditDate()
+    {
+        return $this->editDate;
+    }
+
+    /**
+     * @param mixed $editDate
+     */
+    public function setEditDate($editDate)
+    {
+        $this->editDate = $editDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param mixed $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdUser()
+    {
+        return $this->idUser;
+    }
+
+    /**
+     * @param mixed $idUser
+     */
+    public function setIdUser($idUser)
+    {
+        $this->idUser = $idUser;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @param mixed $creationDate
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHeaderText()
+    {
+        return $this->headerText;
+    }
+
+    /**
+     * @param mixed $headerText
+     */
+    public function setHeaderText($headerText)
+    {
+        $this->headerText = $headerText;
+    }
+
+
+
+
+}
