@@ -124,7 +124,7 @@ class Backend
         {
             if($post['title'] == '' || $post['content'] == '' || $post['headerText'] == '' || $post['idCategory'] == '')
             {
-                $_SESSION['alerte'] = "Tous les champs sont obligatoires";
+                $_SESSION['alerte'] = "Tous les champs sont obligatoires !";
             }
             elseif ($id != null)
             {

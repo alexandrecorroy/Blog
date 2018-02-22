@@ -39,8 +39,8 @@
                     <td>'.$article->getTitle().'</td>
                     <td>'.$article->getCreationDate().'</td>
                     <td>'.$article->getEditDate().'</td>
-                    <td><a href="index.php?action=admin&page=addOrEditArticle&edit='.$article->getId().'"><span class=""></span>Modifier</a></td>
-                    <td><a href="index.php?action=admin&page=listArticle&delete='.$article->getId().'"><span class=""></span>Supprimer</a></td>
+                    <td><a href="index.php?action=admin&page=addOrEditArticle&edit='.$article->getId().'" class="text-info"><i>Modifier</i></a></td>
+                    <td><a href="index.php?action=admin&page=listArticle&delete='.$article->getId().'" class="text-danger"><i>Supprimer</i></a></td>
                 </tr>';
                 }
                 ?>

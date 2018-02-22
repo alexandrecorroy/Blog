@@ -35,6 +35,10 @@ class CategoryManager extends Manager
     public function deleteCategoryById($id)
     {
         $this->db->execute("DELETE FROM category WHERE id = :id", array('id' => $id));
+
+        // update categoryId to '0' on affected articles
+        $article = new ArticleManager();
+        $article->setNullArticleOnDeleteCategoryId($id);
     }
 
     public function addCategory(Category $category)

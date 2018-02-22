@@ -88,5 +88,15 @@ class ArticleManager extends Manager
         $this->db->execute("DELETE FROM article WHERE id = :id", array('id' => $id));
     }
 
+    public function setNullArticleOnDeleteCategoryId($id)
+    {
+        $this->db->execute("UPDATE article
+                                    SET id_category = 0
+                                    WHERE id_category = :id",
+            array(
+                'id' => $id
+            ));
+    }
+
 
 }
