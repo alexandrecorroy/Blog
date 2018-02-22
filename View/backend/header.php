@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?= $title?></title>
+    <title></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="public/backend/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -66,10 +66,10 @@
                         <a href="#"><i class="fa fa-pencil fa-fw"></i> Gestion des articles<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="index.php?action=admin&page=addArticle">Ajouter un article</a>
+                                <a href="index.php?action=admin&page=addOrEditArticle">Ajouter un article</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Modification/Suppression d'un article</a>
+                                <a href="index.php?action=admin&page=listArticle">Modification/Suppression d'un article</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

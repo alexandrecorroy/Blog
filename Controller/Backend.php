@@ -72,13 +72,23 @@ class Backend
             {
                 $id = $data;
                 $categories->deleteCategoryById($id);
+                $_SESSION['info'] = "Catégorie supprimée !";
             }
             // if $_POST -> add
             else
             {
-                $category = new Category();
-                $category->setName($data['name']);
-                $categories->addCategory($category);
+                if($data['name']!='')
+                {
+                    $category = new Category();
+                    $category->setName($data['name']);
+                    $categories->addCategory($category);
+                    $_SESSION['info'] = "Catégorie ajoutée !";
+                }
+                else
+                {
+                    $_SESSION['alerte'] = "Le nom de la catégorie ne peut être vide !";
+                }
+
             }
 
         }
@@ -88,24 +98,67 @@ class Backend
         require "/View/Backend/category.php";
     }
 
-    public function listArticle()
+    public function listArticle($id = null)
     {
+        $articleManager = new ArticleManager();
+        if($id != '')
+        {
+            $articleManager->deleteArticleById(intval($id));
+            $_SESSION['info'] = "Article supprimé !";
+        }
+        $articles = $articleManager->getArticles();
+        $i = $articleManager->countArticles();
 
+        require "/View/Backend/article_list.php";
     }
 
-    public function addArticle($post)
+    public function addOrEditArticle($post, $id = null)
     {
-        if(!
-        empty($post))
+        $categories = new CategoryManager();
+        $categories = $categories->getCategories();
+        $userManager = new UserManager();
+        $user = $userManager->getUserById($_SESSION['id']);
+        $articleManager = new ArticleManager();
+
+        if(!empty($post))
         {
-            $userManager = new UserManager();
-            $user = $userManager->getUserById($_SESSION['id']);
-            $article = new Article($post);
+            if($post['title'] == '' || $post['content'] == '' || $post['headerText'] == '' || $post['idCategory'] == '')
+            {
+                $_SESSION['alerte'] = "Tous les champs sont obligatoires";
+            }
+            elseif ($id != null)
+            {
 
-            $articleManager = new ArticleManager();
+                $article = $articleManager->getArticleById(intval($id));
 
-            $articleManager->addArticle($article, $user);
+                $article->setTitle($post['title']);
+                $article->setHeaderText($post['headerText']);
+                $article->setContent($post['content']);
+                $article->setIdCategory($post['idCategory']);
+
+                $articleManager->editArticle($article);
+
+                $_SESSION['info'] = 'Article n°'.$article->getId().' correctement mise a jour ! <a href="">Voir l\'article</a>';
+
+            }
+            else
+            {
+                $article = new Article();
+                $article->setTitle($post['title']);
+                $article->setHeaderText($post['headerText']);
+                $article->setContent($post['content']);
+                $article->setIdCategory($post['idCategory']);
+
+
+                $articleManager = $articleManager->addArticle($article, $user);
+
+                $_SESSION['info'] = "Article n°$articleManager correctement ajouté ! <a href=''>Voir l'article</a>";
+            }
+
         }
+
+        if ($id != null)
+            $article = $articleManager->getArticleById(intval($id));
 
         require "/View/Backend/article_form.php";
     }

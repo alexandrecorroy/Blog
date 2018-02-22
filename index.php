@@ -52,9 +52,19 @@ if (isset($_GET['action'])) {
             else
                 $content = $backend->category($_POST);
         }
-        if ($_GET['page'] == 'addArticle')
+        if ($_GET['page'] == 'addOrEditArticle')
         {
-            $content = $backend->addArticle($_POST);
+            if(isset($_GET['edit']))
+                $content = $backend->addOrEditArticle($_POST, $_GET['edit']);
+            else
+                $content = $backend->addOrEditArticle($_POST);
+        }
+        if ($_GET['page'] == 'listArticle')
+        {
+            if(isset($_GET['delete']))
+                $content = $backend->listArticle($_GET['delete']);
+            else
+                $content = $backend->listArticle();
         }
     }
     // frontend
@@ -67,7 +77,7 @@ if (isset($_GET['action'])) {
 }
 // erreurs 404 not fount
 else {
-    header('HTTP/1.1 404 Not Found');
+    $content = header('HTTP/1.1 404 Not Found');
 }
 
 echo $content;

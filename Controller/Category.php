@@ -50,7 +50,8 @@ class Category
      */
     public function setName($name)
     {
-        $this->name = $name;
+        if($name!='')
+        $this->name = htmlentities($name);
     }
 
 

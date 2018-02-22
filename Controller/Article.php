@@ -20,16 +20,16 @@ class Article
     protected $idCategory;
 
 
-    public function __construct($data = null)
+    public function __construct(array $data = null)
     {
-        $this->id = $data['id'];
+        $this->id = intval($data['id']);
         $this->title = $data['title'];
         $this->creationDate = $data['creation_date'];
-        $this->editDate = $data['editDate'];
+        $this->editDate = $data['edit_date'];
         $this->headerText = $data['header_text'];
         $this->content = $data['content'];
-        $this->idUser = $data['idUser'];
-        $this->idCategory = $data['idCategory'];
+        $this->idUser = intval($data['id_user']);
+        $this->idCategory = intval($data['id_category']);
     }
 
     /**
@@ -45,7 +45,7 @@ class Article
      */
     public function setIdCategory($idCategory)
     {
-        $this->idCategory = $idCategory;
+        $this->idCategory = intval($idCategory);
     }
 
     /**
@@ -77,7 +77,8 @@ class Article
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        if($title!='')
+        $this->title = htmlentities($title);
     }
 
     /**
@@ -109,7 +110,8 @@ class Article
      */
     public function setContent($content)
     {
-        $this->content = $content;
+        if($content!='')
+        $this->content = htmlentities($content);
     }
 
     /**
@@ -157,7 +159,8 @@ class Article
      */
     public function setHeaderText($headerText)
     {
-        $this->headerText = $headerText;
+        if($headerText!='')
+        $this->headerText = htmlentities($headerText);
     }
 
 

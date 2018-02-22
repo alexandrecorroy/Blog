@@ -23,10 +23,10 @@ class CategoryManager extends Manager
 
         $datas = $this->db->fetchAll("SELECT * FROM category ORDER BY name ASC");
 
+        $i=0;
         foreach ($datas as $data) {
-            $categories[$data['id']] = new Category();
-            $categories[$data['id']]->setId($data['id']);
-            $categories[$data['id']]->setName($data['name']);
+            $categories[$i] = new Category($data);
+            $i++;
         }
 
         return $categories;
