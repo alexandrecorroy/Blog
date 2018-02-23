@@ -7,9 +7,6 @@
  */
 namespace Model;
 
-use Controller\Article;
-use Controller\User;
-
 class ArticleManager extends Manager
 {
 

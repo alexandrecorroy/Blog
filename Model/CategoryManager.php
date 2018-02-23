@@ -8,9 +8,6 @@
 
 namespace Model;
 
-
-use Controller\Category;
-
 class CategoryManager extends Manager
 {
     public function __construct()

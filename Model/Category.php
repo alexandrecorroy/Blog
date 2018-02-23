@@ -6,7 +6,7 @@
  * Time: 21:41
  */
 
-namespace Controller;
+namespace Model;
 
 
 class Category

@@ -12,12 +12,6 @@ function __autoload($class_name)
     include $class_name. '.php';
 }
 
-$article = new \Controller\Article();
-if(!isset($user))
-{
-    $user = new \Controller\User();
-}
-
 $backend = new \Controller\Backend();
 
 if (isset($_GET['action'])) {

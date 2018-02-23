@@ -5,7 +5,7 @@
  * Date: 12/02/2018
  * Time: 17:41
  */
-namespace Controller;
+namespace Model;
 
 class User
 {

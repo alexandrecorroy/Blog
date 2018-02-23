@@ -7,8 +7,6 @@
  */
 namespace Model;
 
-use Controller\User;
-
 class UserManager extends Manager
 {
 

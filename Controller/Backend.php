@@ -9,7 +9,9 @@
 namespace Controller;
 
 
+use Model\Article;
 use Model\ArticleManager;
+use Model\Category;
 use Model\CategoryManager;
 use Model\UserManager;
 
