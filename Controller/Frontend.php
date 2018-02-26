@@ -14,14 +14,36 @@ use Model\Comment;
 use Model\CommentManager;
 use Model\UserManager;
 
+CONST LIMIT = 10;
+
 class Frontend
 {
 
-    public function index()
+    static public function countPages()
     {
+        $articleManager = new ArticleManager();
+        $articles = $articleManager->countArticles();
+
+        return ceil($articles/10);
+    }
+
+    public function index($page = 1)
+    {
+
+        $offset = ($page*10)-LIMIT;
+        if ($offset<0)
+            $offset=0;
+        if($page>self::countPages() OR $page==0)
+        {
+            header( "HTTP/1.1 404 Not Found" );
+            exit;
+        }
+
+
         $userManager = new UserManager();
         $articleManager = new ArticleManager();
-        $articles = $articleManager->getArticles();
+        $articles = $articleManager->getArticlesWithLimit(LIMIT, $offset);
+        $pages = self::countPages();
         require "/View/frontend/index.php";
     }
 

@@ -63,12 +63,15 @@ if (isset($_GET['action'])) {
                 $content = $backend->listArticle();
         }
     }
-    // frontend pages
-    elseif ($_GET['action'] == 'public' && isset($_GET['page']))
+}
+// frontend pages
+elseif (isset($_GET['page']))
+{
+    if ($_GET['page'] == 'show_article' && isset($_GET['id']))
+        $content = $frontend->showArticle($_GET['id'], $_POST);
+    if (ctype_digit($_GET['page']))
     {
-        if ($_GET['page'] == 'show_article' && isset($_GET['id']))
-            $content = $frontend->showArticle($_GET['id'], $_POST);
-
+        $content = $frontend->index(intval($_GET['page']));
     }
 }
 elseif (empty($_GET))

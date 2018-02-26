@@ -43,7 +43,7 @@
                     <div class="post-description">
                         <h5>'.$comment['comment']->getTitle().'</h5>
                         <p>'.$comment['comment']->getContent().'</p>
-                        <p class="text-right"><em>Publié le '.$comment['comment']->getCreationDate().' par '.$comment['user']->getPseudo().'.</em></p>
+                        <p class="text-right"><em>Publié le '.$comment['comment']->getCreationDate().' par '.ucfirst($comment['user']->getPseudo()).'.</em></p>
                     </div>
                 </div></div>';
                     }
@@ -73,7 +73,7 @@
                     unset($_SESSION['alerte']);
                 }
                 ?>
-                <form action="index.php?action=public&page=show_article&id=<?= $article['article']->getId() ?>#comment" method="post">
+                <form action="index.php?page=show_article&id=<?= $article['article']->getId() ?>#comment" method="post">
                     <div class="form-group">
                         <label for="title">Titre</label>
                         <input type="text" name="title" class="form-control" id="title">

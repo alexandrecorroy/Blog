@@ -23,7 +23,7 @@ include "View/frontend/header.php";?>
             <?php
             foreach ($articles as $article) {
                 echo '<div class="post-preview">
-                <a href="index.php?action=public&page=show_article&id='.$article['article']->getId().'">
+                <a href="index.php?page=show_article&id='.$article['article']->getId().'">
                     <h2 class="post-title">
                         '.$article['article']->getTitle().'
                     </h2>
@@ -41,9 +41,25 @@ include "View/frontend/header.php";?>
 
 
             <!-- Pager -->
-            <div class="clearfix">
-                <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-            </div>
+            <?php
+            $actualPage = 0;
+            if(isset($_GET['page']))
+                $actualPage = $_GET['page'];
+
+            if($pages>1)
+            {
+                echo '<div class="clearfix">';
+                if($actualPage>1)
+                    echo '<a class="btn btn-primary float-left" title="Voir les articles plus récents" href="index.php?page='.($actualPage-1).'">&larr; Articles récents</a>';
+                if($actualPage!=$pages)
+                    echo '<a class="btn btn-primary float-right" title="Voir les articles plus anciens" href="index.php?page='.($actualPage+1).'">Articles anciens &rarr;</a>';
+                echo '</div>';
+            }
+
+
+            ?>
+
+
         </div>
     </div>
 </div>

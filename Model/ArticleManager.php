@@ -64,6 +64,22 @@ class ArticleManager extends Manager
         return $articles;
     }
 
+    public function getArticlesWithLimit($limit, $offset)
+    {
+        $userManager = new UserManager();
+
+        $datas = $this->db->fetchAll("SELECT * FROM article ORDER BY id DESC LIMIT $limit OFFSET $offset");
+
+        $i=0;
+        foreach ($datas as $data) {
+            $articles[$i]['article'] = new Article($data);
+            $articles[$i]['user'] = $userManager->getUserById($articles[$i]['article']->getIdUser());
+            $i++;
+        }
+
+        return $articles;
+    }
+
     public function countArticles()
     {
         $i = $this->db->fetch("SELECT COUNT(*) FROM article");
