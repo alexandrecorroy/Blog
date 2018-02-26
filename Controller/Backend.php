@@ -97,7 +97,7 @@ class Backend
 
 
         $categories = $categories->getCategories();
-        require "/View/Backend/category.php";
+        require "/View/backend/category.php";
     }
 
     public function listArticle($id = null)
@@ -111,7 +111,7 @@ class Backend
         $articles = $articleManager->getArticles();
         $i = $articleManager->countArticles();
 
-        require "/View/Backend/article_list.php";
+        require "/View/backend/article_list.php";
     }
 
     public function addOrEditArticle($post, $id = null)
@@ -162,7 +162,7 @@ class Backend
         if ($id != null)
             $article = $articleManager->getArticleById(intval($id));
 
-        require "/View/Backend/article_form.php";
+        require "/View/backend/article_form.php";
     }
 
 }

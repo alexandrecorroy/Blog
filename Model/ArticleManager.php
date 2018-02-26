@@ -50,12 +50,14 @@ class ArticleManager extends Manager
 
     public function getArticles()
     {
+        $userManager = new UserManager();
 
         $datas = $this->db->fetchAll("SELECT * FROM article ORDER BY id DESC");
 
         $i=0;
         foreach ($datas as $data) {
-            $articles[$i] = new Article($data);
+            $articles[$i]['article'] = new Article($data);
+            $articles[$i]['user'] = $userManager->getUserById($articles[$i]['article']->getIdUser());
             $i++;
         }
 

@@ -9,7 +9,18 @@
 namespace Controller;
 
 
+use Model\ArticleManager;
+use Model\UserManager;
+
 class Frontend
 {
+
+    public function index()
+    {
+        $userManager = new UserManager();
+        $articleManager = new ArticleManager();
+        $articles = $articleManager->getArticles();
+        require "/View/frontend/index.php";
+    }
 
 }

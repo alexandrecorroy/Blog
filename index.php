@@ -13,6 +13,8 @@ function __autoload($class_name)
 }
 
 $backend = new \Controller\Backend();
+$frontend = new \Controller\Frontend();
+
 
 if (isset($_GET['action'])) {
     // backend
@@ -61,17 +63,23 @@ if (isset($_GET['action'])) {
                 $content = $backend->listArticle();
         }
     }
-    // frontend
-    else
+    // frontend pages
+    elseif ($_GET['action'] == 'public' && isset($_GET['page']))
     {
-        echo 'frontend';
-        exit;
-    }
+        // index
+            $content = $frontend->index();
 
+
+    }
 }
-// erreurs 404 not fount
-else {
-    $content = header('HTTP/1.1 404 Not Found');
+elseif (empty($_GET))
+{
+    // index
+    $content = $frontend->index();
+}
+else
+{
+    $content = '404';
 }
 
 echo $content;
