@@ -22,18 +22,41 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-                <?= $article['article']->getContent() ?>
+                <p><?= $article['article']->getContent() ?></p>
             </div>
         </div>
     </div>
 </article>
 
-<!-- Comments -->
+
+                <?php
+                if($totalComments>0)
+                {
+                    echo '<!-- Comments -->
+<hr>
+<aside>
+    <div class="container">
+        <div class="row">';
+                    echo '<div class="col-lg-8 col-md-10 mx-auto"><h2 class="section-heading">'.$totalComments.' commentaire(s)</h2></div>';
+                    foreach ($comments as $comment) {
+                        echo '<div class="col-lg-8 col-md-10 mx-auto mb-4"><div class="panel panel-white post panel-shadow">
+                    <div class="post-description">
+                        <h5>'.$comment['comment']->getTitle().'</h5>
+                        <p>'.$comment['comment']->getContent().'</p>
+                        <p class="text-right"><em>Publié le '.$comment['comment']->getCreationDate().' par '.$comment['user']->getPseudo().'.</em></p>
+                    </div>
+                </div></div>';
+                    }
+                    echo '        </div>
+    </div>
+</aside>';
+                }
+                ?>
 
 
 <!-- Comments forms -->
 <hr>
-<aside id="comment">
+<aside id="comment" >
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">

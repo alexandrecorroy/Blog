@@ -60,7 +60,11 @@ class Frontend
 
         }
 
+        $commentManager = new CommentManager();
+        $totalComments = $commentManager->countCommentsByArticle(intval($id));
 
+        if($commentManager->countCommentsByArticle(intval($id))>0)
+            $comments = $commentManager->listCommentsByArticle($id);
 
         $articleManager = new ArticleManager();
         $article = $articleManager->getArticleById($id);

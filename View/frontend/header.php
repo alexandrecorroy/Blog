@@ -20,6 +20,7 @@
 
     <!-- Custom styles for this template -->
     <link href="public/frontend/css/clean-blog.min.css" rel="stylesheet">
+    <link href="public/frontend/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -28,7 +29,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="index.html">Mon CV en PDF</a>
+        <a class="navbar-brand" href="index.html">Alexandre CORROY</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fa fa-bars"></i>
