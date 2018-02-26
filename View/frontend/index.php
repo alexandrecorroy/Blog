@@ -42,7 +42,7 @@ include "View/frontend/header.php";?>
 
             <!-- Pager -->
             <?php
-            $actualPage = 0;
+            $actualPage = 1;
             if(isset($_GET['page']))
                 $actualPage = $_GET['page'];
 
