@@ -66,9 +66,8 @@ if (isset($_GET['action'])) {
     // frontend pages
     elseif ($_GET['action'] == 'public' && isset($_GET['page']))
     {
-        // index
-            $content = $frontend->index();
-
+        if ($_GET['page'] == 'show_article' && isset($_GET['id']))
+            $content = $frontend->showArticle($_GET['id'], $_POST);
 
     }
 }

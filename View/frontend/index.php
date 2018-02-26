@@ -23,7 +23,7 @@ include "View/frontend/header.php";?>
             <?php
             foreach ($articles as $article) {
                 echo '<div class="post-preview">
-                <a href="index.php?action=public&page=show_article&id_article='.$article['article']->getId().'">
+                <a href="index.php?action=public&page=show_article&id='.$article['article']->getId().'">
                     <h2 class="post-title">
                         '.$article['article']->getTitle().'
                     </h2>

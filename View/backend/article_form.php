@@ -32,7 +32,8 @@
 
             <form action="<?php
             if(isset($article))
-                echo 'index.php?action=admin&page=addOrEditArticle&edit='.intval($article->getId());
+                if(!is_null($article))
+                echo 'index.php?action=admin&page=addOrEditArticle&edit='.intval($article['article']->getId());
             else
                 echo "index.php?action=admin&page=addOrEditArticle";
             ?>" method="post">
@@ -45,7 +46,7 @@
                         {
                             $selected = '';
                             if(isset($article))
-                                if($article->getIdCategory()==$category->getId())
+                                if($article['article']->getIdCategory()==$category->getId())
                                     $selected = "Selected";
                             echo '<option value="' .$category->getId(). '"'.$selected.'>' .$category->getName(). '</option>';
                         }
@@ -54,15 +55,15 @@
                 </div>
                 <div class="form-group">
                     <label for="title">Titre</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Titre de l'article" <?php if(isset($article)) echo 'value="' .$article->getTitle() .'"'; ?>>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Titre de l'article" <?php if(isset($article)) echo 'value="' .$article['article']->getTitle() .'"'; ?>>
                 </div>
                 <div class="form-group">
                     <label for="entete">Entête</label>
-                    <textarea class="form-control" id="entete" name="headerText" placeholder="Votre phrase d'accroche"><?php if(isset($article)) echo $article->getHeaderText(); ?></textarea>
+                    <textarea class="form-control" id="entete" name="headerText" placeholder="Votre phrase d'accroche"><?php if(isset($article)) echo $article['article']->getHeaderText(); ?></textarea>
                 </div>
                 <div class="form-group">
                     <label for="contenu">Contenu de l'article</label>
-                    <textarea class="form-control" id="contenu" name="content" placeholder="Contenu de l'article" rows="15"><?php if(isset($article)) echo $article->getContent(); ?></textarea>
+                    <textarea class="form-control" id="contenu" name="content" placeholder="Contenu de l'article" rows="15"><?php if(isset($article)) echo $article['article']->getContent(); ?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary"><?php
                     if(isset($article))

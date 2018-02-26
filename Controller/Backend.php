@@ -133,26 +133,26 @@ class Backend
 
                 $article = $articleManager->getArticleById(intval($id));
 
-                $article->setTitle($post['title']);
-                $article->setHeaderText($post['headerText']);
-                $article->setContent($post['content']);
-                $article->setIdCategory($post['idCategory']);
+                $article['article']->setTitle($post['title']);
+                $article['article']->setHeaderText($post['headerText']);
+                $article['article']->setContent($post['content']);
+                $article['article']->setIdCategory($post['idCategory']);
 
-                $articleManager->editArticle($article);
+                $articleManager->editArticle($article['article']);
 
-                $_SESSION['info'] = 'Article n°'.$article->getId().' correctement mise a jour ! <a href="">Voir l\'article</a>';
+                $_SESSION['info'] = 'Article n°'.$article['article']->getId().' correctement mise a jour ! <a href="">Voir l\'article</a>';
 
             }
             else
             {
-                $article = new Article();
-                $article->setTitle($post['title']);
-                $article->setHeaderText($post['headerText']);
-                $article->setContent($post['content']);
-                $article->setIdCategory($post['idCategory']);
+                $newArticle = new Article();
+                $newArticle->setTitle($post['title']);
+                $newArticle->setHeaderText($post['headerText']);
+                $newArticle->setContent($post['content']);
+                $newArticle->setIdCategory($post['idCategory']);
 
 
-                $articleManager = $articleManager->addArticle($article, $user);
+                $articleManager = $articleManager->addArticle($newArticle, $user);
 
                 $_SESSION['info'] = "Article n°$articleManager correctement ajouté ! <a href=''>Voir l'article</a>";
             }

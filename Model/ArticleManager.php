@@ -73,10 +73,12 @@ class ArticleManager extends Manager
 
     public function getArticleById($id)
     {
+        $userManager = new UserManager();
 
         $article = $this->db->fetch("SELECT * FROM article WHERE id = :id", array('id' => $id));
 
-        $article = new Article($article);
+        $article['article'] = new Article($article);
+        $article['user'] = $userManager->getUserById($article['article']->getIdUser());
 
         return $article;
     }
