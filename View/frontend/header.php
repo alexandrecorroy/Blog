@@ -69,7 +69,7 @@
                 ?>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
+                    <a class="nav-link" href="index.php?page=contact">Contact</a>
                 </li>
             </ul>
         </div>

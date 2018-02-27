@@ -5,5 +5,12 @@
     "dbname": "blog",
     "username": "root",
     "password": ""
+  },
+//  require for send emails
+  "smtp": {
+    "host": "",
+    "port": "",
+    "username": "",
+    "password": ""
   }
 }

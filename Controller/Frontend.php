@@ -112,4 +112,53 @@ class Frontend
         require "/View/frontend/show_article.php";
     }
 
+    public function contact($post = null)
+    {
+        if($post!=null)
+        {
+            if($post['name']=='' || $post['email']=='' || $post['message'] == '' || $post['subject'] =='')
+            {
+                $_SESSION['alerte'] = 'Tous les champs sont obligatoires !';
+            }
+            else
+            {
+                $json = file_get_contents("config.json");
+                $json = json_decode($json, true);
+
+                // Create the Transport
+                $transport = (new \Swift_SmtpTransport($json['smtp']['host'], $json['smtp']['port']))
+                    ->setUsername($json['smtp']['username'])
+                    ->setPassword($json['smtp']['password'])
+                ;
+
+                // Create the Mailer using your created Transport
+                $mailer = new \Swift_Mailer($transport);
+
+                $message = (new \Swift_Message())
+
+
+                    // Give the message a subject
+                    ->setSubject($post['subject'])
+
+                    // Set the From address with an associative array
+                    ->setFrom([$post['email'] => $post['name']])
+
+                    // Set the To addresses with an associative array (setTo/setCc/setBcc)
+                    ->setTo([$json['smtp']['my_email']])
+
+                    // Give it a body
+                    ->setBody($post['message']);
+
+                // Send the message
+                $mailer->send($message);
+                $_SESSION['info'] = 'Le message a bien été envoyé !';
+            }
+        }
+
+
+
+        require "/View/frontend/contact.php";
+
+    }
+
 }

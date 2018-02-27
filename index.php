@@ -7,10 +7,7 @@
  */
 session_start();
 
-function __autoload($class_name)
-{
-    include $class_name. '.php';
-}
+require 'vendor/autoload.php';
 
 $backend = new \Controller\Backend();
 $frontend = new \Controller\Frontend();
@@ -69,11 +66,15 @@ elseif (isset($_GET['page']))
 {
     if ($_GET['page'] == 'show_article' && isset($_GET['id']))
         $content = $frontend->showArticle($_GET['id'], $_POST);
+
     if ($_GET['page'] == 'category' && isset($_GET['id']))
         if(isset($_GET['p']))
             $content = $frontend->index($_GET['p'], $_GET['id']);
         else
             $content = $frontend->index(1, $_GET['id']);
+
+    if ($_GET['page'] == 'contact')
+        $content = $frontend->contact($_POST);
 
 }
 elseif (isset($_GET['p']))
