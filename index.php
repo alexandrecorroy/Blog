@@ -69,9 +69,18 @@ elseif (isset($_GET['page']))
 {
     if ($_GET['page'] == 'show_article' && isset($_GET['id']))
         $content = $frontend->showArticle($_GET['id'], $_POST);
-    if (ctype_digit($_GET['page']))
+    if ($_GET['page'] == 'category' && isset($_GET['id']))
+        if(isset($_GET['p']))
+            $content = $frontend->index($_GET['p'], $_GET['id']);
+        else
+            $content = $frontend->index(1, $_GET['id']);
+
+}
+elseif (isset($_GET['p']))
+{
+    if (ctype_digit($_GET['p']))
     {
-        $content = $frontend->index(intval($_GET['page']));
+        $content = $frontend->index(intval($_GET['p']));
     }
 }
 elseif (empty($_GET))

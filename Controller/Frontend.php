@@ -10,6 +10,7 @@ namespace Controller;
 
 
 use Model\ArticleManager;
+use Model\CategoryManager;
 use Model\Comment;
 use Model\CommentManager;
 use Model\UserManager;
@@ -19,15 +20,24 @@ CONST LIMIT = 10;
 class Frontend
 {
 
-    static public function countPages()
+    static public function showCategories()
+    {
+        $categoryManager = new CategoryManager();
+        return $categoryManager->getCategories();
+
+    }
+
+    static public function countPages($idCategory = null)
     {
         $articleManager = new ArticleManager();
-        $articles = $articleManager->countArticles();
-
+        if($idCategory==null)
+            $articles = $articleManager->countArticles();
+        else
+            $articles = $articleManager->countArticlesByCategory($idCategory);
         return ceil($articles/10);
     }
 
-    public function index($page = 1)
+    public function index($page = 1, $idCategory = null)
     {
 
         $offset = ($page*10)-LIMIT;
@@ -42,8 +52,16 @@ class Frontend
 
         $userManager = new UserManager();
         $articleManager = new ArticleManager();
-        $articles = $articleManager->getArticlesWithLimit(LIMIT, $offset);
-        $pages = self::countPages();
+        if($idCategory==null)
+        {
+            $articles = $articleManager->getArticlesWithLimit(intval(LIMIT), intval($offset));
+            $pages = self::countPages();
+        }
+        else
+        {
+            $articles = $articleManager->getArticlesWithLimit(intval(LIMIT), intval($offset), intval($idCategory));
+            $pages = self::countPages($idCategory);
+        }
         require "/View/frontend/index.php";
     }
 

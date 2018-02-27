@@ -29,6 +29,16 @@ class CategoryManager extends Manager
         return $categories;
     }
 
+    public function getCategoryById($id)
+    {
+
+        $data = $this->db->fetch("SELECT * FROM category WHERE id = :id", array('id' => $id));
+
+        $category = new Category($data);
+
+        return $category;
+    }
+
     public function deleteCategoryById($id)
     {
         $this->db->execute("DELETE FROM category WHERE id = :id", array('id' => $id));

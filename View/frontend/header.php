@@ -39,8 +39,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Accueil</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">Catégories</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <?php
+                        $categories = self::showCategories();
+                        foreach ($categories as $categorie)
+                        {
+                            echo '<a class="dropdown-item" href="index.php?page=category&id='.$categorie->getId().'">'.$categorie->getName().'</a>';
+                        }
+                        ?>
+                    </div>
                 </li>
                 <?php
                     if(isset($_SESSION['id']))

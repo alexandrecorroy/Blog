@@ -8,7 +8,7 @@ include "View/frontend/header.php";?>
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="site-heading">
                     <h1>Le développeur qu'il vous faut !</h1>
-                    <span class="subheading">Blog PHP en orienté objet !</span>
+                    <span class="subheading">Blog PHP en orienté objet sans Framework !</span>
                 </div>
             </div>
         </div>
@@ -32,8 +32,10 @@ include "View/frontend/header.php";?>
                     </h3>
                 </a>
                 <p class="post-meta">Publié par
-                    <a href="#">'.ucfirst($article['user']->getPseudo()).'</a>
-                    le '.$article['article']->getCreationDate().'</p>
+                    '.ucfirst($article['user']->getPseudo()).' ';
+                if (!empty($article['category']->getName()))
+                    echo 'dans <a href="">'.$article['category']->getName().'</a> ';
+                echo 'le '.$article['article']->getCreationDate().'</p>
             </div>
             <hr>';
             }
@@ -43,16 +45,27 @@ include "View/frontend/header.php";?>
             <!-- Pager -->
             <?php
             $actualPage = 1;
-            if(isset($_GET['page']))
-                $actualPage = $_GET['page'];
+            if(isset($_GET['p']))
+                $actualPage = $_GET['p'];
 
             if($pages>1)
             {
                 echo '<div class="clearfix">';
                 if($actualPage>1)
-                    echo '<a class="btn btn-primary float-left" title="Voir les articles plus récents" href="index.php?page='.($actualPage-1).'">&larr; Articles récents</a>';
+                {
+                    echo '<a class="btn btn-primary float-left" title="Voir les articles plus récents" href="index.php?';
+                    if(isset($_GET['page']) && isset($_GET['id']))
+                        echo 'page=category&id='.$_GET['id'].'&';
+                    echo 'p='.($actualPage-1).'">&larr; Articles récents</a>';
+                }
                 if($actualPage!=$pages)
-                    echo '<a class="btn btn-primary float-right" title="Voir les articles plus anciens" href="index.php?page='.($actualPage+1).'">Articles anciens &rarr;</a>';
+                {
+                    echo '<a class="btn btn-primary float-right" title="Voir les articles plus anciens" href="index.php?';
+                    if(isset($_GET['page']) && isset($_GET['id']))
+                        echo 'page=category&id='.$_GET['id'].'&';
+                    echo 'p='.($actualPage+1).'">Articles anciens &rarr;</a>';
+
+                }
                 echo '</div>';
             }
 

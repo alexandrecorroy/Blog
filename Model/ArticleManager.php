@@ -51,6 +51,7 @@ class ArticleManager extends Manager
     public function getArticles()
     {
         $userManager = new UserManager();
+        $categoryManager = new CategoryManager();
 
         $datas = $this->db->fetchAll("SELECT * FROM article ORDER BY id DESC");
 
@@ -58,22 +59,29 @@ class ArticleManager extends Manager
         foreach ($datas as $data) {
             $articles[$i]['article'] = new Article($data);
             $articles[$i]['user'] = $userManager->getUserById($articles[$i]['article']->getIdUser());
+            $articles[$i]['category'] = $categoryManager->getCategoryById($articles[$i]['article']->getIdCategory());
             $i++;
         }
 
         return $articles;
     }
 
-    public function getArticlesWithLimit($limit, $offset)
+    public function getArticlesWithLimit($limit, $offset, $idCategory = null)
     {
         $userManager = new UserManager();
+        $categoryManager = new CategoryManager();
 
-        $datas = $this->db->fetchAll("SELECT * FROM article ORDER BY id DESC LIMIT $limit OFFSET $offset");
+        if ($idCategory==null)
+            $datas = $this->db->fetchAll("SELECT * FROM article ORDER BY id DESC LIMIT $limit OFFSET $offset");
+        else
+            $datas = $this->db->fetchAll("SELECT * FROM article WHERE id_category = :idCategory ORDER BY id DESC LIMIT $limit OFFSET $offset", array('idCategory' => $idCategory));
+
 
         $i=0;
         foreach ($datas as $data) {
             $articles[$i]['article'] = new Article($data);
             $articles[$i]['user'] = $userManager->getUserById($articles[$i]['article']->getIdUser());
+            $articles[$i]['category'] = $categoryManager->getCategoryById($articles[$i]['article']->getIdCategory());
             $i++;
         }
 
@@ -87,14 +95,23 @@ class ArticleManager extends Manager
         return $i['COUNT(*)'];
     }
 
+    public function countArticlesByCategory($id)
+    {
+        $i = $this->db->fetch("SELECT COUNT(*) FROM article WHERE id_category = :id", array('id' => $id));
+
+        return $i['COUNT(*)'];
+    }
+
     public function getArticleById($id)
     {
         $userManager = new UserManager();
+        $categoryManager = new CategoryManager();
 
         $data = $this->db->fetch("SELECT * FROM article WHERE id = :id", array('id' => $id));
 
         $article['article'] = new Article($data);
         $article['user'] = $userManager->getUserById($article['article']->getIdUser());
+        $article['category'] = $categoryManager->getCategoryById($article['article']->getIdCategory());
 
         return $article;
     }

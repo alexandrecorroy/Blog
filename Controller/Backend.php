@@ -140,7 +140,7 @@ class Backend
 
                 $articleManager->editArticle($article['article']);
 
-                $_SESSION['info'] = 'Article n°'.$article['article']->getId().' correctement mise a jour ! <a target="_blank" href="index.php?action=public&page=show_article&id='.$article['article']->getId().'">Voir l\'article</a>';
+                $_SESSION['info'] = 'Article n°'.$article['article']->getId().' correctement mise a jour ! <a target="_blank" href="index.php?page=show_article&id='.$article['article']->getId().'">Voir l\'article</a>';
 
             }
             else
@@ -154,7 +154,7 @@ class Backend
 
                 $articleManager = $articleManager->addArticle($newArticle, $user);
 
-                $_SESSION['info'] = 'Article n°'.$articleManager.' correctement ajouté ! <a target="_blank" href="index.php?action=public&page=show_article&id='.$articleManager.'">Voir l\'article</a>';
+                $_SESSION['info'] = 'Article n°'.$articleManager.' correctement ajouté ! <a target="_blank" href="index.php?page=show_article&id='.$articleManager.'">Voir l\'article</a>';
             }
 
         }
