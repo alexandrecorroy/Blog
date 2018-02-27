@@ -9,6 +9,8 @@
 namespace Model;
 
 
+use Helper\Helper;
+
 class Comment
 {
 
@@ -86,7 +88,8 @@ class Comment
      */
     public function getCreationDate()
     {
-        return $this->creationDate;
+        $helper = new Helper();
+        return $helper->formatDate($this->creationDate);
     }
 
     /**
@@ -102,7 +105,8 @@ class Comment
      */
     public function getEditDate()
     {
-        return $this->editDate;
+        $helper = new Helper();
+        return $helper->formatDate($this->editDate);
     }
 
     /**

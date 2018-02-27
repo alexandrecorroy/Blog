@@ -9,7 +9,7 @@
                     <h1><?= $article['article']->getTitle() ?></h1>
                     <h2 class="subheading"><?= $article['article']->getHeaderText() ?></h2>
                     <span class="meta">Posté par
-                <a href="#"><?= ucfirst($article['user']->getPseudo()) ?></a>
+                <?= ucfirst($article['user']->getPseudo()) ?> <?php if(!empty($article['category']->getName())) echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> '; ?>
                 le <?= $article['article']->getCreationDate() ?></span>
                 </div>
             </div>
@@ -61,19 +61,22 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <h2 class="section-heading">Ajouter un commentaire</h2>
-                <?php
-                if (isset($_SESSION['info']))
-                {
-                    echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
-                    unset($_SESSION['info']);
-                }
-                if (isset($_SESSION['alerte']))
-                {
-                    echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
-                    unset($_SESSION['alerte']);
-                }
-                ?>
-                <form action="index.php?page=show_article&id=<?= $article['article']->getId() ?>#comment" method="post">
+<?php
+
+if(isset($_SESSION['id']))
+{
+    if (isset($_SESSION['info']))
+    {
+        echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
+        unset($_SESSION['info']);
+    }
+    if (isset($_SESSION['alerte']))
+    {
+        echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
+        unset($_SESSION['alerte']);
+    }
+
+    echo '<form action="index.php?page=show_article&id='.$article['article']->getId().'#comment" method="post">
                     <div class="form-group">
                         <label for="title">Titre</label>
                         <input type="text" name="title" class="form-control" id="title">
@@ -83,11 +86,18 @@
                         <textarea class="form-control" id="content" name="content" rows="5"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
-                </form>
+                </form>';
+}
+else
+{
+    echo '<p>Vous devez être <a href="index.php?action=admin&page=login">connecté</a> pour poster un commentaire !</p>';
+}
+
+?>
+
             </div>
         </div>
     </div>
 </aside>
-
 
 <?php include "View/frontend/footer.php";?>
