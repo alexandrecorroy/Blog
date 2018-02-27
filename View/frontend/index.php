@@ -34,7 +34,7 @@ include "View/frontend/header.php";?>
                 <p class="post-meta">Publié par
                     '.ucfirst($article['user']->getPseudo()).' ';
                 if (!empty($article['category']->getName()))
-                    echo 'dans <a href="">'.$article['category']->getName().'</a> ';
+                    echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> ';
                 echo 'le '.$article['article']->getCreationDate().'</p>
             </div>
             <hr>';

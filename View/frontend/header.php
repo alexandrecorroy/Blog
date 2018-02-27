@@ -40,8 +40,8 @@
                     <a class="nav-link" href="index.php">Accueil</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
+                    <a class="nav-link dropdown-toggle pointer" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Catégories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <?php
@@ -57,7 +57,7 @@
                     if(isset($_SESSION['id']))
                     {
                         echo '<li class="nav-item">
-                    <a class="nav-link" href="index.php?action=admin&page=login">'.ucfirst($_SESSION['pseudo']).'</a>
+                    <a class="nav-link" href="index.php?action=admin&page=login">Dashboard</a>
                 </li>';
                     }
                     else

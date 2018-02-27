@@ -14,7 +14,9 @@ class Manager
     // initiate DB
     public function __construct()
     {
-        $this->db = new \PDO("mysql:host=localhost;dbname=blog", "root", "");
+        $json = file_get_contents("config.json");
+        $json = json_decode($json, true);
+        $this->db = new \PDO("mysql:host=".$json['db']['host'].".;dbname=".$json['db']['dbname']."", "".$json['db']['username']."", "".$json['db']['password']."");
         $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->db->exec("SET NAMES UTF8");
     }

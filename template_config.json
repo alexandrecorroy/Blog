@@ -1,0 +1,9 @@
+// replace with your db info
+{
+  "db": {
+    "host": "localhost",
+    "dbname": "blog",
+    "username": "root",
+    "password": ""
+  }
+}
