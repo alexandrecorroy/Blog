@@ -52,4 +52,45 @@ class CommentManager extends Manager
 
         return $comments;
     }
+
+    public function listCommentsByUserId(User $user)
+    {
+        $datas = $this->db->fetchAll("SELECT * FROM comment WHERE id_user = :idUser ORDER BY id DESC", array('idUser' => $user->getId()));
+
+        $i=0;
+        foreach ($datas as $data) {
+            $comments[$i] = new Comment($data);
+            $i++;
+        }
+
+        return $comments;
+    }
+
+    public function getCommentById($id)
+    {
+        $data = $this->db->fetch("SELECT * FROM comment WHERE id = :id", array('id' => $id));
+        $comment = new Comment($data);
+        return $comment;
+    }
+
+    public function deleteCommentById($id)
+    {
+        $this->db->execute("DELETE FROM comment WHERE id = :id", array('id' => $id));
+    }
+
+    public function editComment(Comment $comment)
+    {
+
+        $this->db->execute("UPDATE comment
+                                    SET title = :title, content = :content, edit_date = now(), is_validated = :isValidated
+                                    WHERE id = :id",
+            array(
+                'content' => $comment->getContent(),
+                'title' => $comment->getTitle(),
+                'id' => $comment->getId(),
+                'isValidated' => $comment->getisValidated()
+            ));
+
+    }
+
 }

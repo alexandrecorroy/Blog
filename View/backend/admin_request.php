@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Devenir administrateur</h1>
-                <p>Pour devenir administrateur et commencer à écrire des articles, vous devez décrire vos motivations pour ce poste. En cas de refus, une réponse vous sera apportée ici. Une seule demande par compte.</p>
+                <p>Pour devenir administrateur et commencer à écrire des articles, vous devez décrire vos motivations pour ce poste. Vous recevrez un mail en cas d'acceptation. Une seule demande par compte.</p>
             </div>
             <!-- /.col-lg-12 -->
         </div>

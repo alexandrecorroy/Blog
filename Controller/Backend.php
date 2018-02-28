@@ -9,12 +9,14 @@
 namespace Controller;
 
 
+use Helper\Helper;
 use Model\AdminRequest;
 use Model\AdminRequestManager;
 use Model\Article;
 use Model\ArticleManager;
 use Model\Category;
 use Model\CategoryManager;
+use Model\CommentManager;
 use Model\UserManager;
 
 class Backend
@@ -212,6 +214,12 @@ class Backend
                 $adminRequestManager->deleteAdminRequestById(intval($id));
                 $userManager->setRoleAdminUserById($adminRequest->getIdUser());
 
+                $user = $userManager->getUserById($adminRequest->getIdUser());
+
+                $helper = new Helper();
+                $helper->sendMail($user->getPseudo(), $user->getEmail(), 'Devenir administrateur', 'Votre demande pour devenir administrateur a été acceptée !');
+
+
                 $_SESSION['info'] = 'La demande a bien été acceptée !';
             }
             else
@@ -227,6 +235,69 @@ class Backend
         $requests = $requestManager->getAdminRequests();
 
         require "/View/backend/super_admin_response.php";
+    }
+
+    public function myComments($idToDelete = null)
+    {
+
+        $user = new UserManager();
+        $user = $user->getUserById($_SESSION['id']);
+
+        $commentManager = new CommentManager();
+
+        if(!is_null($idToDelete))
+            if(self::canDeletedOrEditThisComment($idToDelete, $_SESSION['id']))
+            {
+                $commentManager->deleteCommentById($idToDelete);
+                $_SESSION['info'] = 'Votre commentaire a bien été supprimé !';
+            }
+                $comments = $commentManager->listCommentsByUserId($user);
+
+        require "/View/backend/my_comments.php";
+    }
+
+    //        test if comment owner is me
+    static public function canDeletedOrEditThisComment($idComment, $idUserInSession)
+    {
+
+        $commentManager = new CommentManager();
+        $comment = $commentManager->getCommentById($idComment);
+
+        $idUserInComment = $comment->getIdUser();
+        if(intval($idUserInComment)==intval($idUserInSession))
+            return true;
+        else
+            echo 'Le hack c\est pas bien !';
+            die;
+    }
+
+    public function editMyComment($idArticle, $post = null)
+    {
+
+        if(self::canDeletedOrEditThisComment($idArticle, $_SESSION['id']))
+        {
+            $commentManager = new CommentManager();
+            $comment = $commentManager->getCommentById($idArticle);
+
+            if($post!=null)
+            {
+                if($post['title']=='' OR $post['content'] =='')
+                    $_SESSION['alerte'] = 'Tous les champs sont obligatoires !';
+                else
+                {
+                    $comment->setTitle($post['title']);
+                    $comment->setContent($post['content']);
+
+                    if($_SESSION['role']=='subscriber')
+                        $comment->setIsValidated(0);
+
+                    $commentManager->editComment($comment);
+                    $_SESSION['info'] = 'Le commentaire a bien été modifié !';
+                }
+            }
+
+            require "/View/backend/edit_my_comment.php";
+        }
     }
 
 }

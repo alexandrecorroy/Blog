@@ -23,7 +23,7 @@ class Comment
     protected $idUser;
     protected $isValidated;
 
-    public function __construct(array $data = null)
+    public function __construct($data = null)
     {
         $this->id = $data['id'];
         $this->title = $data['title'];

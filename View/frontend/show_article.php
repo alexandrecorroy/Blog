@@ -34,7 +34,7 @@
                 {
                     echo '<!-- Comments -->
 <hr>
-<aside>
+<aside id="comments">
     <div class="container">
         <div class="row">';
                     echo '<div class="col-lg-8 col-md-10 mx-auto"><h2 class="section-heading">'.$totalComments.' commentaire(s)</h2></div>';

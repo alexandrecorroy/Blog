@@ -25,7 +25,7 @@
                     <th scope="col">Id</th>
                     <th scope="col">Titre</th>
                     <th scope="col">Date création</th>
-                    <th scope="col">Date édition</th>
+                    <th scope="col">Dernière modification</th>
                     <th scope="col">Modifier</th>
                     <th scope="col">Supprimer</th>
 

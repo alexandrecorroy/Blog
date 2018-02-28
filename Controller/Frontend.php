@@ -9,6 +9,7 @@
 namespace Controller;
 
 
+use Helper\Helper;
 use Model\ArticleManager;
 use Model\CategoryManager;
 use Model\Comment;
@@ -122,35 +123,8 @@ class Frontend
             }
             else
             {
-                $json = file_get_contents("config.json");
-                $json = json_decode($json, true);
-
-                // Create the Transport
-                $transport = (new \Swift_SmtpTransport($json['smtp']['host'], $json['smtp']['port']))
-                    ->setUsername($json['smtp']['username'])
-                    ->setPassword($json['smtp']['password'])
-                ;
-
-                // Create the Mailer using your created Transport
-                $mailer = new \Swift_Mailer($transport);
-
-                $message = (new \Swift_Message())
-
-
-                    // Give the message a subject
-                    ->setSubject($post['subject'])
-
-                    // Set the From address with an associative array
-                    ->setFrom([$post['email'] => $post['name']])
-
-                    // Set the To addresses with an associative array (setTo/setCc/setBcc)
-                    ->setTo([$json['smtp']['my_email']])
-
-                    // Give it a body
-                    ->setBody($post['message']);
-
-                // Send the message
-                $mailer->send($message);
+                $helper = new Helper();
+                $helper->sendMail($post['name'], $post['email'], $post['subject'], $post['message']);
                 $_SESSION['info'] = 'Le message a bien été envoyé !';
             }
         }

@@ -66,7 +66,7 @@
                         <a href="index.php?action=admin&page=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="index.php"><i class="fa fa-comment fa-fw"></i> Mes commentaires</a>
+                        <a href="index.php?action=admin&page=my_comments"><i class="fa fa-comment fa-fw"></i> Mes commentaires</a>
                     </li>
                     <li>
                         <a href="index.php?action=admin&page=admin_request"><i class="fa fa-user-plus fa-fw"></i> Devenir Administrateur</a>

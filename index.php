@@ -72,6 +72,17 @@ if (isset($_GET['action'])) {
             else
                 $content = $backend->superAdminResponse();
         }
+        if ($_GET['page'] == 'my_comments')
+        {
+            if(isset($_GET['delete']))
+                $content = $backend->myComments($_GET['delete']);
+            else
+                $content = $backend->myComments();
+        }
+        if ($_GET['page'] == 'edit_my_comment' AND isset($_GET['edit']))
+        {
+            $content = $backend->editMyComment($_GET['edit'], $_POST);
+        }
     }
 }
 // frontend pages
