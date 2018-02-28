@@ -30,6 +30,14 @@
                   </span>
                         </a>
                     </li>
+                    <li class="list-inline-item">
+                        <a href="https://drive.google.com/file/d/1KKl3eu505Tkqktcgc1KZQizEoqwoTTue/view?usp=sharing" title="consulter mon cv">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-file-pdf-o fa-stack-1x fa-inverse"></i>
+                  </span>
+                        </a>
+                    </li>
                 </ul>
                 <p class="copyright text-muted">Copyright &copy; Mon Blog 2018</p>
             </div>

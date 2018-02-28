@@ -14,7 +14,7 @@ $frontend = new \Controller\Frontend();
 
 
 if (isset($_GET['action'])) {
-    // backend
+    // backend pages
     if ($_GET['action'] == 'admin' && isset($_GET['page']))
     {
 
