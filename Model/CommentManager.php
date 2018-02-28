@@ -40,6 +40,7 @@ class CommentManager extends Manager
 
         $datas = $this->db->fetchAll("SELECT * FROM comment WHERE id_article = :id ORDER BY id DESC ", array('id' => $id));
 
+        $comments=null;
         $i = 0;
         foreach ($datas as $comment)
         {
@@ -78,6 +79,18 @@ class CommentManager extends Manager
         $this->db->execute("DELETE FROM comment WHERE id = :id", array('id' => $id));
     }
 
+    public function valideComment($id)
+    {
+
+        $this->db->execute("UPDATE comment
+                                    SET is_validated = 1
+                                    WHERE id = :id",
+            array(
+                'id' => $id
+            ));
+
+    }
+
     public function editComment(Comment $comment)
     {
 
@@ -91,6 +104,23 @@ class CommentManager extends Manager
                 'isValidated' => $comment->getisValidated()
             ));
 
+    }
+
+    public function listCommentsNoValidated()
+    {
+        $datas = $this->db->fetchAll("SELECT * FROM comment WHERE is_validated = 0 ORDER BY id ASC");
+
+        $userManager = new UserManager();
+
+        $comments=null;
+        $i=0;
+        foreach ($datas as $data) {
+            $comments[$i]['comment'] = new Comment($data);
+            $comments[$i]['user'] = $userManager->getUserById($comments[$i]['comment']->getIdUser());
+            $i++;
+        }
+
+        return $comments;
     }
 
 }

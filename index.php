@@ -83,6 +83,13 @@ if (isset($_GET['action'])) {
         {
             $content = $backend->editMyComment($_GET['edit'], $_POST);
         }
+        if ($_GET['page'] == 'list_no_validated_comments')
+        {
+            if(isset($_GET['id']) AND isset($_GET['do']))
+                $content = $backend->listNoValidatedComment($_GET['do'], $_GET['id']);
+            else
+                $content = $backend->listNoValidatedComment();
+        }
     }
 }
 // frontend pages

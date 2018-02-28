@@ -300,4 +300,28 @@ class Backend
         }
     }
 
+    public function listNoValidatedComment($action = null, $idComment = null)
+    {
+        $commentManager = new CommentManager();
+
+        if($action!=null AND $idComment!=null)
+        {
+
+            if($action=='validate')
+            {
+                $commentManager->valideComment($idComment);
+                $_SESSION['info'] = 'Commentaire validé !';
+            }
+            elseif($action=='delete')
+            {
+                $commentManager->deleteCommentById($idComment);
+                $_SESSION['info'] = 'Commentaire supprimé !';
+            }
+        }
+
+        $comments = $commentManager->listCommentsNoValidated();
+
+        require "/View/backend/comments_no_validated.php";
+    }
+
 }

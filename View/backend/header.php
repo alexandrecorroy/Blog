@@ -93,7 +93,7 @@
                                 <a href="#">Liste des commentaires</a>
                             </li>
                             <li>
-                                <a href="#">Commentaires en attente</a>
+                                <a href="index.php?action=admin&page=list_no_validated_comments">Commentaires en attente</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
