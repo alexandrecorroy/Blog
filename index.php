@@ -59,6 +59,19 @@ if (isset($_GET['action'])) {
             else
                 $content = $backend->listArticle();
         }
+        if ($_GET['page'] == 'admin_request')
+        {
+            // if($_SESSION['role'] == 'subscriber')
+                $content = $backend->adminRequest($_POST);
+        }
+        if ($_GET['page'] == 'super_admin_response')
+        {
+
+            if(isset($_GET['response']) and isset($_GET['id']))
+                $content = $backend->superAdminResponse($_GET['response'], $_GET['id']);
+            else
+                $content = $backend->superAdminResponse();
+        }
     }
 }
 // frontend pages

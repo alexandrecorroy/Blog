@@ -66,6 +66,12 @@
                         <a href="index.php?action=admin&page=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li>
+                        <a href="index.php"><i class="fa fa-comment fa-fw"></i> Mes commentaires</a>
+                    </li>
+                    <li>
+                        <a href="index.php?action=admin&page=admin_request"><i class="fa fa-user-plus fa-fw"></i> Devenir Administrateur</a>
+                    </li>
+                    <li>
                         <a href="index.php?action=admin&page=category"><i class="fa fa-cogs fa-fw"></i> Gestion des catégories</a>
                     </li>
                     <li>
@@ -88,6 +94,18 @@
                             </li>
                             <li>
                                 <a href="#">Commentaires en attente</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gestion des utilisateurs<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Liste des utilisateurs</a>
+                            </li>
+                            <li>
+                                <a href="index.php?action=admin&page=super_admin_response">Demandes admin en attente</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

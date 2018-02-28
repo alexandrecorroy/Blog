@@ -12,6 +12,9 @@ class Helper
 
     public function formatDate($dateTime)
     {
+        if(is_null($dateTime))
+            return null;
+
         $formatter = new \IntlDateFormatter('fr_FR',\IntlDateFormatter::LONG,
             \IntlDateFormatter::SHORT,
             'Europe/Paris',

@@ -44,4 +44,14 @@ class UserManager extends Manager
                             VALUES (:pseudo, :email, :password)", array('pseudo' => $post['pseudo'], 'email' => $post['email'], 'password' => $post['password']));
     }
 
+    public function setRoleAdminUserById($id)
+    {
+        $this->db->execute("UPDATE user
+                                    SET role = 'admin'
+                                    WHERE id = :id",
+            array(
+                'id' => $id
+            ));
+    }
+
 }

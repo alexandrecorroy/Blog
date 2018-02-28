@@ -9,6 +9,8 @@
 namespace Controller;
 
 
+use Model\AdminRequest;
+use Model\AdminRequestManager;
 use Model\Article;
 use Model\ArticleManager;
 use Model\Category;
@@ -163,6 +165,68 @@ class Backend
             $article = $articleManager->getArticleById(intval($id));
 
         require "/View/backend/article_form.php";
+    }
+
+    public function adminRequest($post = null)
+    {
+        $userManager = new UserManager();
+        $requestManager = new AdminRequestManager();
+        $user = $userManager->getUserById($_SESSION['id']);
+
+        if($post!=null)
+        {
+            if($post['request']=='')
+                $_SESSION['alerte'] = 'Il faut écrire vos motivations !';
+            else
+            {
+                $request = new AdminRequest();
+                $request->setIdUser($user->getId());
+                $request->setRequest($post['request']);
+                $request->setStatus(0);
+
+                $requestManager->addAdminRequest($request);
+                $_SESSION['info'] = 'La demande a bien été envoyée !';
+            }
+
+
+        }
+
+
+
+        $request = $requestManager->getAdminRequest($user);
+
+        require "/View/backend/admin_request.php";
+    }
+
+    public function superAdminResponse($response = null, $id = null)
+    {
+
+        if($response!= null AND $id!=null)
+        {
+            $adminRequestManager = new AdminRequestManager();
+            if($response=='true')
+            {
+                $userManager = new UserManager();
+                $adminRequest = $adminRequestManager->getAdminRequestById(intval($id));
+
+                $adminRequestManager->deleteAdminRequestById(intval($id));
+                $userManager->setRoleAdminUserById($adminRequest->getIdUser());
+
+                $_SESSION['info'] = 'La demande a bien été acceptée !';
+            }
+            else
+            {
+
+                $adminRequestManager->rejectAdminRequestById(intval($id));
+                $_SESSION['info'] = 'La demande a bien été refusée !';
+
+            }
+        }
+
+        $requestManager = new AdminRequestManager();
+        $requests = $requestManager->getAdminRequests();
+
+        require "/View/backend/super_admin_response.php";
     }
 
 }
