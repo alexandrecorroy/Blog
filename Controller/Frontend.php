@@ -63,7 +63,7 @@ class Frontend
             $articles = $articleManager->getArticlesWithLimit(intval(LIMIT), intval($offset), intval($idCategory));
             $pages = self::countPages($idCategory);
         }
-        require "/View/frontend/index.php";
+        require "View/frontend/index.php";
     }
 
     public function showArticle($id, $post = null)
@@ -110,7 +110,7 @@ class Frontend
         $articleManager = new ArticleManager();
         $article = $articleManager->getArticleById($id);
 
-        require "/View/frontend/show_article.php";
+        require "View/frontend/show_article.php";
     }
 
     public function contact($post = null)
@@ -131,7 +131,7 @@ class Frontend
 
 
 
-        require "/View/frontend/contact.php";
+        require "View/frontend/contact.php";
 
     }
 

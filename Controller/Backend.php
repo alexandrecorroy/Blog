@@ -26,12 +26,12 @@ class Backend
     {
         session_destroy();
         $_SESSION['alerte'] = "Vous êtes bien déconnecté !";
-        require "/View/backend/login.php";
+        require "View/backend/login.php";
     }
 
     public function signIn()
     {
-        require "/View/backend/signin.php";
+        require "View/backend/signin.php";
     }
 
     public function login($post)
@@ -41,7 +41,7 @@ class Backend
             $user = new UserManager();
             $user->addUser($post);
         }
-        require "/View/backend/login.php";
+        require "View/backend/login.php";
     }
 
     public function verifUser($post)
@@ -56,7 +56,7 @@ class Backend
             $_SESSION['email'] = $user->getEmail();
             $_SESSION['role'] = $user->getRole();
 
-            require "/View/backend/admin.php";
+            require "View/backend/admin.php";
         }
         else
         {
@@ -101,7 +101,7 @@ class Backend
 
 
         $categories = $categories->getCategories();
-        require "/View/backend/category.php";
+        require "View/backend/category.php";
     }
 
     public function listArticle($id = null)
@@ -115,7 +115,7 @@ class Backend
         $articles = $articleManager->getArticles();
         $i = $articleManager->countArticles();
 
-        require "/View/backend/article_list.php";
+        require "View/backend/article_list.php";
     }
 
     public function addOrEditArticle($post, $id = null)
@@ -166,7 +166,7 @@ class Backend
         if ($id != null)
             $article = $articleManager->getArticleById(intval($id));
 
-        require "/View/backend/article_form.php";
+        require "View/backend/article_form.php";
     }
 
     public function adminRequest($post = null)
@@ -197,7 +197,7 @@ class Backend
 
         $request = $requestManager->getAdminRequest($user);
 
-        require "/View/backend/admin_request.php";
+        require "View/backend/admin_request.php";
     }
 
     public function superAdminResponse($response = null, $id = null)
@@ -234,7 +234,7 @@ class Backend
         $requestManager = new AdminRequestManager();
         $requests = $requestManager->getAdminRequests();
 
-        require "/View/backend/super_admin_response.php";
+        require "View/backend/super_admin_response.php";
     }
 
     public function myComments($idToDelete = null)
@@ -253,7 +253,7 @@ class Backend
             }
                 $comments = $commentManager->listCommentsByUserId($user);
 
-        require "/View/backend/my_comments.php";
+        require "View/backend/my_comments.php";
     }
 
     //        test if comment owner is me
@@ -296,7 +296,7 @@ class Backend
                 }
             }
 
-            require "/View/backend/edit_my_comment.php";
+            require "View/backend/edit_my_comment.php";
         }
     }
 
@@ -321,7 +321,7 @@ class Backend
 
         $comments = $commentManager->listCommentsNoValidated();
 
-        require "/View/backend/comments_no_validated.php";
+        require "View/backend/comments_no_validated.php";
     }
 
     public function listUser($idToDelete = null)
@@ -339,7 +339,7 @@ class Backend
 
 
         $users = $userManager->getAllUser();
-        require "/View/backend/user_list.php";
+        require "View/backend/user_list.php";
     }
 
 
