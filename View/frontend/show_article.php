@@ -8,9 +8,9 @@
                 <div class="post-heading">
                     <h1><?= $article['article']->getTitle() ?></h1>
                     <h2 class="subheading"><?= $article['article']->getHeaderText() ?></h2>
-                    <span class="meta">Posté par
+                    <span class="meta"><?php if($article['article']->getEditDate()!='') echo 'Modifié '; else echo 'Posté '; ?>par
                 <?= ucfirst($article['user']->getPseudo()) ?> <?php if(!empty($article['category']->getName())) echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> '; ?>
-                le <?= $article['article']->getCreationDate() ?></span>
+                le <?php if($article['article']->getEditDate()!='') echo $article['article']->getEditDate(); else $article['article']->getCreationDate(); ?></span>
                 </div>
             </div>
         </div>
@@ -43,7 +43,11 @@
                     <div class="post-description">
                         <h5>'.$comment['comment']->getTitle().'</h5>
                         <p>'.$comment['comment']->getContent().'</p>
-                        <p class="text-right"><em>Publié le '.$comment['comment']->getCreationDate().' par '.ucfirst($comment['user']->getPseudo()).'.</em></p>
+                        <p class="text-right"><em>';
+                        if($comment['comment']->getEditDate()!='') echo 'Modifié '; else echo 'Publié ';
+                        echo 'le ';
+                        if($comment['comment']->getEditDate()!='') echo $comment['comment']->getEditDate(); else echo $comment['comment']->getCreationDate();
+                        echo ' par '.ucfirst($comment['user']->getPseudo()).'.</em></p>
                     </div>
                 </div></div>';
                     }

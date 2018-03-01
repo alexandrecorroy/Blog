@@ -33,9 +33,9 @@ class UserManager extends Manager
         return $user = new User($data);
     }
 
-    public function deleteUserById($id)
+    public function deleteUserById(User $user)
     {
-
+        $this->db->execute("DELETE FROM user WHERE id = :id", array('id' => $user->getId()));
     }
 
     public function addUser($post)
@@ -52,6 +52,19 @@ class UserManager extends Manager
             array(
                 'id' => $id
             ));
+    }
+
+    public function getAllUser()
+    {
+        $datas = $this->db->fetchAll("SELECT * FROM user WHERE role != 'superadmin'");
+
+        $users = null;
+        $i = 0;
+        foreach ($datas as $data)
+        {
+            $users[$i] = new User($data);
+        }
+        return $users;
     }
 
 }

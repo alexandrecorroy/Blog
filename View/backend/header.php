@@ -87,22 +87,13 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gestion des commentaires<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Liste des commentaires</a>
-                            </li>
-                            <li>
-                                <a href="index.php?action=admin&page=list_no_validated_comments">Commentaires en attente</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
+                        <a href="index.php?action=admin&page=list_no_validated_comments"><i class="fa fa-comments fa-fw"></i> Commentaires à valider</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gestion des utilisateurs<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gestion des membres<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">Liste des utilisateurs</a>
+                                <a href="index.php?action=admin&page=user_list">Liste des membres</a>
                             </li>
                             <li>
                                 <a href="index.php?action=admin&page=super_admin_response">Demandes admin en attente</a>

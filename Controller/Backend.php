@@ -324,4 +324,24 @@ class Backend
         require "/View/backend/comments_no_validated.php";
     }
 
+    public function listUser($idToDelete = null)
+    {
+        $userManager = new UserManager();
+        if($idToDelete!=null and $idToDelete!='')
+        {
+            $user = $userManager->getUserById($idToDelete);
+            if($user->getRole()!='superadmin');
+            {
+                $userManager->deleteUserById($user);
+                $_SESSION['info'] = 'Membre supprimé !';
+            }
+        }
+
+
+        $users = $userManager->getAllUser();
+        require "/View/backend/user_list.php";
+    }
+
+
+
 }

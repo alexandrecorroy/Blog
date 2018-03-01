@@ -48,6 +48,10 @@
                 </tr>';
                     }
                 }
+                else
+                {
+                    echo '<td colspan="7" class="text-center">Pas de commentaire à valider !</td>';
+                }
 
                 ?>
 

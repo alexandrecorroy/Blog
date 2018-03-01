@@ -90,6 +90,13 @@ if (isset($_GET['action'])) {
             else
                 $content = $backend->listNoValidatedComment();
         }
+        if ($_GET['page'] == 'user_list')
+        {
+            if(isset($_GET['delete']))
+                $content = $backend->listUser($_GET['delete']);
+            else
+                $content = $backend->listUser();
+        }
     }
 }
 // frontend pages

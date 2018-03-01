@@ -31,11 +31,15 @@ include "View/frontend/header.php";?>
                         '.$article['article']->getHeaderText().'
                     </h3>
                 </a>
-                <p class="post-meta">Publié par
+                <p class="post-meta">';
+                if($article['article']->getEditDate()!='') echo 'Modifié '; else echo 'Publié ';
+                echo 'par
                     '.ucfirst($article['user']->getPseudo()).' ';
                 if (!empty($article['category']->getName()))
                     echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> ';
-                echo 'le '.$article['article']->getCreationDate().'</p>
+                echo 'le ';
+                if($article['article']->getEditDate()!='') echo $article['article']->getEditDate(); else echo $article['article']->getCreationDate();
+                echo '</p>
             </div>
             <hr>';
             }
