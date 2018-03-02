@@ -19,7 +19,7 @@ class UserManager extends Manager
     {
 
         $data = $this->db->fetch("SELECT * FROM user WHERE pseudo = :pseudo", array(
-            'pseudo' => htmlentities($post['pseudo'])
+            'pseudo' => $post['pseudo']
         ));
 
         return $user = new User($data);
@@ -39,8 +39,9 @@ class UserManager extends Manager
 
     public function addUser(User $user)
     {
+        $password = password_hash($user->getPassword(), PASSWORD_DEFAULT);
         $this->db->execute("INSERT INTO user (pseudo, email, password)
-                            VALUES (:pseudo, :email, :password)", array('pseudo' => $user->getPseudo(), 'email' => $user->getEmail(), 'password' => $user->getPassword()));
+                            VALUES (:pseudo, :email, :password)", array('pseudo' => $user->getPseudo(), 'email' => $user->getEmail(), 'password' => $password));
     }
 
     public function setRoleAdminUserById($id)

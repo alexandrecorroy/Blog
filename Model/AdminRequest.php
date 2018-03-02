@@ -17,12 +17,23 @@ class AdminRequest
     protected $request;
     protected $status;
 
-    public function __construct($data = null)
+    public function __construct($valeurs = array())
     {
-        $this->id = intval($data['id']);
-        $this->idUser = intval($data['id_user']);
-        $this->request = $data['request'];
-        $this->status = intval($data['status']);
+        if(is_array($valeurs))
+            $this->hydrate($valeurs);
+    }
+
+    public function hydrate($donnees)
+    {
+        foreach ($donnees as $attribut => $valeur)
+        {
+            $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+
+            if (is_callable(array($this, $methode)))
+            {
+                $this->$methode($valeur);
+            }
+        }
     }
 
     /**

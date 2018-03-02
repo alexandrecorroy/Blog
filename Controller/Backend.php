@@ -47,10 +47,7 @@ class Backend
             else
             {
                 $userManager = new UserManager();
-                $user = new User();
-                $user->setPassword($post['password']);
-                $user->setEmail($post['email']);
-                $user->setPseudo($post['pseudo']);
+                $user = new User($post);
                 $userManager->addUser($user);
                 require "View/backend/login.php";
             }

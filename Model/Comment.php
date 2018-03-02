@@ -23,17 +23,25 @@ class Comment
     protected $idUser;
     protected $isValidated;
 
-    public function __construct($data = null)
+    public function __construct($valeurs = array())
     {
-        $this->id = $data['id'];
-        $this->title = $data['title'];
-        $this->content = $data['content'];
-        $this->creationDate = $data['creation_date'];
-        $this->editDate = $data['edit_date'];
-        $this->idArticle = $data['id_article'];
-        $this->idUser = $data['id_user'];
-        $this->isValidated = $data['is_validated'];
+        if(is_array($valeurs))
+            $this->hydrate($valeurs);
     }
+
+    public function hydrate($donnees)
+    {
+        foreach ($donnees as $attribut => $valeur)
+        {
+            $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+
+            if (is_callable(array($this, $methode)))
+            {
+                $this->$methode($valeur);
+            }
+        }
+    }
+
 
     /**
      * @return mixed

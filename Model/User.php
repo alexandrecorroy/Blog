@@ -16,13 +16,23 @@ class User
     protected $password;
     protected $role;
 
-    public function __construct($data = null)
+    public function __construct($valeurs = array())
     {
-        $this->id=$data['id'];
-        $this->pseudo=$data['pseudo'];
-        $this->email=$data['email'];
-        $this->password=$data['password'];
-        $this->role=$data['role'];
+        if(is_array($valeurs))
+            $this->hydrate($valeurs);
+    }
+
+    public function hydrate($donnees)
+    {
+        foreach ($donnees as $attribut => $valeur)
+        {
+            $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+
+            if (is_callable(array($this, $methode)))
+            {
+                $this->$methode($valeur);
+            }
+        }
     }
 
     /**
@@ -86,7 +96,7 @@ class User
      */
     public function setPassword($password)
     {
-        $this->password = password_hash($password, PASSWORD_BCRYPT);
+        $this->password = $password;
     }
 
     /**

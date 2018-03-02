@@ -22,16 +22,23 @@ class Article
     protected $idCategory;
 
 
-    public function __construct(array $data = null)
+    public function __construct($valeurs = array())
     {
-        $this->id = intval($data['id']);
-        $this->title = $data['title'];
-        $this->creationDate = $data['creation_date'];
-        $this->editDate = $data['edit_date'];
-        $this->headerText = $data['header_text'];
-        $this->content = $data['content'];
-        $this->idUser = intval($data['id_user']);
-        $this->idCategory = intval($data['id_category']);
+        if(is_array($valeurs))
+            $this->hydrate($valeurs);
+    }
+
+    public function hydrate($donnees)
+    {
+        foreach ($donnees as $attribut => $valeur)
+        {
+            $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+
+            if (is_callable(array($this, $methode)))
+            {
+                $this->$methode($valeur);
+            }
+        }
     }
 
     /**

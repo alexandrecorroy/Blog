@@ -15,10 +15,23 @@ class Category
     protected $id;
     protected $name;
 
-    public function __construct($data = null)
+    public function __construct($valeurs = array())
     {
-        $this->id=$data['id'];
-        $this->name=$data['name'];
+        if(is_array($valeurs))
+            $this->hydrate($valeurs);
+    }
+
+    public function hydrate($donnees)
+    {
+        foreach ($donnees as $attribut => $valeur)
+        {
+            $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+
+            if (is_callable(array($this, $methode)))
+            {
+                $this->$methode($valeur);
+            }
+        }
     }
 
     /**
