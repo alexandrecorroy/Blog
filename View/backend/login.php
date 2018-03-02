@@ -28,8 +28,10 @@
                                 <input type="submit" value="Se connecter" class="btn btn-lg btn-success btn-block">
                             </fieldset>
                         </form>
+                        <a href="index.php?action=admin&page=signin" class="text-info">Pas encore de compte ? Devenir membre !</a>
                     </div>
                 </div>
+                <a href="index.php" class="text-info">&larr; Retour sur le site</a>
             </div>
         </div>
     </div>

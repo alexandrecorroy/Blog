@@ -18,10 +18,9 @@ class UserManager extends Manager
     public function getUser($post)
     {
 
-        $data = $this->db->fetch("SELECT * FROM user WHERE pseudo = :pseudo AND password = :password", array(
-            'pseudo' => $post['pseudo'],
-            'password' => $post['password'])
-        );
+        $data = $this->db->fetch("SELECT * FROM user WHERE pseudo = :pseudo", array(
+            'pseudo' => htmlentities($post['pseudo'])
+        ));
 
         return $user = new User($data);
     }
@@ -38,10 +37,10 @@ class UserManager extends Manager
         $this->db->execute("DELETE FROM user WHERE id = :id", array('id' => $user->getId()));
     }
 
-    public function addUser($post)
+    public function addUser(User $user)
     {
         $this->db->execute("INSERT INTO user (pseudo, email, password)
-                            VALUES (:pseudo, :email, :password)", array('pseudo' => $post['pseudo'], 'email' => $post['email'], 'password' => $post['password']));
+                            VALUES (:pseudo, :email, :password)", array('pseudo' => $user->getPseudo(), 'email' => $user->getEmail(), 'password' => $user->getPassword()));
     }
 
     public function setRoleAdminUserById($id)

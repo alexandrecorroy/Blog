@@ -24,7 +24,7 @@
 
                     ?>
                     <div class="panel-body">
-                        <form role="form" action="index.php?action=login" method="post">
+                        <form role="form" action="index.php?action=admin&page=login" method="post">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Pseudo" name="pseudo" type="text" autofocus>
@@ -41,6 +41,7 @@
                         </form>
                     </div>
                 </div>
+                <a href="index.php" class="text-info">&larr; Retour sur le site</a>
             </div>
         </div>
     </div>

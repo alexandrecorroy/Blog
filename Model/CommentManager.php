@@ -58,6 +58,7 @@ class CommentManager extends Manager
     {
         $datas = $this->db->fetchAll("SELECT * FROM comment WHERE id_user = :idUser ORDER BY id DESC", array('idUser' => $user->getId()));
 
+        $comments = null;
         $i=0;
         foreach ($datas as $data) {
             $comments[$i] = new Comment($data);

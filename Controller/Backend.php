@@ -17,6 +17,7 @@ use Model\ArticleManager;
 use Model\Category;
 use Model\CategoryManager;
 use Model\CommentManager;
+use Model\User;
 use Model\UserManager;
 
 class Backend
@@ -36,12 +37,30 @@ class Backend
 
     public function login($post)
     {
-        if($post)
+        if(!empty($post))
         {
-            $user = new UserManager();
-            $user->addUser($post);
+            if($post['pseudo']=='' OR $post['email']=='' OR $post['password']=='')
+            {
+                $_SESSION['alerte'] = 'Tous les champs sont requis !';
+                require "View/backend/signin.php";
+            }
+            else
+            {
+                $userManager = new UserManager();
+                $user = new User();
+                $user->setPassword($post['password']);
+                $user->setEmail($post['email']);
+                $user->setPseudo($post['pseudo']);
+                $userManager->addUser($user);
+                require "View/backend/login.php";
+            }
+
         }
-        require "View/backend/login.php";
+        else
+        {
+            require "View/backend/login.php";
+        }
+
     }
 
     public function verifUser($post)
@@ -49,7 +68,7 @@ class Backend
         $user = new UserManager();
         $user = $user->getUser($post);
 
-        if($user->getId())
+        if(password_verify($post['password'], $user->getPassword()))
         {
             $_SESSION['pseudo'] = $user->getPseudo();
             $_SESSION['id'] = $user->getId();

@@ -38,11 +38,13 @@
                 </thead>
                 <tbody>
                 <?php
-                foreach ($comments as $comment) {
-                    echo '<tr>
+                if(!is_null($comments))
+                {
+                    foreach ($comments as $comment) {
+                        echo '<tr>
                     <th scope="row">';
-                    if($comment->getIsValidated()) echo 'Publié'; else echo 'En attente';
-                    echo'</th>
+                        if($comment->getIsValidated()) echo 'Publié'; else echo 'En attente';
+                        echo'</th>
                     <td>'.$comment->getTitle().'</td>
                     <td>'.$comment->getCreationDate().'</td>
                     <td>'.$comment->getEditDate().'</td>
@@ -51,7 +53,13 @@
                     <td><a href="index.php?page=show_article&id='.$comment->getIdArticle().'#comments" target="_blank" class="text-success"><i>Ouvrir</i></a></td>
 
                 </tr>';
+                    }
                 }
+                else
+                {
+                    echo '<td class="text-center" colspan="7">Vous n\'avez pas encore posté de commentaires !</td>';
+                }
+
                 ?>
 
                 </tbody>
