@@ -35,11 +35,11 @@
                 {
                     foreach ($users as $user) {
                         echo '<tr>
-                    <th scope="row">'.$user->getId().'</th>
-                    <td>'.$user->getPseudo().'</td>
-                    <td>'.$user->getEmail().'</td>
-                    <td>'.$user->getRole().'</td>
-                    <td><a href="index.php?action=admin&page=user_list&delete='.$user->getId().'" class="text-danger"><i class="fa fa-trash"></i> Supprimer</a></td>
+                    <th scope="row">'.$user['user']->getId().'</th>
+                    <td>'.$user['user']->getPseudo().'</td>
+                    <td>'.$user['user']->getEmail().'</td>
+                    <td>'.$user['role']->getName().'</td>
+                    <td><a href="index.php?action=admin&page=user_list&delete='.$user['user']->getId().'" class="text-danger"><i class="fa fa-trash"></i> Supprimer</a></td>
 
                 </tr>';
                     }

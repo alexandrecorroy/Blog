@@ -23,6 +23,7 @@ class UserManager extends Manager
         ));
 
         return $user = new User($data);
+
     }
 
     public function getUserById($id)
@@ -47,7 +48,7 @@ class UserManager extends Manager
     public function setRoleAdminUserById($id)
     {
         $this->db->execute("UPDATE user
-                                    SET role = 'admin'
+                                    SET id_role = 1
                                     WHERE id = :id",
             array(
                 'id' => $id
@@ -56,14 +57,17 @@ class UserManager extends Manager
 
     public function getAllUser()
     {
-        $datas = $this->db->fetchAll("SELECT * FROM user WHERE role != 'superadmin'");
+        $datas = $this->db->fetchAll("SELECT * FROM user WHERE id_role != 2");
 
         $users = null;
         $i = 0;
+        $roleManager = new RoleManager();
         foreach ($datas as $data)
         {
-            $users[$i] = new User($data);
+            $users[$i]['user'] = new User($data);
+            $users[$i]['role'] = $roleManager->getNameRoleById($users[$i]['user']->getIdRole());
         }
+
         return $users;
     }
 

@@ -70,7 +70,7 @@ class Backend
             $_SESSION['pseudo'] = $user->getPseudo();
             $_SESSION['id'] = $user->getId();
             $_SESSION['email'] = $user->getEmail();
-            $_SESSION['role'] = $user->getRole();
+            $_SESSION['role'] = $user->getIdRole();
 
             require "View/backend/admin.php";
         }
@@ -304,7 +304,7 @@ class Backend
                     $comment->setTitle($post['title']);
                     $comment->setContent($post['content']);
 
-                    if($_SESSION['role']=='subscriber')
+                    if($_SESSION['role']>0)
                         $comment->setIsValidated(0);
 
                     $commentManager->editComment($comment);
@@ -346,7 +346,7 @@ class Backend
         if($idToDelete!=null and $idToDelete!='')
         {
             $user = $userManager->getUserById($idToDelete);
-            if($user->getRole()!='superadmin');
+            if($user->getRole()<2);
             {
                 $userManager->deleteUserById($user);
                 $_SESSION['info'] = 'Membre supprimé !';

@@ -35,7 +35,7 @@ if (isset($_GET['action'])) {
         }
         if ($_GET['page'] == 'dashboard') {
             if(isset($_SESSION['id']))
-                if($_SESSION['role']=='admin' OR $_SESSION['role']=='superadmin')
+                if($_SESSION['role']>0)
                     $content = require "/View/backend/admin.php";
                 else
                     header("Location: index.php?action=admin&page=my_comments");

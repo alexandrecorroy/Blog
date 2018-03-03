@@ -14,7 +14,7 @@ class User
     protected $pseudo;
     protected $email;
     protected $password;
-    protected $role;
+    protected $idRole;
 
     public function __construct($valeurs = array())
     {
@@ -102,17 +102,17 @@ class User
     /**
      * @return mixed
      */
-    public function getRole()
+    public function getIdRole()
     {
-        return $this->role;
+        return $this->idRole;
     }
 
     /**
-     * @param mixed $role
+     * @param mixed $idRole
      */
-    public function setRole($role)
+    public function setIdRole($idRole)
     {
-        $this->role = $role;
+        $this->idRole = intval($idRole);
     }
 
 

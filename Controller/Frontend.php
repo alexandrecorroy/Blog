@@ -84,7 +84,7 @@ class Frontend
                 $comment->setTitle($post['title']);
                 $comment->setContent($post['content']);
                 $comment->setIdUser($user->getId());
-                if($user->getRole() == 'admin' || $user->getRole() == 'superadmin')
+                if($user->getRole()>0)
                     $comment->setIsValidated(1);
                 else
                     $comment->setIsValidated(0);
@@ -92,7 +92,7 @@ class Frontend
 
                 $commentManager->addComment($comment);
 
-                if($user->getRole() == 'admin' || $user->getRole() == 'superadmin')
+                if($user->getRole()>0)
                     $_SESSION['info'] = 'Commentaire ajouté !';
                 else
                     $_SESSION['info'] = 'Commentaire en attente de validation par un administrateur !';
