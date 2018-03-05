@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 12/02/2018
- * Time: 13:59
- */
 session_start();
 
 require 'vendor/autoload.php';
@@ -12,9 +6,8 @@ require 'vendor/autoload.php';
 $backend = new \Controller\Backend();
 $frontend = new \Controller\Frontend();
 
-
+// backend pages
 if (isset($_GET['action'])) {
-    // backend pages
     if ($_GET['action'] == 'admin' && isset($_GET['page']))
     {
 
@@ -23,20 +16,20 @@ if (isset($_GET['action'])) {
         }
         if ($_GET['page'] == 'login') {
             if(isset($_SESSION['id']))
-                $content = require "View/backend/dashboard.php";
+                $content = $backend->dashboard();
             else
-            $content = $backend->login($_POST);
+                $content = $backend->login($_POST);
         }
         if ($_GET['page'] == 'signup') {
             if(isset($_SESSION['id']))
-                $content = require "/View/backend/dashboard.php";
+                $content = $backend->dashboard();
             else
-            $content = $backend->signUp();
+                $content = $backend->signUp();
         }
         if ($_GET['page'] == 'dashboard') {
             if(isset($_SESSION['id']))
                 if($_SESSION['role']>0)
-                    $content = require "/View/backend/dashboard.php";
+                    $content = $backend->dashboard();
                 else
                     header("Location: index.php?action=admin&page=my_comments");
             else
@@ -132,7 +125,7 @@ elseif (empty($_GET))
 }
 else
 {
-    $content = '404';
+    $content = header("HTTP/1.0 404 Not Found");;
 }
 
 echo $content;

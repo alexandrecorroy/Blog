@@ -34,6 +34,27 @@ class CommentManager extends Manager
         return $i['COUNT(*)'];
     }
 
+    public function countCommentsByMonth($month)
+    {
+        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE is_validated = 1 AND MONTH(creation_date) = MONTH(:month)", array('month'=>$month));
+
+        return $i['COUNT(*)'];
+    }
+
+    public function countCommentsValidated()
+    {
+        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE is_validated = 1");
+
+        return $i['COUNT(*)'];
+    }
+
+    public function countCommentsUnvalidated()
+    {
+        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE is_validated = 0");
+
+        return $i['COUNT(*)'];
+    }
+
     public function listCommentsByArticle($id)
     {
         $userManager = new UserManager();

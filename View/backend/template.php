@@ -51,7 +51,7 @@
                 <span class="icon-bar"></span>
             </button>
             <div class="navbar-header">
-                <span class="navbar-brand"> <?= ucfirst($_SESSION['pseudo']) ?></span>
+                <span class="navbar-brand"> <?= ucfirst($_SESSION['pseudo']) ?> <?php if(self::checkForAdminRequest()) echo '<a href="index.php?action=admin&page=super_admin_response" ><span class="text-danger"><i class="fa fa-exclamation-triangle"></i> (Demande Admin en attente)</span></a>' ?></span>
             </div>
         </div>
 
@@ -131,7 +131,7 @@ if($_GET['page']!= 'logout' && $_GET['page']!= 'login' && $_GET['page']!= 'signu
     <!-- Morris Charts JavaScript -->
     <script src="public/backend/vendor/raphael/raphael.min.js"></script>
     <script src="public/backend/vendor/morrisjs/morris.min.js"></script>
-    <script src="public/backend/data/morris-data.js"></script>
+    <?php if(isset($script)) echo $script ?>
 
     <!-- Custom Theme JavaScript -->
     <script src="public/backend/dist/js/sb-admin-2.js"></script>
@@ -139,4 +139,3 @@ if($_GET['page']!= 'logout' && $_GET['page']!= 'login' && $_GET['page']!= 'signu
 </body>
 
 </html>
-

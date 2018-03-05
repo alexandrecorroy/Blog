@@ -74,4 +74,11 @@ class AdminRequestManager extends Manager
             ));
     }
 
+    public function countAdminRequestInStandBy()
+    {
+        $i = $this->db->fetch("SELECT COUNT(*) FROM admin_request WHERE status = 0");
+
+        return $i['COUNT(*)'];
+    }
+
 }

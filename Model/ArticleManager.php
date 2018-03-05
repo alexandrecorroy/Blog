@@ -77,6 +77,7 @@ class ArticleManager extends Manager
             $datas = $this->db->fetchAll("SELECT * FROM article WHERE id_category = :idCategory ORDER BY id DESC LIMIT $limit OFFSET $offset", array('idCategory' => $idCategory));
 
 
+        $articles = null;
         $i=0;
         foreach ($datas as $data) {
             $articles[$i]['article'] = new Article($data);
@@ -91,6 +92,13 @@ class ArticleManager extends Manager
     public function countArticles()
     {
         $i = $this->db->fetch("SELECT COUNT(*) FROM article");
+
+        return $i['COUNT(*)'];
+    }
+
+    public function countArticlesByMonth($month)
+    {
+        $i = $this->db->fetch("SELECT COUNT(*) FROM article WHERE MONTH(creation_date) = MONTH(:month)", array('month'=>$month));
 
         return $i['COUNT(*)'];
     }

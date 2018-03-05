@@ -53,4 +53,11 @@ class CategoryManager extends Manager
         $this->db->execute("INSERT INTO category (name)
                             VALUES (:name)",array('name' => $category->getName()));
     }
+
+    public function countCategories()
+    {
+        $i = $this->db->fetch("SELECT COUNT(*) FROM category");
+
+        return $i['COUNT(*)'];
+    }
 }

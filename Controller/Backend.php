@@ -72,7 +72,7 @@ class Backend
             $_SESSION['email'] = $user->getEmail();
             $_SESSION['role'] = $user->getIdRole();
 
-            require "View/backend/dashboard.php";
+            $this::dashboard();
         }
         else
         {
@@ -80,6 +80,35 @@ class Backend
             header("Location: index.php?action=admin&page=login");
             exit;
         }
+    }
+
+    public function dashboard()
+    {
+        $articleManager = new ArticleManager();
+        $commentManager = new CommentManager();
+        $categoryManager = new CategoryManager();
+
+        $yms = array();
+        $now = date('Y-m');
+
+        for($x = 11; $x >= 0; $x--) {
+            $ym = date('Y-m', strtotime($now . " -$x month"));
+            $ymDb = $ym.'-01';
+            $ymFrance = date('m-Y', strtotime($now . " -$x month"));
+            $articles = $articleManager->countArticlesByMonth($ymDb);
+            $comments = $commentManager->countCommentsByMonth($ymDb);
+            $yms[$x] = [
+                'date' => $ym,
+                'articles' => intval($articles),
+                'commentaires' => intval($comments)
+            ];
+        }
+
+        $countArticles = $articleManager->countArticles();
+        $countValidatedComments = $commentManager->countCommentsValidated();
+        $countCategories = $categoryManager->countCategories();
+        $countUnvalidatedComments = $commentManager->countCommentsUnvalidated();
+        require "View/backend/dashboard.php";
     }
 
     public function category($data = null)
@@ -358,6 +387,20 @@ class Backend
         require "View/backend/user_list.php";
     }
 
+    static public function checkForAdminRequest()
+    {
+        if(isset($_SESSION['id']))
+        {
+            if($_SESSION['role']>1)
+            {
+                $adminRequestManager = new AdminRequestManager();
 
+                if(intval($adminRequestManager->countAdminRequestInStandBy())>0)
+                    return true;
+            }
+
+        }
+
+    }
 
 }

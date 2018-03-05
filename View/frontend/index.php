@@ -8,8 +8,10 @@ $classHeader = 'site-heading';
 
 
 ob_start();
-foreach ($articles as $article) {
-    echo '<div class="post-preview">
+if(!is_null($articles))
+{
+    foreach ($articles as $article) {
+        echo '<div class="post-preview">
     <a href="index.php?page=show_article&id='.$article['article']->getId().'">
         <h2 class="post-title">
             '.$article['article']->getTitle().'
@@ -19,18 +21,22 @@ foreach ($articles as $article) {
         </h3>
     </a>
     <p class="post-meta">';
-    if($article['article']->getEditDate()!='') echo 'Modifié '; else echo 'Publié ';
-    echo 'par
+        if($article['article']->getEditDate()!='') echo 'Modifié '; else echo 'Publié ';
+        echo 'par
         '.ucfirst($article['user']->getPseudo()).' ';
-    if (!empty($article['category']->getName()))
-        echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> ';
-    echo 'le ';
-    if($article['article']->getEditDate()!='') echo $article['article']->getEditDate(); else echo $article['article']->getCreationDate();
-    echo '</p>
+        if (!empty($article['category']->getName()))
+            echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> ';
+        echo 'le ';
+        if($article['article']->getEditDate()!='') echo $article['article']->getEditDate(); else echo $article['article']->getCreationDate();
+        echo '</p>
 </div>
 <hr>';
+    }
 }
-
+else
+{
+    echo '<div class="post-preview"><p>Pas encore d\'articles dans cette catégorie.</p></div>';
+}
 
 $actualPage = 1;
 if(isset($_GET['p']))
