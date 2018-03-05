@@ -21,9 +21,16 @@ ob_start();
                     xkey: 'period',
                     ykeys: ['articles', 'commentaires'],
                     labels: ['Articles', 'Commentaires'],
+                    xLabelFormat: function(date) {
+                        return (date.getMonth()+1)+'/'+date.getFullYear();
+                    },
                     pointSize: 2,
                     hideHover: 'auto',
                     resize: true,
+                    dateFormat: function(date) {
+                        d = new Date(date);
+                        return (d.getMonth()+1)+'/'+d.getFullYear();
+                    }
                 });
 
             });
@@ -83,7 +90,7 @@ ob_start();
                                 <i class="fa fa-cogs fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge"><?= $countCategories ?></div>
+                                <div class="huge"><?= $countUnvalidatedComments ?></div>
                                 <div>Catégories !</div>
                             </div>
                         </div>

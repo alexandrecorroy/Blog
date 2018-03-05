@@ -6,6 +6,8 @@ require 'vendor/autoload.php';
 $backend = new \Controller\Backend();
 $frontend = new \Controller\Frontend();
 
+$content = header("HTTP/1.0 404 Not Found");
+
 // backend pages
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'admin' && isset($_GET['page']))
@@ -16,7 +18,10 @@ if (isset($_GET['action'])) {
         }
         if ($_GET['page'] == 'login') {
             if(isset($_SESSION['id']))
-                $content = $backend->dashboard();
+                if($_SESSION['role']>0)
+                    $content = $backend->dashboard();
+                else
+                    header("Location: index.php?action=admin&page=my_comments");
             else
                 $content = $backend->login($_POST);
         }
@@ -35,38 +40,10 @@ if (isset($_GET['action'])) {
             else
                 $content = $backend->verifUser($_POST);
         }
-        if ($_GET['page'] == 'category') {
-            if(isset($_GET['delete']))
-                $content = $backend->category((int)$_GET['delete']);
-            else
-                $content = $backend->category($_POST);
-        }
-        if ($_GET['page'] == 'addOrEditArticle')
-        {
-            if(isset($_GET['edit']))
-                $content = $backend->addOrEditArticle($_POST, $_GET['edit']);
-            else
-                $content = $backend->addOrEditArticle($_POST);
-        }
-        if ($_GET['page'] == 'listArticle')
-        {
-            if(isset($_GET['delete']))
-                $content = $backend->listArticle($_GET['delete']);
-            else
-                $content = $backend->listArticle();
-        }
         if ($_GET['page'] == 'admin_request')
         {
-            // if($_SESSION['role'] == 'subscriber')
+            if($_SESSION['role'] == 0)
                 $content = $backend->adminRequest($_POST);
-        }
-        if ($_GET['page'] == 'super_admin_response')
-        {
-
-            if(isset($_GET['response']) and isset($_GET['id']))
-                $content = $backend->superAdminResponse($_GET['response'], $_GET['id']);
-            else
-                $content = $backend->superAdminResponse();
         }
         if ($_GET['page'] == 'my_comments')
         {
@@ -79,20 +56,61 @@ if (isset($_GET['action'])) {
         {
             $content = $backend->editMyComment($_GET['edit'], $_POST);
         }
-        if ($_GET['page'] == 'list_no_validated_comments')
+
+        if(isset($_SESSION['id']))
         {
-            if(isset($_GET['id']) AND isset($_GET['do']))
-                $content = $backend->listNoValidatedComment($_GET['do'], $_GET['id']);
-            else
-                $content = $backend->listNoValidatedComment();
+            if($_SESSION['role']>0)
+            {
+                if ($_GET['page'] == 'addOrEditArticle')
+                {
+                    if(isset($_GET['edit']))
+                        $content = $backend->addOrEditArticle($_POST, $_GET['edit']);
+                    else
+                        $content = $backend->addOrEditArticle($_POST);
+                }
+                if ($_GET['page'] == 'listArticle')
+                {
+                    if(isset($_GET['delete']))
+                        $content = $backend->listArticle($_GET['delete']);
+                    else
+                        $content = $backend->listArticle();
+                }
+                if ($_GET['page'] == 'list_no_validated_comments')
+                {
+                    if(isset($_GET['id']) AND isset($_GET['do']))
+                        $content = $backend->listNoValidatedComment($_GET['do'], $_GET['id']);
+                    else
+                        $content = $backend->listNoValidatedComment();
+                }
+            }
+            if($_SESSION['role']>1)
+            {
+                if ($_GET['page'] == 'user_list')
+                {
+                    if(isset($_GET['delete']))
+                        $content = $backend->listUser($_GET['delete']);
+                    else
+                        $content = $backend->listUser();
+                }
+                if ($_GET['page'] == 'super_admin_response')
+                {
+
+                    if(isset($_GET['response']) and isset($_GET['id']))
+                        $content = $backend->superAdminResponse($_GET['response'], $_GET['id']);
+                    else
+                        $content = $backend->superAdminResponse();
+                }
+                if ($_GET['page'] == 'category') {
+                    if(isset($_GET['delete']))
+                        $content = $backend->category((int)$_GET['delete']);
+                    else
+                        $content = $backend->category($_POST);
+                }
+            }
         }
-        if ($_GET['page'] == 'user_list')
-        {
-            if(isset($_GET['delete']))
-                $content = $backend->listUser($_GET['delete']);
-            else
-                $content = $backend->listUser();
-        }
+
+
+
     }
 }
 // frontend pages
@@ -122,10 +140,6 @@ elseif (empty($_GET))
 {
     // index
     $content = $frontend->index();
-}
-else
-{
-    $content = header("HTTP/1.0 404 Not Found");;
 }
 
 echo $content;

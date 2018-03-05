@@ -72,7 +72,10 @@ class Backend
             $_SESSION['email'] = $user->getEmail();
             $_SESSION['role'] = $user->getIdRole();
 
-            $this::dashboard();
+            if($user->getIdRole()>0)
+                $this::dashboard();
+            else
+                header("Location: index.php?action=admin&page=my_comments");
         }
         else
         {

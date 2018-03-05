@@ -63,34 +63,8 @@
                     <li>
                         <a href="index.php"><i class="fa fa-home fa-fw"></i> Retour accueil du site</a>
                     </li>
-                    <li>
-                        <a href="index.php?action=admin&page=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="index.php?action=admin&page=my_comments"><i class="fa fa-comment fa-fw"></i> Mes commentaires</a>
-                    </li>
-                    <li>
-                        <a href="index.php?action=admin&page=admin_request"><i class="fa fa-user-plus fa-fw"></i> Devenir Administrateur</a>
-                    </li>
-                    <li>
-                        <a href="index.php?action=admin&page=category"><i class="fa fa-cogs fa-fw"></i> Gestion des catégories</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-pencil fa-fw"></i> Gestion des articles<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="index.php?action=admin&page=addOrEditArticle">Ajouter un article</a>
-                            </li>
-                            <li>
-                                <a href="index.php?action=admin&page=listArticle">Modification/Suppression d'un article</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="index.php?action=admin&page=list_no_validated_comments"><i class="fa fa-comments fa-fw"></i> Commentaires à valider</a>
-                    </li>
-                    <li>
+                    <?php if($_SESSION['role']>1)
+                        echo '<li>
                         <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gestion des membres<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -102,6 +76,32 @@
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
+                    <li><a href="index.php?action=admin&page=category"><i class="fa fa-cogs fa-fw"></i> Gestion des catégories</a></li>';
+                    ?>
+                    <?php if($_SESSION['role']>=1)
+                        echo '<li><a href="index.php?action=admin&page=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+                    <li>
+                        <a href="index.php?action=admin&page=list_no_validated_comments"><i class="fa fa-comments fa-fw"></i> Commentaires à valider</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-pencil fa-fw"></i> Gestion des articles<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="index.php?action=admin&page=addOrEditArticle">Ajouter un article</a>
+                            </li>
+                            <li>
+                                <a href="index.php?action=admin&page=listArticle">Modification/Suppression d\'un article</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>';
+                    ?>
+                    <?php if($_SESSION['role']>=0)
+                        echo '<li><a href="index.php?action=admin&page=my_comments"><i class="fa fa-comment fa-fw"></i> Mes commentaires</a></li>';
+                    ?>
+                    <?php if($_SESSION['role']==0)
+                        echo '<li><a href="index.php?action=admin&page=admin_request"><i class="fa fa-user-plus fa-fw"></i> Devenir Administrateur</a></li>';
+                    ?>
                     <li>
                         <a href="index.php?action=admin&page=logout"><i class="fa fa-sign-out fa-fw"></i> Déconnexion</a>
                     </li>
