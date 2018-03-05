@@ -1,4 +1,9 @@
-<?php include "View/backend/header.php";?>
+<?php
+
+$title = 'Devenir Administrateur';
+
+ob_start();
+?>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -26,7 +31,7 @@
                 <div class="panel panel-default">
                     <?php
                     if($request->getId()==null)
-                    echo '<div class="panel-heading">
+                        echo '<div class="panel-heading">
                         <i class="fa fa-pencil fa-fw"></i> Vos motivations
                     </div>
                     <!-- /.panel-heading -->
@@ -52,7 +57,7 @@
                         echo '</p>
                         <p></div>';
                     }
-                     ?>
+                    ?>
                     <!-- /.panel-body -->
                 </div>
             </div>
@@ -64,5 +69,7 @@
 
     </div>
     <!-- /#wrapper -->
+<?php
+$content = ob_get_clean();
 
-<?php include "View/backend/footer.php";?>
+require "View/Backend/template.php";

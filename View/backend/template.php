@@ -3,6 +3,7 @@
 
 <head>
 
+    <title><?= $title ?></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -110,8 +111,32 @@
         </div>
         <!-- /.navbar-static-side -->
     </nav>
-    <?php
-    $content = ob_get_clean();
-    if($_GET['page']!= 'logout' && $_GET['page']!= 'login' && $_GET['page']!= 'signin' || (isset($_SESSION['id']) && $_GET['page']== 'login') || (isset($_SESSION['id']) && $_GET['page']== 'signin'))
-    echo $content;
-    ?>
+<?php
+$menu = ob_get_clean();
+if($_GET['page']!= 'logout' && $_GET['page']!= 'login' && $_GET['page']!= 'signup' || (isset($_SESSION['id']) && $_GET['page']== 'login') || (isset($_SESSION['id']) && $_GET['page']== 'signup'))
+    echo $menu;
+?>
+
+    <?= $content ?>
+
+    <!-- jQuery -->
+    <script src="public/backend/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="public/backend/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="public/backend/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="public/backend/vendor/raphael/raphael.min.js"></script>
+    <script src="public/backend/vendor/morrisjs/morris.min.js"></script>
+    <script src="public/backend/data/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="public/backend/dist/js/sb-admin-2.js"></script>
+
+</body>
+
+</html>
+

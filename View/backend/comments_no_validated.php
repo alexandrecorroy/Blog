@@ -1,4 +1,9 @@
-<?php include "View/backend/header.php";?>
+<?php
+
+$title = 'Commentaires en attente de validation';
+
+ob_start();
+?>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -65,5 +70,7 @@
 
     </div>
     <!-- /#wrapper -->
+<?php
+$content = ob_get_clean();
 
-<?php include "View/backend/footer.php";?>
+require "View/Backend/template.php";

@@ -30,9 +30,9 @@ class Backend
         require "View/backend/login.php";
     }
 
-    public function signIn()
+    public function signUp()
     {
-        require "View/backend/signin.php";
+        require "View/backend/signup.php";
     }
 
     public function login($post)
@@ -42,7 +42,7 @@ class Backend
             if($post['pseudo']=='' OR $post['email']=='' OR $post['password']=='')
             {
                 $_SESSION['alerte'] = 'Tous les champs sont requis !';
-                require "View/backend/signin.php";
+                require "View/backend/signup.php";
             }
             else
             {
@@ -72,7 +72,7 @@ class Backend
             $_SESSION['email'] = $user->getEmail();
             $_SESSION['role'] = $user->getIdRole();
 
-            require "View/backend/admin.php";
+            require "View/backend/dashboard.php";
         }
         else
         {

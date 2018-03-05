@@ -23,20 +23,20 @@ if (isset($_GET['action'])) {
         }
         if ($_GET['page'] == 'login') {
             if(isset($_SESSION['id']))
-                $content = require "View/backend/admin.php";
+                $content = require "View/backend/dashboard.php";
             else
             $content = $backend->login($_POST);
         }
-        if ($_GET['page'] == 'signin') {
+        if ($_GET['page'] == 'signup') {
             if(isset($_SESSION['id']))
-                $content = require "/View/backend/admin.php";
+                $content = require "/View/backend/dashboard.php";
             else
-            $content = $backend->signIn();
+            $content = $backend->signUp();
         }
         if ($_GET['page'] == 'dashboard') {
             if(isset($_SESSION['id']))
                 if($_SESSION['role']>0)
-                    $content = require "/View/backend/admin.php";
+                    $content = require "/View/backend/dashboard.php";
                 else
                     header("Location: index.php?action=admin&page=my_comments");
             else

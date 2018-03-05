@@ -1,5 +1,10 @@
-<?php include "View/backend/header.php";?>
-<div id="page-wrapper">
+<?php
+
+$title = 'Dashboard';
+
+ob_start();
+?>
+    <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Dashboard</h1>
@@ -107,7 +112,10 @@
     </div>
     <!-- /#page-wrapper -->
 
-</div>
-<!-- /#wrapper -->
+    </div>
+    <!-- /#wrapper -->
 
-<?php include "View/backend/footer.php";?>
+<?php
+$content = ob_get_clean();
+
+require "View/Backend/template.php";
