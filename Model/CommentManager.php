@@ -29,7 +29,7 @@ class CommentManager extends Manager
 
     public function countCommentsByArticle($id)
     {
-        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE id_article = :id", array('id' => $id));
+        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE id_article = :id AND is_validated = 1", array('id' => $id));
 
         return $i['COUNT(*)'];
     }
@@ -59,7 +59,7 @@ class CommentManager extends Manager
     {
         $userManager = new UserManager();
 
-        $datas = $this->db->fetchAll("SELECT * FROM comment WHERE id_article = :id ORDER BY id DESC ", array('id' => $id));
+        $datas = $this->db->fetchAll("SELECT * FROM comment WHERE id_article = :id AND is_validated = 1 ORDER BY id DESC", array('id' => $id));
 
         $comments=null;
         $i = 0;
@@ -123,7 +123,7 @@ class CommentManager extends Manager
                 'content' => $comment->getContent(),
                 'title' => $comment->getTitle(),
                 'id' => $comment->getId(),
-                'isValidated' => $comment->getisValidated()
+                'isValidated' => $comment->getIsValidated()
             ));
 
     }

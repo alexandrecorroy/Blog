@@ -336,7 +336,7 @@ class Backend
                     $comment->setTitle($post['title']);
                     $comment->setContent($post['content']);
 
-                    if($_SESSION['role']>0)
+                    if($_SESSION['role']==0)
                         $comment->setIsValidated(0);
 
                     $commentManager->editComment($comment);

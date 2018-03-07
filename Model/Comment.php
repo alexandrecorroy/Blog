@@ -160,7 +160,7 @@ class Comment
     /**
      * @return mixed
      */
-    public function getisValidated()
+    public function getIsValidated()
     {
         return $this->isValidated;
     }
