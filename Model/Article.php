@@ -7,6 +7,8 @@
  */
 namespace Model;
 
+use Helper\Helper;
+
 class Article
 {
 
@@ -86,7 +88,8 @@ class Article
      */
     public function getEditDate()
     {
-        return $this->editDate;
+        $helper = new Helper();
+        return $helper->formatDate($this->editDate);
     }
 
     /**
@@ -135,7 +138,8 @@ class Article
      */
     public function getCreationDate()
     {
-        return $this->creationDate;
+        $helper = new Helper();
+        return $helper->formatDate($this->creationDate);
     }
 
     /**

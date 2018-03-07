@@ -97,7 +97,7 @@ class Backend
 
 
         $categories = $categories->getCategories();
-        require "/View/Backend/category.php";
+        require "/View/backend/category.php";
     }
 
     public function listArticle($id = null)
@@ -111,7 +111,7 @@ class Backend
         $articles = $articleManager->getArticles();
         $i = $articleManager->countArticles();
 
-        require "/View/Backend/article_list.php";
+        require "/View/backend/article_list.php";
     }
 
     public function addOrEditArticle($post, $id = null)
@@ -133,28 +133,28 @@ class Backend
 
                 $article = $articleManager->getArticleById(intval($id));
 
-                $article->setTitle($post['title']);
-                $article->setHeaderText($post['headerText']);
-                $article->setContent($post['content']);
-                $article->setIdCategory($post['idCategory']);
+                $article['article']->setTitle($post['title']);
+                $article['article']->setHeaderText($post['headerText']);
+                $article['article']->setContent($post['content']);
+                $article['article']->setIdCategory($post['idCategory']);
 
-                $articleManager->editArticle($article);
+                $articleManager->editArticle($article['article']);
 
-                $_SESSION['info'] = 'Article n°'.$article->getId().' correctement mise a jour ! <a href="">Voir l\'article</a>';
+                $_SESSION['info'] = 'Article n°'.$article['article']->getId().' correctement mise a jour ! <a target="_blank" href="index.php?page=show_article&id='.$article['article']->getId().'">Voir l\'article</a>';
 
             }
             else
             {
-                $article = new Article();
-                $article->setTitle($post['title']);
-                $article->setHeaderText($post['headerText']);
-                $article->setContent($post['content']);
-                $article->setIdCategory($post['idCategory']);
+                $newArticle = new Article();
+                $newArticle->setTitle($post['title']);
+                $newArticle->setHeaderText($post['headerText']);
+                $newArticle->setContent($post['content']);
+                $newArticle->setIdCategory($post['idCategory']);
 
 
-                $articleManager = $articleManager->addArticle($article, $user);
+                $articleManager = $articleManager->addArticle($newArticle, $user);
 
-                $_SESSION['info'] = "Article n°$articleManager correctement ajouté ! <a href=''>Voir l'article</a>";
+                $_SESSION['info'] = 'Article n°'.$articleManager.' correctement ajouté ! <a target="_blank" href="index.php?page=show_article&id='.$articleManager.'">Voir l\'article</a>';
             }
 
         }
@@ -162,7 +162,7 @@ class Backend
         if ($id != null)
             $article = $articleManager->getArticleById(intval($id));
 
-        require "/View/Backend/article_form.php";
+        require "/View/backend/article_form.php";
     }
 
 }

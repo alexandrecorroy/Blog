@@ -49,13 +49,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><?= $_SESSION['pseudo'] ?></a>
+            <div class="navbar-header">
+                <span class="navbar-brand"> <?= ucfirst($_SESSION['pseudo']) ?></span>
+            </div>
         </div>
+
         <!-- /.navbar-header -->
 
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="index.php"><i class="fa fa-home fa-fw"></i> Retour accueil du site</a>
+                    </li>
                     <li>
                         <a href="index.php?action=admin&page=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>

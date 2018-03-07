@@ -1,0 +1,14 @@
+{
+    "name": "alex/blog",
+    "type": "commposer-plugin",
+    "require": {
+        "swiftmailer/swiftmailer": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Model\\": "Model/",
+            "Controller\\":"Controller/",
+            "Helper\\":"Helper/"
+        }
+    }
+}

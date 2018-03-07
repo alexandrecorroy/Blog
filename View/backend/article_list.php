@@ -35,12 +35,12 @@
                 <?php
                 foreach ($articles as $article) {
                     echo '<tr>
-                    <th scope="row">'.$article->getID().'</th>
-                    <td>'.$article->getTitle().'</td>
-                    <td>'.$article->getCreationDate().'</td>
-                    <td>'.$article->getEditDate().'</td>
-                    <td><a href="index.php?action=admin&page=addOrEditArticle&edit='.$article->getId().'" class="text-info"><i>Modifier</i></a></td>
-                    <td><a href="index.php?action=admin&page=listArticle&delete='.$article->getId().'" class="text-danger"><i>Supprimer</i></a></td>
+                    <th scope="row">'.$article['article']->getId().'</th>
+                    <td>'.$article['article']->getTitle().'</td>
+                    <td>'.$article['article']->getCreationDate().'</td>
+                    <td>'.$article['article']->getEditDate().'</td>
+                    <td><a href="index.php?action=admin&page=addOrEditArticle&edit='.$article['article']->getId().'" class="text-info"><i>Modifier</i></a></td>
+                    <td><a href="index.php?action=admin&page=listArticle&delete='.$article['article']->getId().'" class="text-danger"><i>Supprimer</i></a></td>
                 </tr>';
                 }
                 ?>

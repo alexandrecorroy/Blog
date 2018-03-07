@@ -7,15 +7,14 @@
  */
 session_start();
 
-function __autoload($class_name)
-{
-    include $class_name. '.php';
-}
+require 'vendor/autoload.php';
 
 $backend = new \Controller\Backend();
+$frontend = new \Controller\Frontend();
+
 
 if (isset($_GET['action'])) {
-    // backend
+    // backend pages
     if ($_GET['action'] == 'admin' && isset($_GET['page']))
     {
 
@@ -61,17 +60,38 @@ if (isset($_GET['action'])) {
                 $content = $backend->listArticle();
         }
     }
-    // frontend
-    else
-    {
-        echo 'frontend';
-        exit;
-    }
+}
+// frontend pages
+elseif (isset($_GET['page']))
+{
+    if ($_GET['page'] == 'show_article' && isset($_GET['id']))
+        $content = $frontend->showArticle($_GET['id'], $_POST);
+
+    if ($_GET['page'] == 'category' && isset($_GET['id']))
+        if(isset($_GET['p']))
+            $content = $frontend->index($_GET['p'], $_GET['id']);
+        else
+            $content = $frontend->index(1, $_GET['id']);
+
+    if ($_GET['page'] == 'contact')
+        $content = $frontend->contact($_POST);
 
 }
-// erreurs 404 not fount
-else {
-    $content = header('HTTP/1.1 404 Not Found');
+elseif (isset($_GET['p']))
+{
+    if (ctype_digit($_GET['p']))
+    {
+        $content = $frontend->index(intval($_GET['p']));
+    }
+}
+elseif (empty($_GET))
+{
+    // index
+    $content = $frontend->index();
+}
+else
+{
+    $content = '404';
 }
 
 echo $content;
