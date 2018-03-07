@@ -56,7 +56,7 @@ class User
      */
     public function getPseudo()
     {
-        return $this->pseudo;
+        return htmlspecialchars($this->pseudo);
     }
 
     /**
@@ -72,7 +72,7 @@ class User
      */
     public function getEmail()
     {
-        return $this->email;
+        return htmlspecialchars($this->email);
     }
 
     /**

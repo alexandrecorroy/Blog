@@ -64,7 +64,7 @@ class Comment
      */
     public function getTitle()
     {
-        return $this->title;
+        return htmlspecialchars($this->title);
     }
 
     /**
@@ -72,7 +72,7 @@ class Comment
      */
     public function setTitle($title)
     {
-        $this->title = htmlentities($title);
+        $this->title = $title;
     }
 
     /**
@@ -80,7 +80,7 @@ class Comment
      */
     public function getContent()
     {
-        return $this->content;
+        return htmlspecialchars($this->content);
     }
 
     /**
@@ -88,7 +88,7 @@ class Comment
      */
     public function setContent($content)
     {
-        $this->content = htmlentities($content);
+        $this->content = $content;
     }
 
     /**

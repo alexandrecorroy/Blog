@@ -10,7 +10,7 @@ ob_start();
 ?>
 <span class="meta"><?php if($article['article']->getEditDate()!='') echo 'Modifié '; else echo 'Posté '; ?>par
                 <?= ucfirst($article['user']->getPseudo()) ?> <?php if(!empty($article['category']->getName())) echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> '; ?>
-                le <?php if($article['article']->getEditDate()!='') echo $article['article']->getEditDate(); else $article['article']->getCreationDate(); ?></span>
+                le <?php if($article['article']->getEditDate()!='') echo $article['article']->getEditDate(); else echo $article['article']->getCreationDate(); ?></span>
 <?php
 $span = ob_get_clean();
 $content = $article['article']->getContent();
@@ -30,7 +30,7 @@ ob_start();
                         <h5>'.$comment['comment']->getTitle().'</h5>
                         <p>'.$comment['comment']->getContent().'</p>
                         <p class="text-right"><em>';
-                        if($comment['comment']->getEditDate()!='') echo 'Modifié '; else echo 'Publié ';
+                        if($comment['comment']->getEditDate()!=null) echo 'Modifié '; else echo 'Publié ';
                         echo 'le ';
                         if($comment['comment']->getEditDate()!='') echo $comment['comment']->getEditDate(); else echo $comment['comment']->getCreationDate();
                         echo ' par '.ucfirst($comment['user']->getPseudo()).'.</em></p>

@@ -5,9 +5,29 @@ if(isset($article))
     $title = "Modifier un article";
 else
     $title = "Ajouter un article";
-?>
 
 ob_start();
+?>
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 500,
+                toolbar: [
+                    [ 'style', [ 'style' ] ],
+                    [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                    [ 'fontname', [ 'fontname' ] ],
+                    [ 'fontsize', [ 'fontsize' ] ],
+                    [ 'color', [ 'color' ] ],
+                    [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                    [ 'table', [ 'table' ] ],
+                    [ 'insert', [ 'link'] ],
+                    [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+                ]
+            });
+        });
+    </script>
+<?php
+$script = ob_get_clean();
 ?>
     <div id="page-wrapper">
         <div class="row">
@@ -65,8 +85,8 @@ ob_start();
                     <textarea class="form-control" id="entete" name="headerText" placeholder="Votre phrase d'accroche"><?php if(isset($article)) echo $article['article']->getHeaderText(); ?></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="contenu">Contenu de l'article</label>
-                    <textarea class="form-control" id="contenu" name="content" placeholder="Contenu de l'article" rows="15"><?php if(isset($article)) echo $article['article']->getContent(); ?></textarea>
+                    <label for="summernote">Contenu de l'article</label>
+                    <textarea class="form-control" id="summernote" name="content" placeholder="Contenu de l'article" rows="15"><?php if(isset($article)) echo html_entity_decode($article['article']->getContent()); ?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary"><?php
                     if(isset($article))

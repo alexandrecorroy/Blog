@@ -73,7 +73,7 @@ class AdminRequest
      */
     public function getRequest()
     {
-        return $this->request;
+        return htmlspecialchars($this->request);
     }
 
     /**
@@ -81,7 +81,7 @@ class AdminRequest
      */
     public function setRequest($request)
     {
-        $this->request = htmlentities($request);
+        $this->request = $request;
     }
 
     /**

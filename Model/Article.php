@@ -78,7 +78,7 @@ class Article
      */
     public function getTitle()
     {
-        return $this->title;
+        return htmlspecialchars($this->title);
     }
 
     /**
@@ -87,7 +87,7 @@ class Article
     public function setTitle($title)
     {
         if($title!='')
-        $this->title = htmlentities($title);
+        $this->title = htmlspecialchars($title);
     }
 
     /**
@@ -112,7 +112,7 @@ class Article
      */
     public function getContent()
     {
-        return $this->content;
+        return strip_tags($this->content, '<strike><sup><sub><a><p><br><li><table><tbody><tr><th><td></tr><u><i><b><span><h1><h2><h3><h4><h5><h6>');
     }
 
     /**
@@ -120,8 +120,7 @@ class Article
      */
     public function setContent($content)
     {
-        if($content!='')
-        $this->content = htmlentities($content);
+        $this->content = $content;
     }
 
     /**
@@ -162,7 +161,7 @@ class Article
      */
     public function getHeaderText()
     {
-        return $this->headerText;
+        return htmlspecialchars($this->headerText);
     }
 
     /**
@@ -170,8 +169,7 @@ class Article
      */
     public function setHeaderText($headerText)
     {
-        if($headerText!='')
-        $this->headerText = htmlentities($headerText);
+        $this->headerText = $headerText;
     }
 
 

@@ -117,6 +117,7 @@ if($_GET['page']!= 'logout' && $_GET['page']!= 'login' && $_GET['page']!= 'signu
     echo $menu;
 ?>
 
+
     <?= $content ?>
 
     <!-- jQuery -->
@@ -135,7 +136,8 @@ if($_GET['page']!= 'logout' && $_GET['page']!= 'login' && $_GET['page']!= 'signu
 
     <!-- Custom Theme JavaScript -->
     <script src="public/backend/dist/js/sb-admin-2.js"></script>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
 </body>
 
 </html>

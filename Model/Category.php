@@ -55,7 +55,7 @@ class Category
      */
     public function getName()
     {
-        return $this->name;
+        return htmlspecialchars($this->name);
     }
 
     /**
@@ -64,7 +64,7 @@ class Category
     public function setName($name)
     {
         if($name!='')
-        $this->name = htmlentities($name);
+        $this->name = $name;
     }
 
 
