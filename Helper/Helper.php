@@ -7,6 +7,8 @@
  */
 namespace Helper;
 
+use Controller\Backend;
+
 class Helper
 {
 
@@ -72,6 +74,29 @@ class Helper
         }
         else
             return false;
+
+    }
+
+    public function sessionHijackingProtection()
+    {
+
+        if(isset($_COOKIE['ticket']) && isset($_SESSION['ticket']))
+        {
+
+            if($_COOKIE['ticket'] != $_SESSION['ticket'])
+            {
+                session_destroy();
+                header('Location:index.php');
+                exit;
+            }
+
+        }
+
+
+        $ticket = bin2hex(random_bytes(32));
+        $_SESSION['ticket'] = $ticket;
+        setcookie('ticket', $ticket);
+
 
     }
 

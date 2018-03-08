@@ -3,13 +3,18 @@ session_start();
 
 require 'vendor/autoload.php';
 
-$token = bin2hex(openssl_random_pseudo_bytes (32));
-
 if(!isset($_SESSION['token']))
+{
+    $token = bin2hex(openssl_random_pseudo_bytes (32));
     $_SESSION['token'] = $token;
+}
+
 
 $backend = new \Controller\Backend();
 $frontend = new \Controller\Frontend();
+$helper = new \Helper\Helper();
+
+$helper->sessionHijackingProtection();
 
 $content = header("HTTP/1.0 404 Not Found");
 
