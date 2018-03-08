@@ -12,5 +12,9 @@
     "port": "",
     "username": "",
     "password": ""
+  },
+//  require for new user (go to https://www.google.com/recaptcha/intro/index.html)
+  "captcha": {
+    "secret": "your_google_captcha_secret_key"
   }
 }

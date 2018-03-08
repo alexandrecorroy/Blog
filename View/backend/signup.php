@@ -1,6 +1,7 @@
 <?php
 
 $title = 'Inscription';
+$script = "<script src='https://www.google.com/recaptcha/api.js'></script>";
 
 ob_start();
 ?>
@@ -32,8 +33,10 @@ ob_start();
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="">
                                 </div>
+                                <div class="g-recaptcha" data-sitekey="6LcljEsUAAAAAP56YjkwUP26D6fmR7-nRZXbSpdV"></div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="submit" value="S'enregistrer" class="btn btn-lg btn-success btn-block">
+
                             </fieldset>
                         </form>
                     </div>

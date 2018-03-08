@@ -45,17 +45,59 @@ class Backend
     {
         if(!empty($post))
         {
-            if($post['pseudo']=='' OR $post['email']=='' OR $post['password']=='')
+            $json = file_get_contents("config.json");
+            $json = json_decode($json, true);
+
+            $secret = $json['captcha']['secret'];
+            $response = $_POST['g-recaptcha-response'];
+            $remoteip = $_SERVER['REMOTE_ADDR'];
+
+            $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
+                . $secret
+                . "&response=" . $response
+                . "&remoteip=" . $remoteip ;
+
+            $decode = json_decode(file_get_contents($api_url), true);
+
+            if ($decode['success'] == true)
             {
-                $_SESSION['alerte'] = 'Tous les champs sont requis !';
-                require "View/backend/signup.php";
+                if($post['pseudo']=='' OR $post['email']=='' OR $post['password']=='')
+                {
+                    $_SESSION['alerte'] = 'Tous les champs sont requis !';
+                    require "View/backend/signup.php";
+                }
+                else
+                {
+                    if(!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $post['password']))
+                    {
+                        $_SESSION['alerte'] = 'Le mot de passe doit contenir 8 caractères minimum (minuscule, MASJUSCLE, chiffre et caractères spéciaux).';
+                        require "View/backend/signup.php";
+                    }
+                    elseif(!filter_var($post['email'], FILTER_VALIDATE_EMAIL))
+                    {
+                        $_SESSION['alerte'] = 'L\'adresse email est incorrect.';
+                        require "View/backend/signup.php";
+                    }
+                    elseif(strlen($post['pseudo'])<8)
+                    {
+                        $_SESSION['alerte'] = 'Le pseudo doit contenir 8 caractères minimum.';
+                        require "View/backend/signup.php";
+                    }
+                    else
+                    {
+                        $userManager = new UserManager();
+                        $user = new User($post);
+                        $userManager->addUser($user);
+                        require "View/backend/login.php";
+                    }
+
+                }
+
             }
             else
             {
-                $userManager = new UserManager();
-                $user = new User($post);
-                $userManager->addUser($user);
-                require "View/backend/login.php";
+                $_SESSION['alerte'] = 'Captcha obligatoire !';
+                require "View/backend/signup.php";
             }
 
         }
@@ -386,10 +428,11 @@ class Backend
     {
 
         $userManager = new UserManager();
+
         if($idToDelete!='' AND $this->helper->tokenValidationCSRF($_SESSION['token'], $token))
         {
             $user = $userManager->getUserById($idToDelete);
-            if($user->getRole()<2);
+            if($user->getIdRole()<2);
             {
                 $userManager->deleteUserById($user);
                 $_SESSION['info'] = 'Membre supprimé !';

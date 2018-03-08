@@ -59,16 +59,18 @@ class UserManager extends Manager
     {
         $datas = $this->db->fetchAll("SELECT * FROM user WHERE id_role != 2");
 
+        $roleManager = new RoleManager();
         $users = null;
         $i = 0;
-        $roleManager = new RoleManager();
         foreach ($datas as $data)
         {
             $users[$i]['user'] = new User($data);
             $users[$i]['role'] = $roleManager->getNameRoleById($users[$i]['user']->getIdRole());
+            $i++;
         }
 
         return $users;
+
     }
 
 }
