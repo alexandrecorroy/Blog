@@ -90,7 +90,7 @@ ob_start();
                                 <i class="fa fa-cogs fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge"><?= $countUnvalidatedComments ?></div>
+                                <div class="huge"><?= $countCategories ?></div>
                                 <div>Catégories !</div>
                             </div>
                         </div>

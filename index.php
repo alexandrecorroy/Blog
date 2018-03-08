@@ -3,6 +3,11 @@ session_start();
 
 require 'vendor/autoload.php';
 
+$token = bin2hex(openssl_random_pseudo_bytes (32));
+
+if(!isset($_SESSION['token']))
+    $_SESSION['token'] = $token;
+
 $backend = new \Controller\Backend();
 $frontend = new \Controller\Frontend();
 
@@ -47,8 +52,8 @@ if (isset($_GET['action'])) {
         }
         if ($_GET['page'] == 'my_comments')
         {
-            if(isset($_GET['delete']))
-                $content = $backend->myComments($_GET['delete']);
+            if(isset($_GET['delete']) AND isset($_GET['token']))
+                $content = $backend->myComments($_GET['delete'], $_GET['token']);
             else
                 $content = $backend->myComments();
         }
@@ -70,8 +75,8 @@ if (isset($_GET['action'])) {
                 }
                 if ($_GET['page'] == 'listArticle')
                 {
-                    if(isset($_GET['delete']))
-                        $content = $backend->listArticle($_GET['delete']);
+                    if(isset($_GET['delete']) AND isset($_GET['token']))
+                        $content = $backend->listArticle($_GET['delete'], $_GET['token']);
                     else
                         $content = $backend->listArticle();
                 }
@@ -87,22 +92,22 @@ if (isset($_GET['action'])) {
             {
                 if ($_GET['page'] == 'user_list')
                 {
-                    if(isset($_GET['delete']))
-                        $content = $backend->listUser($_GET['delete']);
+                    if(isset($_GET['delete']) AND isset($_GET['token']))
+                        $content = $backend->listUser($_GET['delete'], $_GET['token']);
                     else
                         $content = $backend->listUser();
                 }
                 if ($_GET['page'] == 'super_admin_response')
                 {
 
-                    if(isset($_GET['response']) and isset($_GET['id']))
-                        $content = $backend->superAdminResponse($_GET['response'], $_GET['id']);
+                    if(isset($_GET['response']) AND isset($_GET['id']) AND isset($_GET['token']))
+                        $content = $backend->superAdminResponse($_GET['response'], $_GET['id'], $_GET['token']);
                     else
                         $content = $backend->superAdminResponse();
                 }
                 if ($_GET['page'] == 'category') {
-                    if(isset($_GET['delete']))
-                        $content = $backend->category((int)$_GET['delete']);
+                    if(isset($_GET['delete']) AND isset($_GET['token']))
+                        $content = $backend->category((int)$_GET['delete'], $_GET['token']);
                     else
                         $content = $backend->category($_POST);
                 }

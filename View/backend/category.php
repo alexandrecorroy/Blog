@@ -56,7 +56,7 @@ ob_start();
                         <div class="list-group">
                             <?php
                             foreach ($categories as $category) {
-                                echo '<span class="list-group-item"><i class="fa fa-cog fa-fw"></i> ' .$category->getName(). '<a href="index.php?action=admin&page=category&delete='.$category->getId().'"><span class="pull-right text-muted small text-danger"><em>Supprimer</em></span></a></span>';
+                                echo '<span class="list-group-item"><i class="fa fa-cog fa-fw"></i> ' .$category->getName(). '<a href="index.php?action=admin&page=category&delete='.$category->getId().'&token='.$_SESSION['token'].'"><span class="pull-right text-muted small text-danger"><em>Supprimer</em></span></a></span>';
                             }
                             ?>
                         </div>

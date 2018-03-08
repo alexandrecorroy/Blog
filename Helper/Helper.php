@@ -57,4 +57,22 @@ class Helper
         $mailer->send($message);
     }
 
+    public function tokenValidationCSRF($tokenInSession, $tokenInForm)
+    {
+
+        if (!empty($tokenInSession) AND !empty($tokenInForm))
+        {
+
+            // On vérifie que les deux correspondent
+            if ($tokenInSession == $tokenInForm)
+                return true;
+            else
+                return false;
+
+        }
+        else
+            return false;
+
+    }
+
 }

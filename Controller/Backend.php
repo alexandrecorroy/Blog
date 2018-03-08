@@ -22,6 +22,12 @@ use Model\UserManager;
 
 class Backend
 {
+    protected $helper;
+
+    public function __construct()
+    {
+        $this->helper = new Helper();
+    }
 
     public function logout()
     {
@@ -114,7 +120,7 @@ class Backend
         require "View/backend/dashboard.php";
     }
 
-    public function category($data = null)
+    public function category($data = null, $token = null)
     {
         $categories = new CategoryManager();
 
@@ -122,7 +128,7 @@ class Backend
         if($data != null)
         {
             // if int -> delete
-            if(is_int($data))
+            if(is_int($data) AND $this->helper->tokenValidationCSRF($_SESSION['token'], $token))
             {
                 $id = $data;
                 $categories->deleteCategoryById($id);
@@ -152,14 +158,17 @@ class Backend
         require "View/backend/category.php";
     }
 
-    public function listArticle($id = null)
+    public function listArticle($id = null, $token = null)
     {
         $articleManager = new ArticleManager();
-        if($id != '')
+        $helper = new Helper();
+
+        if($id != '' AND $helper->tokenValidationCSRF($_SESSION['token'], $token))
         {
             $articleManager->deleteArticleById(intval($id));
             $_SESSION['info'] = "Article supprimé !";
         }
+
         $articles = $articleManager->getArticles();
         $i = $articleManager->countArticles();
 
@@ -248,10 +257,10 @@ class Backend
         require "View/backend/admin_request.php";
     }
 
-    public function superAdminResponse($response = null, $id = null)
+    public function superAdminResponse($response = null, $id = null, $token = null)
     {
 
-        if($response!= null AND $id!=null)
+        if($response!= null AND $id!=null AND $this->helper->tokenValidationCSRF($_SESSION['token'], $token))
         {
             $adminRequestManager = new AdminRequestManager();
             if($response=='true')
@@ -285,16 +294,17 @@ class Backend
         require "View/backend/super_admin_response.php";
     }
 
-    public function myComments($idToDelete = null)
+    public function myComments($idToDelete = null, $token = null)
     {
 
         $user = new UserManager();
         $user = $user->getUserById($_SESSION['id']);
 
         $commentManager = new CommentManager();
+        $helper = new Helper();
 
         if(!is_null($idToDelete))
-            if(self::canDeletedOrEditThisComment($idToDelete, $_SESSION['id']))
+            if(self::canDeletedOrEditThisComment($idToDelete, $_SESSION['id']) AND $helper->tokenValidationCSRF($_SESSION['token'], $token))
             {
                 $commentManager->deleteCommentById($idToDelete);
                 $_SESSION['info'] = 'Votre commentaire a bien été supprimé !';
@@ -315,7 +325,7 @@ class Backend
         if(intval($idUserInComment)==intval($idUserInSession))
             return true;
         else
-            echo 'Le hack c\est pas bien !';
+            echo 'Le hack c\'est pas bien !';
             die;
     }
 
@@ -372,10 +382,11 @@ class Backend
         require "View/backend/comments_no_validated.php";
     }
 
-    public function listUser($idToDelete = null)
+    public function listUser($idToDelete = null, $token = null)
     {
+
         $userManager = new UserManager();
-        if($idToDelete!=null and $idToDelete!='')
+        if($idToDelete!='' AND $this->helper->tokenValidationCSRF($_SESSION['token'], $token))
         {
             $user = $userManager->getUserById($idToDelete);
             if($user->getRole()<2);

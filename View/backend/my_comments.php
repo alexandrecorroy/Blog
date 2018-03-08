@@ -54,7 +54,7 @@ ob_start();
                     <td>'.$comment->getCreationDate().'</td>
                     <td>'.$comment->getEditDate().'</td>
                     <td><a href="index.php?action=admin&page=edit_my_comment&edit='.$comment->getId().'" class="text-info"><i>Modifier</i></a></td>
-                    <td><a href="index.php?action=admin&page=my_comments&delete='.$comment->getId().'" class="text-danger"><i>Supprimer</i></a></td>
+                    <td><a href="index.php?action=admin&page=my_comments&delete='.$comment->getId().'&token='.$_SESSION['token'].'" class="text-danger"><i>Supprimer</i></a></td>
                     <td><a href="index.php?page=show_article&id='.$comment->getIdArticle().'#comments" target="_blank" class="text-success"><i>Ouvrir</i></a></td>
 
                 </tr>';

@@ -41,8 +41,8 @@ ob_start();
                             </div>
                             <!-- /.panel-body -->
                             <div class="panel-footer">
-                                <a href="index.php?action=admin&page=super_admin_response&response=true&id='.$request['request']->getId().'"><span class="btn btn-success mb-2">Accepter la demande</span></a>
-                                <a class="pull-right" href="index.php?action=admin&page=super_admin_response&response=false&id='.$request['request']->getId().'"><span class="btn btn-danger mb-2">Refuser la demande</span></a>
+                                <a href="index.php?action=admin&page=super_admin_response&response=true&id='.$request['request']->getId().'&token='.$_SESSION['token'].'"><span class="btn btn-success mb-2">Accepter la demande</span></a>
+                                <a class="pull-right" href="index.php?action=admin&page=super_admin_response&response=false&id='.$request['request']->getId().'&token='.$_SESSION['token'].'"><span class="btn btn-danger mb-2">Refuser la demande</span></a>
                             </div>
                         </div>';
                     }

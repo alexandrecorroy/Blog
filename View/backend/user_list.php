@@ -44,7 +44,7 @@ ob_start();
                     <td>'.$user['user']->getPseudo().'</td>
                     <td>'.$user['user']->getEmail().'</td>
                     <td>'.$user['role']->getName().'</td>
-                    <td><a href="index.php?action=admin&page=user_list&delete='.$user['user']->getId().'" class="text-danger"><i class="fa fa-trash"></i> Supprimer</a></td>
+                    <td><a href="index.php?action=admin&page=user_list&delete='.$user['user']->getId().'&token='.$_SESSION['token'].'" class="text-danger"><i class="fa fa-trash"></i> Supprimer</a></td>
 
                 </tr>';
                     }
