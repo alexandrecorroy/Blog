@@ -8,10 +8,8 @@
 
 namespace Model;
 
-
 class RoleManager extends Manager
 {
-
     public function __construct()
     {
         $this->db = new Manager();
@@ -19,11 +17,8 @@ class RoleManager extends Manager
 
     public function getNameRoleById($id)
     {
-
         $data = $this->db->fetch("SELECT * FROM role WHERE id = :id", array('id' => $id));
 
         return $role = new Role($data);
-
     }
-
 }

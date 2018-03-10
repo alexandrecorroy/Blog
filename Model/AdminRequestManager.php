@@ -8,10 +8,8 @@
 
 namespace Model;
 
-
 class AdminRequestManager extends Manager
 {
-
     public function __construct()
     {
         $this->db = new Manager();
@@ -20,7 +18,7 @@ class AdminRequestManager extends Manager
     public function addAdminRequest(AdminRequest $adminRequest)
     {
         $this->db->execute("INSERT INTO admin_request (id_user, request, status)
-                            VALUES (:id_user, :request, :status)",array(
+                            VALUES (:id_user, :request, :status)", array(
                                 'id_user' => $adminRequest->getIdUser(),
                                 'request' => $adminRequest->getRequest(),
                                 'status' => $adminRequest->getStatus()
@@ -46,17 +44,17 @@ class AdminRequestManager extends Manager
         $datas = $this->db->fetchAll("SELECT * FROM admin_request WHERE status = 0");
 
         $i = 0;
-        foreach ($datas as $data)
-        {
+        foreach ($datas as $data) {
             $requests[$i]['request'] = new AdminRequest($data);
             $requests[$i]['user'] = $userManager->getUserById($requests[$i]['request']->getIdUser());
             $i++;
         }
 
-        if ($datas!=null)
+        if ($datas!=null) {
             return $requests;
-        else
+        } else {
             return $requests = null;
+        }
     }
 
     public function deleteAdminRequestById($id)
@@ -66,12 +64,14 @@ class AdminRequestManager extends Manager
 
     public function rejectAdminRequestById($id)
     {
-        $this->db->execute("UPDATE admin_request
+        $this->db->execute(
+            "UPDATE admin_request
                                     SET status = 1
                                     WHERE id = :id",
             array(
                 'id' => $id
-            ));
+            )
+        );
     }
 
     public function countAdminRequestInStandBy()
@@ -80,5 +80,4 @@ class AdminRequestManager extends Manager
 
         return $i['COUNT(*)'];
     }
-
 }

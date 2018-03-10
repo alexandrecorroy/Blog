@@ -16,13 +16,11 @@ ob_start();
         <div class="row">
 
             <?php
-            if (isset($_SESSION['info']))
-            {
+            if (isset($_SESSION['info'])) {
                 echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                 unset($_SESSION['info']);
             }
-            if (isset($_SESSION['alerte']))
-            {
+            if (isset($_SESSION['alerte'])) {
                 echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
                 unset($_SESSION['alerte']);
             }
@@ -43,12 +41,15 @@ ob_start();
                 </thead>
                 <tbody>
                 <?php
-                if(!is_null($comments))
-                {
+                if (!is_null($comments)) {
                     foreach ($comments as $comment) {
                         echo '<tr>
                     <th scope="row">';
-                        if($comment->getIsValidated()) echo 'Publié'; else echo 'En attente';
+                        if ($comment->getIsValidated()) {
+                            echo 'Publié';
+                        } else {
+                            echo 'En attente';
+                        }
                         echo'</th>
                     <td>'.$comment->getTitle().'</td>
                     <td>'.$comment->getCreationDate().'</td>
@@ -59,9 +60,7 @@ ob_start();
 
                 </tr>';
                     }
-                }
-                else
-                {
+                } else {
                     echo '<td class="text-center" colspan="7">Vous n\'avez pas encore posté de commentaires !</td>';
                 }
 

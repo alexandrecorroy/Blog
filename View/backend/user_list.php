@@ -16,8 +16,7 @@ ob_start();
         <div class="row">
 
             <?php
-            if (isset($_SESSION['info']))
-            {
+            if (isset($_SESSION['info'])) {
                 echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                 unset($_SESSION['info']);
             }
@@ -36,8 +35,7 @@ ob_start();
                 </thead>
                 <tbody>
                 <?php
-                if(!is_null($users))
-                {
+                if (!is_null($users)) {
                     foreach ($users as $user) {
                         echo '<tr>
                     <th scope="row">'.$user['user']->getId().'</th>
@@ -48,9 +46,7 @@ ob_start();
 
                 </tr>';
                     }
-                }
-                else
-                {
+                } else {
                     echo '<td colspan="7" class="text-center">Pas d\'utilisateurs à renseigner !</td>';
                 }
 

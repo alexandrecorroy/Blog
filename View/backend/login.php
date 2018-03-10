@@ -12,8 +12,7 @@ ob_start();
                         <h3 class="panel-title text-center">Connexion panel administration</h3>
                     </div>
                     <?php
-                    if(isset($_SESSION['alerte']))
-                    {
+                    if (isset($_SESSION['alerte'])) {
                         echo '<div class="alert alert-danger">'.$_SESSION['alerte'].'</div>';
                         unset($_SESSION['alerte']);
                     }

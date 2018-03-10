@@ -16,8 +16,7 @@ ob_start();
         <div class="row">
 
             <?php
-            if (isset($_SESSION['info']))
-            {
+            if (isset($_SESSION['info'])) {
                 echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                 unset($_SESSION['info']);
             }
@@ -38,8 +37,7 @@ ob_start();
                 </thead>
                 <tbody>
                 <?php
-                if(!is_null($comments))
-                {
+                if (!is_null($comments)) {
                     foreach ($comments as $comment) {
                         echo '<tr>
                     <th scope="row">'.$comment['user']->getPseudo().'</th>
@@ -52,9 +50,7 @@ ob_start();
 
                 </tr>';
                     }
-                }
-                else
-                {
+                } else {
                     echo '<td colspan="7" class="text-center">Pas de commentaire à valider !</td>';
                 }
 

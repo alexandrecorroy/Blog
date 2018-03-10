@@ -11,16 +11,19 @@ use Controller\Backend;
 
 class Helper
 {
-
     public function formatDate($dateTime)
     {
-        if(is_null($dateTime))
+        if (is_null($dateTime)) {
             return null;
+        }
 
-        $formatter = new \IntlDateFormatter('fr_FR',\IntlDateFormatter::LONG,
+        $formatter = new \IntlDateFormatter(
+            'fr_FR',
+            \IntlDateFormatter::LONG,
             \IntlDateFormatter::SHORT,
             'Europe/Paris',
-            \IntlDateFormatter::GREGORIAN );
+            \IntlDateFormatter::GREGORIAN
+        );
         $date = new \DateTime($dateTime);
         $date = $formatter->format($date);
         return str_replace(':', 'h', $date);
@@ -61,43 +64,32 @@ class Helper
 
     public function tokenValidationCSRF($tokenInSession, $tokenInForm)
     {
-
-        if (!empty($tokenInSession) AND !empty($tokenInForm))
-        {
+        if (!empty($tokenInSession) and !empty($tokenInForm)) {
 
             // On vérifie que les deux correspondent
-            if ($tokenInSession == $tokenInForm)
+            if ($tokenInSession == $tokenInForm) {
                 return true;
-            else
+            } else {
                 return false;
-
-        }
-        else
+            }
+        } else {
             return false;
-
+        }
     }
 
     public function sessionHijackingProtection()
     {
-
-        if(isset($_COOKIE['ticket']) && isset($_SESSION['ticket']))
-        {
-
-            if($_COOKIE['ticket'] != $_SESSION['ticket'])
-            {
+        if (isset($_COOKIE['ticket']) && isset($_SESSION['ticket'])) {
+            if ($_COOKIE['ticket'] != $_SESSION['ticket']) {
                 session_destroy();
                 header('Location:index.php');
                 exit;
             }
-
         }
 
 
         $ticket = bin2hex(random_bytes(32));
         $_SESSION['ticket'] = $ticket;
         setcookie('ticket', $ticket);
-
-
     }
-
 }

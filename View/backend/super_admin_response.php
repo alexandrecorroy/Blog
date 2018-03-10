@@ -17,16 +17,14 @@ ob_start();
         <div class="row">
             <div class="col-lg-12">
                 <?php
-                if (isset($_SESSION['info']))
-                {
+                if (isset($_SESSION['info'])) {
                     echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                     unset($_SESSION['info']);
                 }
                 ?>
 
                 <?php
-                if($requests!=null)
-                {
+                if ($requests!=null) {
                     foreach ($requests as $request) {
                         echo '                        <div class="panel panel-default mb-5">
                             <div class="panel-heading">
@@ -46,9 +44,7 @@ ob_start();
                             </div>
                         </div>';
                     }
-                }
-                else
-                {
+                } else {
                     echo'<p class="text-center">Aucune demande pour l\'instant</p>';
                 }
 

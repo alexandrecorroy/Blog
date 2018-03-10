@@ -8,16 +8,25 @@ $classHeader = 'post-heading';
 
 ob_start();
 ?>
-<span class="meta"><?php if($article['article']->getEditDate()!='') echo 'Modifié '; else echo 'Posté '; ?>par
-                <?= ucfirst($article['user']->getPseudo()) ?> <?php if(!empty($article['category']->getName())) echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> '; ?>
-                le <?php if($article['article']->getEditDate()!='') echo $article['article']->getEditDate(); else echo $article['article']->getCreationDate(); ?></span>
+<span class="meta"><?php if ($article['article']->getEditDate()!='') {
+    echo 'Modifié ';
+} else {
+    echo 'Posté ';
+} ?>par
+                <?= ucfirst($article['user']->getPseudo()) ?> <?php if (!empty($article['category']->getName())) {
+    echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> ';
+} ?>
+                le <?php if ($article['article']->getEditDate()!='') {
+    echo $article['article']->getEditDate();
+} else {
+    echo $article['article']->getCreationDate();
+} ?></span>
 <?php
 $span = ob_get_clean();
 $content = $article['article']->getContent();
 
 ob_start();
-                if($totalComments>0)
-                {
+                if ($totalComments>0) {
                     echo '<!-- Comments -->
 <hr>
 <aside id="comments">
@@ -30,9 +39,17 @@ ob_start();
                         <h5>'.$comment['comment']->getTitle().'</h5>
                         <p>'.$comment['comment']->getContent().'</p>
                         <p class="text-right"><em>';
-                        if($comment['comment']->getEditDate()!=null) echo 'Modifié '; else echo 'Publié ';
+                        if ($comment['comment']->getEditDate()!=null) {
+                            echo 'Modifié ';
+                        } else {
+                            echo 'Publié ';
+                        }
                         echo 'le ';
-                        if($comment['comment']->getEditDate()!='') echo $comment['comment']->getEditDate(); else echo $comment['comment']->getCreationDate();
+                        if ($comment['comment']->getEditDate()!='') {
+                            echo $comment['comment']->getEditDate();
+                        } else {
+                            echo $comment['comment']->getCreationDate();
+                        }
                         echo ' par '.ucfirst($comment['user']->getPseudo()).'.</em></p>
                     </div>
                 </div></div>';
@@ -50,20 +67,17 @@ echo '<!-- Comments forms -->
             <div class="col-lg-8 col-md-10 mx-auto">
                 <h2 class="section-heading">Ajouter un commentaire</h2>';
 
-                if(isset($_SESSION['id']))
-{
-    if (isset($_SESSION['info']))
-    {
-        echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
-        unset($_SESSION['info']);
-    }
-    if (isset($_SESSION['alerte']))
-    {
-        echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
-        unset($_SESSION['alerte']);
-    }
+                if (isset($_SESSION['id'])) {
+                    if (isset($_SESSION['info'])) {
+                        echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
+                        unset($_SESSION['info']);
+                    }
+                    if (isset($_SESSION['alerte'])) {
+                        echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
+                        unset($_SESSION['alerte']);
+                    }
 
-    echo '<form action="index.php?page=show_article&id='.$article['article']->getId().'#comment" method="post">
+                    echo '<form action="index.php?page=show_article&id='.$article['article']->getId().'#comment" method="post">
                     <div class="form-group">
                         <label for="title">Titre</label>
                         <input type="text" name="title" class="form-control" id="title">
@@ -74,9 +88,7 @@ echo '<!-- Comments forms -->
                     </div>
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>';
-}
-else
-{
+                } else {
     echo '<p>Vous devez être <a href="index.php?action=admin&page=login">connecté</a> pour poster un commentaire !</p>';
 }
 

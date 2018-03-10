@@ -8,27 +8,24 @@
 
 namespace Model;
 
-
 class Category
 {
-
-    protected $id;
-    protected $name;
+    private $_id;
+    private $_name;
 
     public function __construct($valeurs = array())
     {
-        if(is_array($valeurs))
+        if (is_array($valeurs)) {
             $this->hydrate($valeurs);
+        }
     }
 
     public function hydrate($donnees)
     {
-        foreach ($donnees as $attribut => $valeur)
-        {
+        foreach ($donnees as $attribut => $valeur) {
             $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
 
-            if (is_callable(array($this, $methode)))
-            {
+            if (is_callable(array($this, $methode))) {
                 $this->$methode($valeur);
             }
         }
@@ -39,7 +36,7 @@ class Category
      */
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     /**
@@ -47,7 +44,7 @@ class Category
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     /**
@@ -55,7 +52,7 @@ class Category
      */
     public function getName()
     {
-        return htmlspecialchars($this->name);
+        return $this->_name;
     }
 
     /**
@@ -63,10 +60,6 @@ class Category
      */
     public function setName($name)
     {
-        if($name!='')
-        $this->name = $name;
+        $this->_name = $name;
     }
-
-
-
 }

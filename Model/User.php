@@ -9,27 +9,25 @@ namespace Model;
 
 class User
 {
-
-    protected $id;
-    protected $pseudo;
-    protected $email;
-    protected $password;
-    protected $idRole;
+    private $_id;
+    private $_pseudo;
+    private $_email;
+    private $_password;
+    private $_idRole;
 
     public function __construct($valeurs = array())
     {
-        if(is_array($valeurs))
+        if (is_array($valeurs)) {
             $this->hydrate($valeurs);
+        }
     }
 
     public function hydrate($donnees)
     {
-        foreach ($donnees as $attribut => $valeur)
-        {
+        foreach ($donnees as $attribut => $valeur) {
             $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
 
-            if (is_callable(array($this, $methode)))
-            {
+            if (is_callable(array($this, $methode))) {
                 $this->$methode($valeur);
             }
         }
@@ -40,7 +38,7 @@ class User
      */
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     /**
@@ -48,7 +46,7 @@ class User
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     /**
@@ -56,7 +54,7 @@ class User
      */
     public function getPseudo()
     {
-        return htmlspecialchars($this->pseudo);
+        return htmlspecialchars($this->_pseudo);
     }
 
     /**
@@ -64,7 +62,7 @@ class User
      */
     public function setPseudo($pseudo)
     {
-        $this->pseudo = $pseudo;
+        $this->_pseudo = $pseudo;
     }
 
     /**
@@ -72,7 +70,7 @@ class User
      */
     public function getEmail()
     {
-        return htmlspecialchars($this->email);
+        return htmlspecialchars($this->_email);
     }
 
     /**
@@ -80,7 +78,7 @@ class User
      */
     public function setEmail($email)
     {
-        $this->email = $email;
+        $this->_email = $email;
     }
 
     /**
@@ -88,7 +86,7 @@ class User
      */
     public function getPassword()
     {
-        return $this->password;
+        return $this->_password;
     }
 
     /**
@@ -96,7 +94,7 @@ class User
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->_password = $password;
     }
 
     /**
@@ -104,7 +102,7 @@ class User
      */
     public function getIdRole()
     {
-        return $this->idRole;
+        return $this->_idRole;
     }
 
     /**
@@ -112,9 +110,6 @@ class User
      */
     public function setIdRole($idRole)
     {
-        $this->idRole = intval($idRole);
+        $this->_idRole = intval($idRole);
     }
-
-
-
 }

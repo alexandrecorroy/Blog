@@ -11,12 +11,12 @@ ob_start();
                 Morris.Line({
                     element: 'morris-area-chart',
                     data: [<?php foreach ($yms as $ym) {
-                        echo '{';
-                        echo 'period: "'.$ym['date'].'",';
-                        echo 'articles: '.$ym['articles'].',';
-                        echo 'commentaires: '.$ym['commentaires'].'';
-                        echo '},';
-                    }
+    echo '{';
+    echo 'period: "'.$ym['date'].'",';
+    echo 'articles: '.$ym['articles'].',';
+    echo 'commentaires: '.$ym['commentaires'].'';
+    echo '},';
+}
                         ?>],
                     xkey: 'period',
                     ykeys: ['articles', 'commentaires'],

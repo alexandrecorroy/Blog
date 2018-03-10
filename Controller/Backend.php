@@ -8,7 +8,6 @@
 
 namespace Controller;
 
-
 use Helper\Helper;
 use Model\AdminRequest;
 use Model\AdminRequestManager;
@@ -43,8 +42,7 @@ class Backend
 
     public function login($post)
     {
-        if(!empty($post))
-        {
+        if (!empty($post)) {
             $json = file_get_contents("config.json");
             $json = json_decode($json, true);
 
@@ -59,53 +57,34 @@ class Backend
 
             $decode = json_decode(file_get_contents($api_url), true);
 
-            if ($decode['success'] == true)
-            {
-                if($post['pseudo']=='' OR $post['email']=='' OR $post['password']=='')
-                {
+            if ($decode['success'] == true) {
+                if ($post['pseudo']=='' or $post['email']=='' or $post['password']=='') {
                     $_SESSION['alerte'] = 'Tous les champs sont requis !';
                     require "View/backend/signup.php";
-                }
-                else
-                {
-                    if(!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $post['password']))
-                    {
+                } else {
+                    if (!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $post['password'])) {
                         $_SESSION['alerte'] = 'Le mot de passe doit contenir 8 caractères minimum (minuscule, MASJUSCLE, chiffre et caractères spéciaux).';
                         require "View/backend/signup.php";
-                    }
-                    elseif(!filter_var($post['email'], FILTER_VALIDATE_EMAIL))
-                    {
+                    } elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
                         $_SESSION['alerte'] = 'L\'adresse email est incorrect.';
                         require "View/backend/signup.php";
-                    }
-                    elseif(strlen($post['pseudo'])<8)
-                    {
+                    } elseif (strlen($post['pseudo'])<8) {
                         $_SESSION['alerte'] = 'Le pseudo doit contenir 8 caractères minimum.';
                         require "View/backend/signup.php";
-                    }
-                    else
-                    {
+                    } else {
                         $userManager = new UserManager();
                         $user = new User($post);
                         $userManager->addUser($user);
                         require "View/backend/login.php";
                     }
-
                 }
-
-            }
-            else
-            {
+            } else {
                 $_SESSION['alerte'] = 'Captcha obligatoire !';
                 require "View/backend/signup.php";
             }
-
-        }
-        else
-        {
+        } else {
             require "View/backend/login.php";
         }
-
     }
 
     public function verifUser($post)
@@ -113,20 +92,18 @@ class Backend
         $user = new UserManager();
         $user = $user->getUser($post);
 
-        if(password_verify($post['password'], $user->getPassword()))
-        {
+        if (password_verify($post['password'], $user->getPassword())) {
             $_SESSION['pseudo'] = $user->getPseudo();
             $_SESSION['id'] = $user->getId();
             $_SESSION['email'] = $user->getEmail();
             $_SESSION['role'] = $user->getIdRole();
 
-            if($user->getIdRole()>0)
+            if ($user->getIdRole()>0) {
                 $this::dashboard();
-            else
+            } else {
                 header("Location: index.php?action=admin&page=my_comments");
-        }
-        else
-        {
+            }
+        } else {
             $_SESSION['alerte'] = 'Mot de passe et/ou login incorrect !';
             header("Location: index.php?action=admin&page=login");
             exit;
@@ -142,7 +119,7 @@ class Backend
         $yms = array();
         $now = date('Y-m');
 
-        for($x = 11; $x >= 0; $x--) {
+        for ($x = 11; $x >= 0; $x--) {
             $ym = date('Y-m', strtotime($now . " -$x month"));
             $ymDb = $ym.'-01';
             $ymFrance = date('m-Y', strtotime($now . " -$x month"));
@@ -167,32 +144,24 @@ class Backend
         $categories = new CategoryManager();
 
         // Test $data existe
-        if($data != null)
-        {
+        if ($data != null) {
             // if int -> delete
-            if(is_int($data) AND $this->helper->tokenValidationCSRF($_SESSION['token'], $token))
-            {
+            if (is_int($data) and $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
                 $id = $data;
                 $categories->deleteCategoryById($id);
                 $_SESSION['info'] = "Catégorie supprimée !";
             }
             // if $_POST -> add
-            else
-            {
-                if($data['name']!='')
-                {
+            else {
+                if ($data['name']!='') {
                     $category = new Category();
                     $category->setName($data['name']);
                     $categories->addCategory($category);
                     $_SESSION['info'] = "Catégorie ajoutée !";
-                }
-                else
-                {
+                } else {
                     $_SESSION['alerte'] = "Le nom de la catégorie ne peut être vide !";
                 }
-
             }
-
         }
 
 
@@ -205,8 +174,7 @@ class Backend
         $articleManager = new ArticleManager();
         $helper = new Helper();
 
-        if($id != '' AND $helper->tokenValidationCSRF($_SESSION['token'], $token))
-        {
+        if ($id != '' and $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
             $articleManager->deleteArticleById(intval($id));
             $_SESSION['info'] = "Article supprimé !";
         }
@@ -225,15 +193,10 @@ class Backend
         $user = $userManager->getUserById($_SESSION['id']);
         $articleManager = new ArticleManager();
 
-        if(!empty($post))
-        {
-            if($post['title'] == '' || $post['content'] == '' || $post['headerText'] == '' || $post['idCategory'] == '')
-            {
+        if (!empty($post)) {
+            if ($post['title'] == '' || $post['content'] == '' || $post['headerText'] == '' || $post['idCategory'] == '') {
                 $_SESSION['alerte'] = "Tous les champs sont obligatoires !";
-            }
-            elseif ($id != null)
-            {
-
+            } elseif ($id != null) {
                 $article = $articleManager->getArticleById(intval($id));
 
                 $article['article']->setTitle($post['title']);
@@ -244,10 +207,7 @@ class Backend
                 $articleManager->editArticle($article['article']);
 
                 $_SESSION['info'] = 'Article n°'.$article['article']->getId().' correctement mise a jour ! <a target="_blank" href="index.php?page=show_article&id='.$article['article']->getId().'">Voir l\'article</a>';
-
-            }
-            else
-            {
+            } else {
                 $newArticle = new Article();
                 $newArticle->setTitle($post['title']);
                 $newArticle->setHeaderText($post['headerText']);
@@ -259,11 +219,11 @@ class Backend
 
                 $_SESSION['info'] = 'Article n°'.$articleManager.' correctement ajouté ! <a target="_blank" href="index.php?page=show_article&id='.$articleManager.'">Voir l\'article</a>';
             }
-
         }
 
-        if ($id != null)
+        if ($id != null) {
             $article = $articleManager->getArticleById(intval($id));
+        }
 
         require "View/backend/article_form.php";
     }
@@ -274,12 +234,10 @@ class Backend
         $requestManager = new AdminRequestManager();
         $user = $userManager->getUserById($_SESSION['id']);
 
-        if($post!=null)
-        {
-            if($post['request']=='')
-                $_SESSION['alerte'] = 'Il faut écrire vos motivations !';
-            else
-            {
+        if ($post!=null) {
+            if ($post['request']=='' or strlen($post['request'])<200) {
+                $_SESSION['alerte'] = 'Il faut minimum 200 caractères à vos motivations pour prétendre au status d\'administrateur !';
+            } else {
                 $request = new AdminRequest();
                 $request->setIdUser($user->getId());
                 $request->setRequest($post['request']);
@@ -288,8 +246,6 @@ class Backend
                 $requestManager->addAdminRequest($request);
                 $_SESSION['info'] = 'La demande a bien été envoyée !';
             }
-
-
         }
 
 
@@ -301,12 +257,9 @@ class Backend
 
     public function superAdminResponse($response = null, $id = null, $token = null)
     {
-
-        if($response!= null AND $id!=null AND $this->helper->tokenValidationCSRF($_SESSION['token'], $token))
-        {
+        if ($response!= null and $id!=null and $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
             $adminRequestManager = new AdminRequestManager();
-            if($response=='true')
-            {
+            if ($response=='true') {
                 $userManager = new UserManager();
                 $adminRequest = $adminRequestManager->getAdminRequestById(intval($id));
 
@@ -320,13 +273,9 @@ class Backend
 
 
                 $_SESSION['info'] = 'La demande a bien été acceptée !';
-            }
-            else
-            {
-
+            } else {
                 $adminRequestManager->rejectAdminRequestById(intval($id));
                 $_SESSION['info'] = 'La demande a bien été refusée !';
-
             }
         }
 
@@ -338,58 +287,54 @@ class Backend
 
     public function myComments($idToDelete = null, $token = null)
     {
-
         $user = new UserManager();
         $user = $user->getUserById($_SESSION['id']);
 
         $commentManager = new CommentManager();
         $helper = new Helper();
 
-        if(!is_null($idToDelete))
-            if(self::canDeletedOrEditThisComment($idToDelete, $_SESSION['id']) AND $helper->tokenValidationCSRF($_SESSION['token'], $token))
-            {
+        if (!is_null($idToDelete)) {
+            if (self::canDeletedOrEditThisComment($idToDelete, $_SESSION['id']) and $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
                 $commentManager->deleteCommentById($idToDelete);
                 $_SESSION['info'] = 'Votre commentaire a bien été supprimé !';
             }
-                $comments = $commentManager->listCommentsByUserId($user);
+        }
+        $comments = $commentManager->listCommentsByUserId($user);
 
         require "View/backend/my_comments.php";
     }
 
     //        test if comment owner is me
-    static public function canDeletedOrEditThisComment($idComment, $idUserInSession)
+    public static function canDeletedOrEditThisComment($idComment, $idUserInSession)
     {
-
         $commentManager = new CommentManager();
         $comment = $commentManager->getCommentById($idComment);
 
         $idUserInComment = $comment->getIdUser();
-        if(intval($idUserInComment)==intval($idUserInSession))
+        if (intval($idUserInComment)==intval($idUserInSession)) {
             return true;
-        else
+        } else {
             echo 'Le hack c\'est pas bien !';
-            die;
+        }
+        die;
     }
 
     public function editMyComment($idArticle, $post = null)
     {
-
-        if(self::canDeletedOrEditThisComment($idArticle, $_SESSION['id']))
-        {
+        if (self::canDeletedOrEditThisComment($idArticle, $_SESSION['id'])) {
             $commentManager = new CommentManager();
             $comment = $commentManager->getCommentById($idArticle);
 
-            if($post!=null)
-            {
-                if($post['title']=='' OR $post['content'] =='')
+            if ($post!=null) {
+                if ($post['title']=='' or $post['content'] =='') {
                     $_SESSION['alerte'] = 'Tous les champs sont obligatoires !';
-                else
-                {
+                } else {
                     $comment->setTitle($post['title']);
                     $comment->setContent($post['content']);
 
-                    if($_SESSION['role']==0)
+                    if ($_SESSION['role']==0) {
                         $comment->setIsValidated(0);
+                    }
 
                     $commentManager->editComment($comment);
                     $_SESSION['info'] = 'Le commentaire a bien été modifié !';
@@ -404,16 +349,11 @@ class Backend
     {
         $commentManager = new CommentManager();
 
-        if($action!=null AND $idComment!=null)
-        {
-
-            if($action=='validate')
-            {
+        if ($action!=null and $idComment!=null) {
+            if ($action=='validate') {
                 $commentManager->valideComment($idComment);
                 $_SESSION['info'] = 'Commentaire validé !';
-            }
-            elseif($action=='delete')
-            {
+            } elseif ($action=='delete') {
                 $commentManager->deleteCommentById($idComment);
                 $_SESSION['info'] = 'Commentaire supprimé !';
             }
@@ -426,13 +366,11 @@ class Backend
 
     public function listUser($idToDelete = null, $token = null)
     {
-
         $userManager = new UserManager();
 
-        if($idToDelete!='' AND $this->helper->tokenValidationCSRF($_SESSION['token'], $token))
-        {
+        if ($idToDelete!='' and $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
             $user = $userManager->getUserById($idToDelete);
-            if($user->getIdRole()<2);
+            if ($user->getIdRole()<2);
             {
                 $userManager->deleteUserById($user);
                 $_SESSION['info'] = 'Membre supprimé !';
@@ -444,20 +382,16 @@ class Backend
         require "View/backend/user_list.php";
     }
 
-    static public function checkForAdminRequest()
+    public static function checkForAdminRequest()
     {
-        if(isset($_SESSION['id']))
-        {
-            if($_SESSION['role']>1)
-            {
+        if (isset($_SESSION['id'])) {
+            if ($_SESSION['role']>1) {
                 $adminRequestManager = new AdminRequestManager();
 
-                if(intval($adminRequestManager->countAdminRequestInStandBy())>0)
+                if (intval($adminRequestManager->countAdminRequestInStandBy())>0) {
                     return true;
+                }
             }
-
         }
-
     }
-
 }

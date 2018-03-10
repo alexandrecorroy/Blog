@@ -8,35 +8,32 @@
 
 namespace Model;
 
-
 use Helper\Helper;
 
 class Comment
 {
-
-    protected $id;
-    protected $title;
-    protected $content;
-    protected $creationDate;
-    protected $editDate;
-    protected $idArticle;
-    protected $idUser;
-    protected $isValidated;
+    private $_id;
+    private $_title;
+    private $_content;
+    private $_creationDate;
+    private $_editDate;
+    private $_idArticle;
+    private $_idUser;
+    private $_isValidated;
 
     public function __construct($valeurs = array())
     {
-        if(is_array($valeurs))
+        if (is_array($valeurs)) {
             $this->hydrate($valeurs);
+        }
     }
 
     public function hydrate($donnees)
     {
-        foreach ($donnees as $attribut => $valeur)
-        {
+        foreach ($donnees as $attribut => $valeur) {
             $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
 
-            if (is_callable(array($this, $methode)))
-            {
+            if (is_callable(array($this, $methode))) {
                 $this->$methode($valeur);
             }
         }
@@ -48,7 +45,7 @@ class Comment
      */
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     /**
@@ -56,7 +53,7 @@ class Comment
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     /**
@@ -64,7 +61,7 @@ class Comment
      */
     public function getTitle()
     {
-        return htmlspecialchars($this->title);
+        return htmlspecialchars($this->_title);
     }
 
     /**
@@ -72,7 +69,7 @@ class Comment
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->_title = $title;
     }
 
     /**
@@ -80,7 +77,7 @@ class Comment
      */
     public function getContent()
     {
-        return htmlspecialchars($this->content);
+        return htmlspecialchars($this->_content);
     }
 
     /**
@@ -88,7 +85,7 @@ class Comment
      */
     public function setContent($content)
     {
-        $this->content = $content;
+        $this->_content = $content;
     }
 
     /**
@@ -97,7 +94,7 @@ class Comment
     public function getCreationDate()
     {
         $helper = new Helper();
-        return $helper->formatDate($this->creationDate);
+        return $helper->formatDate($this->_creationDate);
     }
 
     /**
@@ -105,7 +102,7 @@ class Comment
      */
     public function setCreationDate($creationDate)
     {
-        $this->creationDate = $creationDate;
+        $this->_creationDate = $creationDate;
     }
 
     /**
@@ -114,7 +111,7 @@ class Comment
     public function getEditDate()
     {
         $helper = new Helper();
-        return $helper->formatDate($this->editDate);
+        return $helper->formatDate($this->_editDate);
     }
 
     /**
@@ -122,7 +119,7 @@ class Comment
      */
     public function setEditDate($editDate)
     {
-        $this->editDate = $editDate;
+        $this->_editDate = $editDate;
     }
 
     /**
@@ -130,7 +127,7 @@ class Comment
      */
     public function getIdArticle()
     {
-        return $this->idArticle;
+        return $this->_idArticle;
     }
 
     /**
@@ -138,7 +135,7 @@ class Comment
      */
     public function setIdArticle($idArticle)
     {
-        $this->idArticle = $idArticle;
+        $this->_idArticle = $idArticle;
     }
 
     /**
@@ -146,7 +143,7 @@ class Comment
      */
     public function getIdUser()
     {
-        return $this->idUser;
+        return $this->_idUser;
     }
 
     /**
@@ -154,7 +151,7 @@ class Comment
      */
     public function setIdUser($idUser)
     {
-        $this->idUser = $idUser;
+        $this->_idUser = $idUser;
     }
 
     /**
@@ -162,7 +159,7 @@ class Comment
      */
     public function getIsValidated()
     {
-        return $this->isValidated;
+        return $this->_isValidated;
     }
 
     /**
@@ -170,9 +167,6 @@ class Comment
      */
     public function setIsValidated($isValidated)
     {
-        $this->isValidated = $isValidated;
+        $this->_isValidated = $isValidated;
     }
-
-
-
 }

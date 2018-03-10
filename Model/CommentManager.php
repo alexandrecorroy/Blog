@@ -16,7 +16,8 @@ class CommentManager extends Manager
 
     public function addComment(Comment $comment)
     {
-        $this->db->execute("INSERT INTO comment (title, content, creation_date, id_article, id_user, is_validated)
+        $this->db->execute(
+            "INSERT INTO comment (title, content, creation_date, id_article, id_user, is_validated)
                             VALUES (:title, :content, now(), :id_article, :id_user, :is_validated)",
             array(
                 'title' => $comment->getTitle(),
@@ -24,7 +25,8 @@ class CommentManager extends Manager
                 'id_article' => $comment->getIdArticle(),
                 'id_user' => $comment->getIdUser(),
                 'is_validated' => $comment->getisValidated(),
-            ));
+            )
+        );
     }
 
     public function countCommentsByArticle($id)
@@ -63,12 +65,10 @@ class CommentManager extends Manager
 
         $comments=null;
         $i = 0;
-        foreach ($datas as $comment)
-        {
+        foreach ($datas as $comment) {
             $comments[$i]['comment'] = new Comment($comment);
             $comments[$i]['user'] = $userManager->getUserById($comments[$i]['comment']->getIdUser());
             $i++;
-
         }
 
 
@@ -103,20 +103,20 @@ class CommentManager extends Manager
 
     public function valideComment($id)
     {
-
-        $this->db->execute("UPDATE comment
+        $this->db->execute(
+            "UPDATE comment
                                     SET is_validated = 1
                                     WHERE id = :id",
             array(
                 'id' => $id
-            ));
-
+            )
+        );
     }
 
     public function editComment(Comment $comment)
     {
-
-        $this->db->execute("UPDATE comment
+        $this->db->execute(
+            "UPDATE comment
                                     SET title = :title, content = :content, edit_date = now(), is_validated = :isValidated
                                     WHERE id = :id",
             array(
@@ -124,8 +124,8 @@ class CommentManager extends Manager
                 'title' => $comment->getTitle(),
                 'id' => $comment->getId(),
                 'isValidated' => $comment->getIsValidated()
-            ));
-
+            )
+        );
     }
 
     public function listCommentsNoValidated()
@@ -144,5 +144,4 @@ class CommentManager extends Manager
 
         return $comments;
     }
-
 }

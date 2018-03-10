@@ -59,5 +59,4 @@ class Manager
     {
         return $this->db->lastInsertId();
     }
-
 }
