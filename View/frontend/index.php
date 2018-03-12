@@ -8,7 +8,6 @@ $classHeader = 'site-heading';
 
 
 ob_start();
-if (!is_null($articles)) {
     foreach ($articles as $article) {
         echo '<div class="post-preview">
     <a href="index.php?page=show_article&id='.$article['article']->getId().'">
@@ -40,9 +39,6 @@ if (!is_null($articles)) {
 </div>
 <hr>';
     }
-} else {
-    echo '<div class="post-preview"><p>Pas encore d\'articles dans cette catégorie.</p></div>';
-}
 
 $actualPage = 1;
 if (isset($_GET['p'])) {

@@ -57,6 +57,11 @@ class Frontend
             $articles = $articleManager->getArticlesWithLimit(intval(LIMIT), intval($offset), intval($idCategory));
             $pages = self::countPages($idCategory);
         }
+
+        if ($articles==null) {
+            throw new \Exception('Pas d\'articles à afficher !');
+        }
+
         require "View/frontend/index.php";
     }
 
@@ -100,6 +105,10 @@ class Frontend
 
         $articleManager = new ArticleManager();
         $article = $articleManager->getArticleById($id);
+
+        if (!$article['article']->getTitle()) {
+            throw new \Exception('L\'article demandé n\'existe pas !');
+        }
 
         require "View/frontend/show_article.php";
     }

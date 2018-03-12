@@ -35,12 +35,7 @@ class Backend
         require "View/backend/login.php";
     }
 
-    public function signUp()
-    {
-        require "View/backend/signup.php";
-    }
-
-    public function login($post)
+    public function signUp($post = null)
     {
         if (!empty($post)) {
             $json = file_get_contents("config.json");
@@ -60,53 +55,57 @@ class Backend
             if ($decode['success'] == true) {
                 if ($post['pseudo']=='' or $post['email']=='' or $post['password']=='') {
                     $_SESSION['alerte'] = 'Tous les champs sont requis !';
-                    require "View/backend/signup.php";
                 } else {
                     if (!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $post['password'])) {
                         $_SESSION['alerte'] = 'Le mot de passe doit contenir 8 caractères minimum (minuscule, MASJUSCLE, chiffre et caractères spéciaux).';
-                        require "View/backend/signup.php";
                     } elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
                         $_SESSION['alerte'] = 'L\'adresse email est incorrect.';
-                        require "View/backend/signup.php";
                     } elseif (strlen($post['pseudo'])<8) {
                         $_SESSION['alerte'] = 'Le pseudo doit contenir 8 caractères minimum.';
-                        require "View/backend/signup.php";
                     } else {
                         $userManager = new UserManager();
                         $user = new User($post);
                         $userManager->addUser($user);
-                        require "View/backend/login.php";
+                        $this::login();
                     }
                 }
             } else {
                 $_SESSION['alerte'] = 'Captcha obligatoire !';
-                require "View/backend/signup.php";
             }
-        } else {
-            require "View/backend/login.php";
         }
+
+        require "View/backend/signup.php";
     }
 
-    public function verifUser($post)
+    public function login()
     {
-        $user = new UserManager();
-        $user = $user->getUser($post);
+        require "View/backend/login.php";
+    }
 
-        if (password_verify($post['password'], $user->getPassword())) {
-            $_SESSION['pseudo'] = $user->getPseudo();
-            $_SESSION['id'] = $user->getId();
-            $_SESSION['email'] = $user->getEmail();
-            $_SESSION['role'] = $user->getIdRole();
+    public function verifUser($post = null)
+    {
+        if ($post) {
+            $user = new UserManager();
+            $user = $user->getUser($post);
 
-            if ($user->getIdRole()>0) {
-                $this::dashboard();
+            if (password_verify($post['password'], $user->getPassword())) {
+                $_SESSION['pseudo'] = $user->getPseudo();
+                $_SESSION['id'] = $user->getId();
+                $_SESSION['email'] = $user->getEmail();
+                $_SESSION['role'] = $user->getIdRole();
+
+                if ($user->getIdRole()>0) {
+                    $this::dashboard();
+                } else {
+                    header("Location: index.php?action=admin&page=my_comments");
+                }
             } else {
-                header("Location: index.php?action=admin&page=my_comments");
+                $_SESSION['alerte'] = 'Mot de passe et/ou login incorrect !';
+                header("Location: index.php?action=admin&page=login");
+                exit;
             }
         } else {
-            $_SESSION['alerte'] = 'Mot de passe et/ou login incorrect !';
-            header("Location: index.php?action=admin&page=login");
-            exit;
+            $this::login();
         }
     }
 
@@ -136,6 +135,7 @@ class Backend
         $countValidatedComments = $commentManager->countCommentsValidated();
         $countCategories = $categoryManager->countCategories();
         $countUnvalidatedComments = $commentManager->countCommentsUnvalidated();
+
         require "View/backend/dashboard.php";
     }
 
@@ -314,9 +314,8 @@ class Backend
         if (intval($idUserInComment)==intval($idUserInSession)) {
             return true;
         } else {
-            echo 'Le hack c\'est pas bien !';
+            throw new \Exception('Tentative de hacking détectée !');
         }
-        die;
     }
 
     public function editMyComment($idArticle, $post = null)

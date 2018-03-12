@@ -21,7 +21,7 @@ ob_start();
 
                     ?>
                     <div class="panel-body">
-                        <form role="form" action="index.php?action=admin&page=login" method="post">
+                        <form role="form" action="index.php?action=admin&page=signup" method="post">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Pseudo" name="pseudo" type="text" autofocus>

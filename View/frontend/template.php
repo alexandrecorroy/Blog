@@ -45,7 +45,10 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <?php
-                        $categories = self::showCategories();
+                        if (!isset($categories)) {
+                            $categories = self::showCategories();
+                        }
+
                         foreach ($categories as $categorie) {
                             echo '<a class="dropdown-item" href="index.php?page=category&id='.$categorie->getId().'">'.$categorie->getName().'</a>';
                         }

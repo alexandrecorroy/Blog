@@ -17,12 +17,17 @@ class Manager
         $json = file_get_contents("config.json");
         $json = json_decode($json, true);
 
-        $host = $json['db']['host'];
+        $host = $json['db']['host'].' ';
         $dbname = $json['db']['dbname'];
         $username = $json['db']['username'];
         $password = $json['db']['password'];
 
-        $this->db = new \PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        try {
+            $this->db = new \PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        } catch (\Exception $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            die;
+        }
         $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->db->exec("SET NAMES UTF8");
     }
