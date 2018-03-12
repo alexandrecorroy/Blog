@@ -169,18 +169,29 @@ class Backend
         require "View/backend/category.php";
     }
 
-    public function listArticle($id = null, $token = null)
+    public function listArticles($id = null, $token = null, $idUser = null)
     {
         $articleManager = new ArticleManager();
         $helper = new Helper();
 
         if ($id != '' and $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
+            if($_SESSION['role']!=2)
+                self::canDeletedOrEditThisArticle($id, $_SESSION['id']);
             $articleManager->deleteArticleById(intval($id));
             $_SESSION['info'] = "Article supprimé !";
         }
 
-        $articles = $articleManager->getArticles();
-        $i = $articleManager->countArticles();
+        if($idUser)
+        {
+            $articles = $articleManager->getArticlesByUser($idUser);
+            $i = $articleManager->countArticlesByUser($idUser);
+        }
+        else
+        {
+            $articles = $articleManager->getArticles();
+            $i = $articleManager->countArticles();
+        }
+
 
         require "View/backend/article_list.php";
     }
@@ -197,6 +208,9 @@ class Backend
             if ($post['title'] == '' || $post['content'] == '' || $post['headerText'] == '' || $post['idCategory'] == '') {
                 $_SESSION['alerte'] = "Tous les champs sont obligatoires !";
             } elseif ($id != null) {
+                if($user->getIdRole()!=2)
+                    self::canDeletedOrEditThisArticle($id, $user->getId());
+
                 $article = $articleManager->getArticleById(intval($id));
 
                 $article['article']->setTitle($post['title']);
@@ -312,6 +326,19 @@ class Backend
 
         $idUserInComment = $comment->getIdUser();
         if (intval($idUserInComment)==intval($idUserInSession)) {
+            return true;
+        } else {
+            throw new \Exception('Tentative de hacking détectée !');
+        }
+    }
+
+    public static function canDeletedOrEditThisArticle($idArticle, $idUserInSession)
+    {
+        $articleManager = new ArticleManager();
+        $article = $articleManager->getArticleById($idArticle);
+
+        $idUserInArticle = $article['article']->getIdUser();
+        if (intval($idUserInArticle)==intval($idUserInSession)) {
             return true;
         } else {
             throw new \Exception('Tentative de hacking détectée !');

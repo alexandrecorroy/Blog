@@ -93,9 +93,15 @@
                                 <a href="index.php?action=admin&page=addOrEditArticle">Ajouter un article</a>
                             </li>
                             <li>
-                                <a href="index.php?action=admin&page=listArticle">Modification/Suppression d\'un article</a>
-                            </li>
-                        </ul>
+                                <a href="index.php?action=admin&page=listMyArticles">Modifier/Supprimer mes articles</a>
+                            </li>';
+
+                        if($_SESSION['role']==2)
+                            echo '<li>
+                                <a href="index.php?action=admin&page=listArticles">Liste des articles</a>
+                            </li>';
+
+                        echo'</ul>
                         <!-- /.nav-second-level -->
                     </li>';
                     }

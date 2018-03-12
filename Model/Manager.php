@@ -17,7 +17,7 @@ class Manager
         $json = file_get_contents("config.json");
         $json = json_decode($json, true);
 
-        $host = $json['db']['host'].' ';
+        $host = $json['db']['host'];
         $dbname = $json['db']['dbname'];
         $username = $json['db']['username'];
         $password = $json['db']['password'];

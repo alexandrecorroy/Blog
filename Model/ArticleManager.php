@@ -68,6 +68,24 @@ class ArticleManager extends Manager
         return $articles;
     }
 
+    public function getArticlesByUser($id)
+    {
+        $userManager = new UserManager();
+        $categoryManager = new CategoryManager();
+
+        $datas = $this->db->fetchAll("SELECT * FROM article WHERE id_user = :id_user ORDER BY id DESC", array(':id_user' => $id));
+
+        $i=0;
+        foreach ($datas as $data) {
+            $articles[$i]['article'] = new Article($data);
+            $articles[$i]['user'] = $userManager->getUserById($articles[$i]['article']->getIdUser());
+            $articles[$i]['category'] = $categoryManager->getCategoryById($articles[$i]['article']->getIdCategory());
+            $i++;
+        }
+
+        return $articles;
+    }
+
     public function getArticlesWithLimit($limit, $offset, $idCategory = null)
     {
         $userManager = new UserManager();
@@ -95,6 +113,13 @@ class ArticleManager extends Manager
     public function countArticles()
     {
         $i = $this->db->fetch("SELECT COUNT(*) FROM article");
+
+        return $i['COUNT(*)'];
+    }
+
+    public function countArticlesByUser($id)
+    {
+        $i = $this->db->fetch("SELECT COUNT(*) FROM article WHERE id_user = :id_user", array(':id_user' => $id));
 
         return $i['COUNT(*)'];
     }

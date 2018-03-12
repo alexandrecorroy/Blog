@@ -67,11 +67,11 @@ try {
                             $content = $backend->addOrEditArticle($_POST);
                         }
                     }
-                    if ($_GET['page'] == 'listArticle') {
+                    if ($_GET['page'] == 'listMyArticles') {
                         if (isset($_GET['delete']) and isset($_GET['token'])) {
-                            $content = $backend->listArticle($_GET['delete'], $_GET['token']);
+                            $content = $backend->listArticles($_GET['delete'], $_GET['token'], $_SESSION['id']);
                         } else {
-                            $content = $backend->listArticle();
+                            $content = $backend->listArticles(null, null, $_SESSION['id']);
                         }
                     }
                     if ($_GET['page'] == 'list_no_validated_comments') {
@@ -90,6 +90,13 @@ try {
                             $content = $backend->listUser($_GET['delete'], $_GET['token']);
                         } else {
                             $content = $backend->listUser();
+                        }
+                    }
+                    if ($_GET['page'] == 'listArticles') {
+                        if (isset($_GET['delete']) and isset($_GET['token'])) {
+                            $content = $backend->listArticles($_GET['delete'], $_GET['token']);
+                        } else {
+                            $content = $backend->listArticles();
                         }
                     }
                     if ($_GET['page'] == 'super_admin_response') {
