@@ -19,7 +19,7 @@ class Comment
     private $_editDate;
     private $_idArticle;
     private $_idUser;
-    private $_isValidated;
+    private $_status;
 
     public function __construct($valeurs = array())
     {
@@ -157,16 +157,16 @@ class Comment
     /**
      * @return mixed
      */
-    public function getIsValidated()
+    public function getStatus()
     {
-        return $this->_isValidated;
+        return $this->_status;
     }
 
     /**
-     * @param mixed $isValidated
+     * @param mixed $status
      */
-    public function setIsValidated($isValidated)
+    public function setStatus($status)
     {
-        $this->_isValidated = $isValidated;
+        $this->_status = $status;
     }
 }

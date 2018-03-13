@@ -8,7 +8,6 @@ if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = $token;
 }
 
-
 $backend = new \Controller\Backend();
 $frontend = new \Controller\Frontend();
 $helper = new \Helper\Helper();

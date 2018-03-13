@@ -17,42 +17,42 @@ class CommentManager extends Manager
     public function addComment(Comment $comment)
     {
         $this->db->execute(
-            "INSERT INTO comment (title, content, creation_date, id_article, id_user, is_validated)
-                            VALUES (:title, :content, now(), :id_article, :id_user, :is_validated)",
+            "INSERT INTO comment (title, content, creation_date, id_article, id_user, status)
+                            VALUES (:title, :content, now(), :id_article, :id_user, :status)",
             array(
                 'title' => $comment->getTitle(),
                 'content' => $comment->getContent(),
                 'id_article' => $comment->getIdArticle(),
                 'id_user' => $comment->getIdUser(),
-                'is_validated' => $comment->getisValidated(),
+                'is_validated' => $comment->getStatus(),
             )
         );
     }
 
     public function countCommentsByArticle($id)
     {
-        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE id_article = :id AND is_validated = 1", array('id' => $id));
+        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE id_article = :id AND status = 1", array('id' => $id));
 
         return $i['COUNT(*)'];
     }
 
     public function countCommentsByMonth($month)
     {
-        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE is_validated = 1 AND MONTH(creation_date) = MONTH(:month)", array('month'=>$month));
+        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE status = 1 AND MONTH(creation_date) = MONTH(:month)", array('month'=>$month));
 
         return $i['COUNT(*)'];
     }
 
     public function countCommentsValidated()
     {
-        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE is_validated = 1");
+        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE status = 1");
 
         return $i['COUNT(*)'];
     }
 
     public function countCommentsUnvalidated()
     {
-        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE is_validated = 0");
+        $i = $this->db->fetch("SELECT COUNT(*) FROM comment WHERE status = 0");
 
         return $i['COUNT(*)'];
     }
@@ -61,7 +61,7 @@ class CommentManager extends Manager
     {
         $userManager = new UserManager();
 
-        $datas = $this->db->fetchAll("SELECT * FROM comment WHERE id_article = :id AND is_validated = 1 ORDER BY id DESC", array('id' => $id));
+        $datas = $this->db->fetchAll("SELECT * FROM comment WHERE id_article = :id AND status = 1 ORDER BY id DESC", array('id' => $id));
 
         $comments=null;
         $i = 0;
@@ -105,7 +105,7 @@ class CommentManager extends Manager
     {
         $this->db->execute(
             "UPDATE comment
-                                    SET is_validated = 1
+                                    SET status = 1
                                     WHERE id = :id",
             array(
                 'id' => $id
@@ -117,20 +117,20 @@ class CommentManager extends Manager
     {
         $this->db->execute(
             "UPDATE comment
-                                    SET title = :title, content = :content, edit_date = now(), is_validated = :isValidated
+                                    SET title = :title, content = :content, edit_date = now(), status = :status
                                     WHERE id = :id",
             array(
                 'content' => $comment->getContent(),
                 'title' => $comment->getTitle(),
                 'id' => $comment->getId(),
-                'isValidated' => $comment->getIsValidated()
+                'isValidated' => $comment->getStatus()
             )
         );
     }
 
     public function listCommentsNoValidated()
     {
-        $datas = $this->db->fetchAll("SELECT * FROM comment WHERE is_validated = 0 ORDER BY id ASC");
+        $datas = $this->db->fetchAll("SELECT * FROM comment WHERE status = 0 ORDER BY id ASC");
 
         $userManager = new UserManager();
 

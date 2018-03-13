@@ -79,9 +79,9 @@ class Frontend
                 $comment->setContent($post['content']);
                 $comment->setIdUser($user->getId());
                 if ($user->getIdRole()>0) {
-                    $comment->setIsValidated(1);
+                    $comment->setStatus(1);
                 } else {
-                    $comment->setIsValidated(0);
+                    $comment->setStatus(0);
                 }
                 $comment->setIdArticle($id);
 

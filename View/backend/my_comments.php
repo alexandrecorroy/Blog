@@ -45,7 +45,7 @@ ob_start();
                     foreach ($comments as $comment) {
                         echo '<tr>
                     <th scope="row">';
-                        if ($comment->getIsValidated()) {
+                        if ($comment->getStatus()) {
                             echo 'Publié';
                         } else {
                             echo 'En attente';

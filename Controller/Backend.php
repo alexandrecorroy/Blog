@@ -72,9 +72,9 @@ class Backend
             } else {
                 $_SESSION['alerte'] = 'Captcha obligatoire !';
             }
+        } else {
+            require "View/backend/signup.php";
         }
-
-        require "View/backend/signup.php";
     }
 
     public function login()
@@ -143,7 +143,7 @@ class Backend
         $categories = new CategoryManager();
 
         // Test $data existe
-        if ($data !== null) {
+        if (!empty($data)) {
             // if int -> delete
             if (is_int($data) && $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
                 $id = $data;
@@ -174,19 +174,17 @@ class Backend
         $helper = new Helper();
 
         if ($id != '' && $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
-            if($_SESSION['role']!=2)
+            if ($_SESSION['role']!=2) {
                 self::canDeletedOrEditThisArticle($id, $_SESSION['id']);
+            }
             $articleManager->deleteArticleById(intval($id));
             $_SESSION['info'] = "Article supprimé !";
         }
 
-        if($idUser)
-        {
+        if ($idUser) {
             $articles = $articleManager->getArticlesByUser($idUser);
             $i = $articleManager->countArticlesByUser($idUser);
-        }
-        else
-        {
+        } else {
             $articles = $articleManager->getArticles();
             $i = $articleManager->countArticles();
         }
@@ -207,8 +205,9 @@ class Backend
             if ($post['title'] == '' || $post['content'] == '' || $post['headerText'] == '' || $post['idCategory'] == '') {
                 $_SESSION['alerte'] = "Tous les champs sont obligatoires !";
             } elseif ($id !== null) {
-                if($user->getIdRole()!=2)
+                if ($user->getIdRole()!=2) {
                     self::canDeletedOrEditThisArticle($id, $user->getId());
+                }
 
                 $article = $articleManager->getArticleById(intval($id));
 
@@ -358,7 +357,7 @@ class Backend
                     $comment->setContent($post['content']);
 
                     if ($_SESSION['role']==0) {
-                        $comment->setIsValidated(0);
+                        $comment->setStatus(0);
                     }
 
                     $commentManager->editComment($comment);
