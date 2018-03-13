@@ -35,7 +35,7 @@
     <![endif]-->
 
     <!--  favicon  -->
-    <link rel="icon" href="public/backend/images/favicon.ico" />
+    <link rel="icon" href="public/favicon.ico" />
 
 </head>
 

@@ -23,7 +23,7 @@
     <link href="public/frontend/css/style.css" rel="stylesheet">
 
     <!--  favicon  -->
-    <link rel="icon" href="public/frontend/images/favicon.ico" />
+    <link rel="icon" href="public/favicon.ico" />
 
 </head>
 

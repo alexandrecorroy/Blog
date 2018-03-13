@@ -21,13 +21,7 @@ class Manager
         $dbname = $json['db']['dbname'];
         $username = $json['db']['username'];
         $password = $json['db']['password'];
-
-        try {
-            $this->db = new \PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-        } catch (\Exception $e) {
-            die('Erreur de connexion à la base de donnée : ' . $e->getMessage());
-        }
-
+        $this->db = new \PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->db->exec("SET NAMES UTF8");
     }
