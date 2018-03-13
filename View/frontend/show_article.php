@@ -39,7 +39,7 @@ ob_start();
                         <h5>'.$comment['comment']->getTitle().'</h5>
                         <p>'.$comment['comment']->getContent().'</p>
                         <p class="text-right"><em>';
-                        if ($comment['comment']->getEditDate()!=null) {
+                        if ($comment['comment']->getEditDate()!==null) {
                             echo 'Modifié ';
                         } else {
                             echo 'Publié ';

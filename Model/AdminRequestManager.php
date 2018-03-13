@@ -50,7 +50,7 @@ class AdminRequestManager extends Manager
             $i++;
         }
 
-        if ($datas!=null) {
+        if ($datas) {
             return $requests;
         } else {
             return $requests = null;

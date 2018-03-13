@@ -24,7 +24,7 @@ ob_start();
                 ?>
 
                 <?php
-                if ($requests!=null) {
+                if ($requests!==null) {
                     foreach ($requests as $request) {
                         echo '                        <div class="panel panel-default mb-5">
                             <div class="panel-heading">

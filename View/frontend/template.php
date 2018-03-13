@@ -22,6 +22,9 @@
     <link href="public/frontend/css/clean-blog.min.css" rel="stylesheet">
     <link href="public/frontend/css/style.css" rel="stylesheet">
 
+    <!--  favicon  -->
+    <link rel="icon" href="public/frontend/images/favicon.ico" />
+
 </head>
 
 <body>

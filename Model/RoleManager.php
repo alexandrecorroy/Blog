@@ -19,6 +19,6 @@ class RoleManager extends Manager
     {
         $data = $this->db->fetch("SELECT * FROM role WHERE id = :id", array('id' => $id));
 
-        return $role = new Role($data);
+        return new Role($data);
     }
 }

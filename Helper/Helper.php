@@ -64,7 +64,7 @@ class Helper
 
     public function tokenValidationCSRF($tokenInSession, $tokenInForm)
     {
-        if (!empty($tokenInSession) and !empty($tokenInForm)) {
+        if (!empty($tokenInSession) && !empty($tokenInForm)) {
 
             // On vérifie que les deux correspondent
             if ($tokenInSession == $tokenInForm) {
@@ -82,8 +82,7 @@ class Helper
         if (isset($_COOKIE['ticket']) && isset($_SESSION['ticket'])) {
             if ($_COOKIE['ticket'] != $_SESSION['ticket']) {
                 session_destroy();
-                header('Location:index.php');
-                exit;
+                throw new \Exception("Tentative de Session Hijacking détectée !");
             }
         }
 

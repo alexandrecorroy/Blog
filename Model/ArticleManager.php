@@ -91,7 +91,7 @@ class ArticleManager extends Manager
         $userManager = new UserManager();
         $categoryManager = new CategoryManager();
 
-        if ($idCategory==null) {
+        if ($idCategory===null) {
             $datas = $this->db->fetchAll("SELECT * FROM article ORDER BY id DESC LIMIT $limit OFFSET $offset");
         } else {
             $datas = $this->db->fetchAll("SELECT * FROM article WHERE id_category = :idCategory ORDER BY id DESC LIMIT $limit OFFSET $offset", array('idCategory' => $idCategory));

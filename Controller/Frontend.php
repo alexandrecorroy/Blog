@@ -28,7 +28,7 @@ class Frontend
     public static function countPages($idCategory = null)
     {
         $articleManager = new ArticleManager();
-        if ($idCategory==null) {
+        if ($idCategory===null) {
             $articles = $articleManager->countArticles();
         } else {
             $articles = $articleManager->countArticlesByCategory($idCategory);
@@ -42,15 +42,14 @@ class Frontend
         if ($offset<0) {
             $offset=0;
         }
-        if ($page>self::countPages() or $page==0) {
-            header("HTTP/1.1 404 Not Found");
-            exit;
+        if ($page>self::countPages() || $page==0) {
+            throw new \Exception("Cette page n'existe pas !");
         }
 
 
         $userManager = new UserManager();
         $articleManager = new ArticleManager();
-        if ($idCategory==null) {
+        if ($idCategory===null) {
             $articles = $articleManager->getArticlesWithLimit(intval(LIMIT), intval($offset));
             $pages = self::countPages();
         } else {
@@ -58,7 +57,7 @@ class Frontend
             $pages = self::countPages($idCategory);
         }
 
-        if ($articles==null) {
+        if ($articles===null) {
             throw new \Exception('Pas d\'articles à afficher !');
         }
 
@@ -115,7 +114,7 @@ class Frontend
 
     public function contact($post = null)
     {
-        if ($post!=null) {
+        if ($post!==null) {
             if ($post['name']=='' || $post['email']=='' || $post['message'] == '' || $post['subject'] =='') {
                 $_SESSION['alerte'] = 'Tous les champs sont obligatoires !';
             } else {

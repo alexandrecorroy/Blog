@@ -41,19 +41,19 @@ class Backend
             $json = file_get_contents("config.json");
             $json = json_decode($json, true);
 
-            $secret = $json['captcha']['secret'];
+            $secretKey = $json['captcha']['secret'];
             $response = $_POST['g-recaptcha-response'];
             $remoteip = $_SERVER['REMOTE_ADDR'];
 
             $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
-                . $secret
+                . $secretKey
                 . "&response=" . $response
                 . "&remoteip=" . $remoteip ;
 
             $decode = json_decode(file_get_contents($api_url), true);
 
-            if ($decode['success'] == true) {
-                if ($post['pseudo']=='' or $post['email']=='' or $post['password']=='') {
+            if ($decode['success'] === true) {
+                if ($post['pseudo']=='' || $post['email']=='' || $post['password']=='') {
                     $_SESSION['alerte'] = 'Tous les champs sont requis !';
                 } else {
                     if (!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $post['password'])) {
@@ -101,8 +101,7 @@ class Backend
                 }
             } else {
                 $_SESSION['alerte'] = 'Mot de passe et/ou login incorrect !';
-                header("Location: index.php?action=admin&page=login");
-                exit;
+                $this::login();
             }
         } else {
             $this::login();
@@ -144,9 +143,9 @@ class Backend
         $categories = new CategoryManager();
 
         // Test $data existe
-        if ($data != null) {
+        if ($data !== null) {
             // if int -> delete
-            if (is_int($data) and $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
+            if (is_int($data) && $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
                 $id = $data;
                 $categories->deleteCategoryById($id);
                 $_SESSION['info'] = "Catégorie supprimée !";
@@ -174,7 +173,7 @@ class Backend
         $articleManager = new ArticleManager();
         $helper = new Helper();
 
-        if ($id != '' and $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
+        if ($id != '' && $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
             if($_SESSION['role']!=2)
                 self::canDeletedOrEditThisArticle($id, $_SESSION['id']);
             $articleManager->deleteArticleById(intval($id));
@@ -207,7 +206,7 @@ class Backend
         if (!empty($post)) {
             if ($post['title'] == '' || $post['content'] == '' || $post['headerText'] == '' || $post['idCategory'] == '') {
                 $_SESSION['alerte'] = "Tous les champs sont obligatoires !";
-            } elseif ($id != null) {
+            } elseif ($id !== null) {
                 if($user->getIdRole()!=2)
                     self::canDeletedOrEditThisArticle($id, $user->getId());
 
@@ -235,7 +234,7 @@ class Backend
             }
         }
 
-        if ($id != null) {
+        if ($id !== null) {
             $article = $articleManager->getArticleById(intval($id));
         }
 
@@ -248,8 +247,8 @@ class Backend
         $requestManager = new AdminRequestManager();
         $user = $userManager->getUserById($_SESSION['id']);
 
-        if ($post!=null) {
-            if ($post['request']=='' or strlen($post['request'])<200) {
+        if (!empty($post)) {
+            if ($post['request']=='' || strlen($post['request'])<200) {
                 $_SESSION['alerte'] = 'Il faut minimum 200 caractères à vos motivations pour prétendre au status d\'administrateur !';
             } else {
                 $request = new AdminRequest();
@@ -271,7 +270,7 @@ class Backend
 
     public function superAdminResponse($response = null, $id = null, $token = null)
     {
-        if ($response!= null and $id!=null and $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
+        if ($response!== null && $id!==null && $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
             $adminRequestManager = new AdminRequestManager();
             if ($response=='true') {
                 $userManager = new UserManager();
@@ -308,7 +307,7 @@ class Backend
         $helper = new Helper();
 
         if (!is_null($idToDelete)) {
-            if (self::canDeletedOrEditThisComment($idToDelete, $_SESSION['id']) and $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
+            if (self::canDeletedOrEditThisComment($idToDelete, $_SESSION['id']) && $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
                 $commentManager->deleteCommentById($idToDelete);
                 $_SESSION['info'] = 'Votre commentaire a bien été supprimé !';
             }
@@ -351,8 +350,8 @@ class Backend
             $commentManager = new CommentManager();
             $comment = $commentManager->getCommentById($idArticle);
 
-            if ($post!=null) {
-                if ($post['title']=='' or $post['content'] =='') {
+            if ($post!==null) {
+                if ($post['title']=='' || $post['content'] =='') {
                     $_SESSION['alerte'] = 'Tous les champs sont obligatoires !';
                 } else {
                     $comment->setTitle($post['title']);
@@ -375,7 +374,7 @@ class Backend
     {
         $commentManager = new CommentManager();
 
-        if ($action!=null and $idComment!=null) {
+        if ($action!==null && $idComment!==null) {
             if ($action=='validate') {
                 $commentManager->valideComment($idComment);
                 $_SESSION['info'] = 'Commentaire validé !';
@@ -394,7 +393,7 @@ class Backend
     {
         $userManager = new UserManager();
 
-        if ($idToDelete!='' and $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
+        if ($idToDelete!='' && $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
             $user = $userManager->getUserById($idToDelete);
             if ($user->getIdRole()<2);
             {

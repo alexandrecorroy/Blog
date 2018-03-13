@@ -20,14 +20,14 @@ class UserManager extends Manager
             'pseudo' => $post['pseudo']
         ));
 
-        return $user = new User($data);
+        return new User($data);
     }
 
     public function getUserById($id)
     {
         $data = $this->db->fetch("SELECT * FROM user WHERE id = :id", array('id' => $id));
 
-        return $user = new User($data);
+        return new User($data);
     }
 
     public function deleteUserById(User $user)

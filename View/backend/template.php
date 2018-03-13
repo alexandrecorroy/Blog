@@ -34,6 +34,9 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!--  favicon  -->
+    <link rel="icon" href="public/backend/images/favicon.ico" />
+
 </head>
 
 <body>

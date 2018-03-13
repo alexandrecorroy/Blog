@@ -37,14 +37,14 @@ try {
                 }
 
                 if ($_GET['page'] == 'my_comments') {
-                    if (isset($_GET['delete']) and isset($_GET['token'])) {
+                    if (isset($_GET['delete']) && isset($_GET['token'])) {
                         $content = $backend->myComments($_GET['delete'], $_GET['token']);
                     } else {
                         $content = $backend->myComments();
                     }
                 }
 
-                if ($_GET['page'] == 'edit_my_comment' and isset($_GET['edit'])) {
+                if ($_GET['page'] == 'edit_my_comment' && isset($_GET['edit'])) {
                     $content = $backend->editMyComment($_GET['edit'], $_POST);
                 }
 
@@ -68,14 +68,14 @@ try {
                         }
                     }
                     if ($_GET['page'] == 'listMyArticles') {
-                        if (isset($_GET['delete']) and isset($_GET['token'])) {
+                        if (isset($_GET['delete']) && isset($_GET['token'])) {
                             $content = $backend->listArticles($_GET['delete'], $_GET['token'], $_SESSION['id']);
                         } else {
                             $content = $backend->listArticles(null, null, $_SESSION['id']);
                         }
                     }
                     if ($_GET['page'] == 'list_no_validated_comments') {
-                        if (isset($_GET['id']) and isset($_GET['do'])) {
+                        if (isset($_GET['id']) && isset($_GET['do'])) {
                             $content = $backend->listNoValidatedComment($_GET['do'], $_GET['id']);
                         } else {
                             $content = $backend->listNoValidatedComment();
@@ -86,28 +86,28 @@ try {
                 // pages superadmin
                 if ($_SESSION['role'] > 1) {
                     if ($_GET['page'] == 'user_list') {
-                        if (isset($_GET['delete']) and isset($_GET['token'])) {
+                        if (isset($_GET['delete']) && isset($_GET['token'])) {
                             $content = $backend->listUser($_GET['delete'], $_GET['token']);
                         } else {
                             $content = $backend->listUser();
                         }
                     }
                     if ($_GET['page'] == 'listArticles') {
-                        if (isset($_GET['delete']) and isset($_GET['token'])) {
+                        if (isset($_GET['delete']) && isset($_GET['token'])) {
                             $content = $backend->listArticles($_GET['delete'], $_GET['token']);
                         } else {
                             $content = $backend->listArticles();
                         }
                     }
                     if ($_GET['page'] == 'super_admin_response') {
-                        if (isset($_GET['response']) and isset($_GET['id']) and isset($_GET['token'])) {
+                        if (isset($_GET['response']) && isset($_GET['id']) && isset($_GET['token'])) {
                             $content = $backend->superAdminResponse($_GET['response'], $_GET['id'], $_GET['token']);
                         } else {
                             $content = $backend->superAdminResponse();
                         }
                     }
                     if ($_GET['page'] == 'category') {
-                        if (isset($_GET['delete']) and isset($_GET['token'])) {
+                        if (isset($_GET['delete']) && isset($_GET['token'])) {
                             $content = $backend->category((int)$_GET['delete'], $_GET['token']);
                         } else {
                             $content = $backend->category($_POST);

@@ -28,7 +28,7 @@ ob_start();
                 ?>
                 <div class="panel panel-default">
                     <?php
-                    if ($request->getId()==null) {
+                    if ($request->getId()===null) {
                         echo '<div class="panel-heading">
                         <i class="fa fa-pencil fa-fw"></i> Vos motivations
                     </div>
@@ -42,7 +42,7 @@ ob_start();
                         </form>
                         <!-- /.list-group -->
                     </div>';
-                    } elseif ($request->getId()!=null) {
+                    } elseif ($request->getId()!==null) {
                         echo '<div class="panel-heading">
                         <i class="fa fa-pencil fa-fw"></i> Votre demande
                     </div>
