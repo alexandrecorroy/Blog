@@ -171,9 +171,8 @@ class Backend
     public function listArticles($id = null, $token = null, $idUser = null)
     {
         $articleManager = new ArticleManager();
-        $helper = new Helper();
 
-        if ($id != '' && $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
+        if ($id != '' && $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
             if ($_SESSION['role']!=2) {
                 self::canDeletedOrEditThisArticle($id, $_SESSION['id']);
             }
@@ -232,7 +231,6 @@ class Backend
                 $_SESSION['info'] = 'Article n°'.$articleManager.' correctement ajouté ! <a target="_blank" href="index.php?page=show_article&id='.$articleManager.'">Voir l\'article</a>';
             }
         }
-
         if ($id !== null) {
             $article = $articleManager->getArticleById(intval($id));
         }
@@ -280,8 +278,7 @@ class Backend
 
                 $user = $userManager->getUserById($adminRequest->getIdUser());
 
-                $helper = new Helper();
-                $helper->sendMail($user->getPseudo(), $user->getEmail(), 'Devenir administrateur', 'Votre demande pour devenir administrateur a été acceptée !');
+                $this->helper->sendMail($user->getPseudo(), $user->getEmail(), 'Devenir administrateur', 'Votre demande pour devenir administrateur a été acceptée !');
 
 
                 $_SESSION['info'] = 'La demande a bien été acceptée !';
@@ -303,10 +300,9 @@ class Backend
         $user = $user->getUserById($_SESSION['id']);
 
         $commentManager = new CommentManager();
-        $helper = new Helper();
 
         if (!is_null($idToDelete)) {
-            if (self::canDeletedOrEditThisComment($idToDelete, $_SESSION['id']) && $helper->tokenValidationCSRF($_SESSION['token'], $token)) {
+            if (self::canDeletedOrEditThisComment($idToDelete, $_SESSION['id']) && $this->helper->tokenValidationCSRF($_SESSION['token'], $token)) {
                 $commentManager->deleteCommentById($idToDelete);
                 $_SESSION['info'] = 'Votre commentaire a bien été supprimé !';
             }
@@ -349,7 +345,7 @@ class Backend
             $commentManager = new CommentManager();
             $comment = $commentManager->getCommentById($idArticle);
 
-            if ($post!==null) {
+            if (!empty($post)) {
                 if ($post['title']=='' || $post['content'] =='') {
                     $_SESSION['alerte'] = 'Tous les champs sont obligatoires !';
                 } else {

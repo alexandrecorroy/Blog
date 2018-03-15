@@ -11,6 +11,9 @@ use Controller\Backend;
 
 class Helper
 {
+
+    const STRING = 'festDEnj,lkj845&ne';
+
     public function formatDate($dateTime)
     {
         if (is_null($dateTime)) {
@@ -79,16 +82,27 @@ class Helper
 
     public function sessionHijackingProtection()
     {
-        if (isset($_COOKIE['ticket']) && isset($_SESSION['ticket'])) {
-            if ($_COOKIE['ticket'] != $_SESSION['ticket']) {
+        $userAgent = $_SERVER['HTTP_USER_AGENT'].$this::STRING;
+        if (isset($_SESSION['mir_tup']))
+        {
+            if ($_SESSION['mir_tup'] != hash('sha512', $userAgent))
+            {
                 session_destroy();
-                throw new \Exception("Tentative de Session Hijacking détectée !");
+                throw new \Exception('Tentative de session Hijacking détectée !');
             }
         }
+        else
+        {
+            $_SESSION['mir_tup'] = hash('sha512', $userAgent);
+        }
 
+    }
 
-        $ticket = bin2hex(random_bytes(32));
-        $_SESSION['ticket'] = $ticket;
-        setcookie('ticket', $ticket);
+    public function generateToken()
+    {
+        if (!isset($_SESSION['token'])) {
+            $token = hash('sha512', uniqid().time().$this::STRING);
+            $_SESSION['token'] = $token;
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 $title = 'Liste des articles';
 
+
 ob_start();
 ?>
     <div id="page-wrapper">
@@ -43,7 +44,7 @@ ob_start();
                     <td>'.$article['article']->getCreationDate().'</td>
                     <td>'.$article['article']->getEditDate().'</td>
                     <td><a href="index.php?action=admin&page=addOrEditArticle&edit='.$article['article']->getId().'" class="text-info"><i>Modifier</i></a></td>
-                    <td><a href="index.php?action=admin&page=listArticle&delete='.$article['article']->getId().'&token='.$_SESSION['token'].'" class="text-danger"><i>Supprimer</i></a></td>
+                    <td><a href="index.php?action=admin&page='.$_GET['page'].'&delete='.$article['article']->getId().'&token='.$_SESSION['token'].'" class="text-danger"><i>Supprimer</i></a></td>
                 </tr>';
                 }
                 ?>
@@ -56,4 +57,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

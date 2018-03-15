@@ -24,7 +24,7 @@ class CommentManager extends Manager
                 'content' => $comment->getContent(),
                 'id_article' => $comment->getIdArticle(),
                 'id_user' => $comment->getIdUser(),
-                'is_validated' => $comment->getStatus(),
+                'status' => $comment->getStatus(),
             )
         );
     }
@@ -123,7 +123,7 @@ class CommentManager extends Manager
                 'content' => $comment->getContent(),
                 'title' => $comment->getTitle(),
                 'id' => $comment->getId(),
-                'isValidated' => $comment->getStatus()
+                'status' => $comment->getStatus()
             )
         );
     }

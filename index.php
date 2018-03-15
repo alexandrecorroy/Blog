@@ -1,23 +1,21 @@
 <?php
-session_start();
 
-require 'vendor/autoload.php';
-
-if (!isset($_SESSION['token'])) {
-    $token = bin2hex(openssl_random_pseudo_bytes(32));
-    $_SESSION['token'] = $token;
-}
-
-$backend = new \Controller\Backend();
-$frontend = new \Controller\Frontend();
-$helper = new \Helper\Helper();
-
-$helper->sessionHijackingProtection();
-
-$content = 404;
-
-// backend pages
 try {
+//    initialize
+    session_start();
+
+    require 'vendor/autoload.php';
+
+    $backend = new \Controller\Backend();
+    $frontend = new \Controller\Frontend();
+    $helper = new \Helper\Helper();
+
+    $helper->generateToken();
+    $helper->sessionHijackingProtection();
+
+    $content = null;
+
+    // backend pages
     if (isset($_GET['action'])) {
         if (isset($_SESSION['id'])) {
             if ($_GET['action'] == 'admin' && isset($_GET['page'])) {
@@ -164,7 +162,7 @@ try {
     }
 
     // Affichage du contenu
-    if($content != 404)
+    if($content===null)
         echo $content;
     else
         throw new Exception('La page demandée n\'existe pas !');

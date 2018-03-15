@@ -29,6 +29,7 @@ ob_start();
     </script>
 <?php
 $script = ob_get_clean();
+ob_start();
 ?>
     <div id="page-wrapper">
         <div class="row">
@@ -109,4 +110,4 @@ $script = ob_get_clean();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

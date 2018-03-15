@@ -45,4 +45,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

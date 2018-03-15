@@ -15,10 +15,10 @@ use Model\Comment;
 use Model\CommentManager;
 use Model\UserManager;
 
-const LIMIT = 10;
-
 class Frontend
 {
+    const LIMIT = 10;
+
     public static function showCategories()
     {
         $categoryManager = new CategoryManager();
@@ -38,7 +38,7 @@ class Frontend
 
     public function index($page = 1, $idCategory = null)
     {
-        $offset = ($page*10)-LIMIT;
+        $offset = ($page*10)-$this::LIMIT;
         if ($offset<0) {
             $offset=0;
         }
@@ -50,10 +50,10 @@ class Frontend
         $userManager = new UserManager();
         $articleManager = new ArticleManager();
         if ($idCategory===null) {
-            $articles = $articleManager->getArticlesWithLimit(intval(LIMIT), intval($offset));
+            $articles = $articleManager->getArticlesWithLimit(intval($this::LIMIT), intval($offset));
             $pages = self::countPages();
         } else {
-            $articles = $articleManager->getArticlesWithLimit(intval(LIMIT), intval($offset), intval($idCategory));
+            $articles = $articleManager->getArticlesWithLimit(intval($this::LIMIT), intval($offset), intval($idCategory));
             $pages = self::countPages($idCategory);
         }
 
@@ -114,7 +114,7 @@ class Frontend
 
     public function contact($post = null)
     {
-        if ($post!==null) {
+        if (!empty($post)) {
             if ($post['name']=='' || $post['email']=='' || $post['message'] == '' || $post['subject'] =='') {
                 $_SESSION['alerte'] = 'Tous les champs sont obligatoires !';
             } else {
