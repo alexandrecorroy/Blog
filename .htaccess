@@ -1,5 +1,0 @@
-Options -Indexes
-<files "config.json">
-Order allow,deny
-Deny from all
-</files>
