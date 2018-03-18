@@ -16,8 +16,7 @@ ob_start();
         <div class="row">
 
             <?php
-            if (isset($_SESSION['info']))
-            {
+            if (isset($_SESSION['info'])) {
                 echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                 unset($_SESSION['info']);
             }
@@ -36,21 +35,18 @@ ob_start();
                 </thead>
                 <tbody>
                 <?php
-                if(!is_null($users))
-                {
+                if (!is_null($users)) {
                     foreach ($users as $user) {
                         echo '<tr>
                     <th scope="row">'.$user['user']->getId().'</th>
                     <td>'.$user['user']->getPseudo().'</td>
                     <td>'.$user['user']->getEmail().'</td>
                     <td>'.$user['role']->getName().'</td>
-                    <td><a href="index.php?action=admin&page=user_list&delete='.$user['user']->getId().'" class="text-danger"><i class="fa fa-trash"></i> Supprimer</a></td>
+                    <td><a href="index.php?action=admin&page=user_list&delete='.$user['user']->getId().'&token='.$_SESSION['token'].'" class="text-danger"><i class="fa fa-trash"></i> Supprimer</a></td>
 
                 </tr>';
                     }
-                }
-                else
-                {
+                } else {
                     echo '<td colspan="7" class="text-center">Pas d\'utilisateurs à renseigner !</td>';
                 }
 
@@ -69,4 +65,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

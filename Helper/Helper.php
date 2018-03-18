@@ -7,18 +7,26 @@
  */
 namespace Helper;
 
+use Controller\Backend;
+
 class Helper
 {
 
+    const STRING = 'festDEnj,lkj845&ne';
+
     public function formatDate($dateTime)
     {
-        if(is_null($dateTime))
+        if (is_null($dateTime)) {
             return null;
+        }
 
-        $formatter = new \IntlDateFormatter('fr_FR',\IntlDateFormatter::LONG,
+        $formatter = new \IntlDateFormatter(
+            'fr_FR',
+            \IntlDateFormatter::LONG,
             \IntlDateFormatter::SHORT,
             'Europe/Paris',
-            \IntlDateFormatter::GREGORIAN );
+            \IntlDateFormatter::GREGORIAN
+        );
         $date = new \DateTime($dateTime);
         $date = $formatter->format($date);
         return str_replace(':', 'h', $date);
@@ -57,4 +65,44 @@ class Helper
         $mailer->send($message);
     }
 
+    public function tokenValidationCSRF($tokenInSession, $tokenInForm)
+    {
+        if (!empty($tokenInSession) && !empty($tokenInForm)) {
+
+            // On vérifie que les deux correspondent
+            if ($tokenInSession == $tokenInForm) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function sessionHijackingProtection()
+    {
+        $userAgent = $_SERVER['HTTP_USER_AGENT'].$this::STRING;
+        if (isset($_SESSION['mir_tup']))
+        {
+            if ($_SESSION['mir_tup'] != hash('sha512', $userAgent))
+            {
+                session_destroy();
+                throw new \Exception('Tentative de session Hijacking détectée !');
+            }
+        }
+        else
+        {
+            $_SESSION['mir_tup'] = hash('sha512', $userAgent);
+        }
+
+    }
+
+    public function generateToken()
+    {
+        if (!isset($_SESSION['token'])) {
+            $token = hash('sha512', uniqid().time().$this::STRING);
+            $_SESSION['token'] = $token;
+        }
+    }
 }

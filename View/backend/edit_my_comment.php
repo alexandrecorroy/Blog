@@ -19,13 +19,11 @@ ob_start();
         <div class="row">
 
             <?php
-            if (isset($_SESSION['info']))
-            {
+            if (isset($_SESSION['info'])) {
                 echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                 unset($_SESSION['info']);
             }
-            if (isset($_SESSION['alerte']))
-            {
+            if (isset($_SESSION['alerte'])) {
                 echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
                 unset($_SESSION['alerte']);
             }
@@ -47,4 +45,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

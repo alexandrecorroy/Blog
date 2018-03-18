@@ -22,6 +22,9 @@
     <link href="public/frontend/css/clean-blog.min.css" rel="stylesheet">
     <link href="public/frontend/css/style.css" rel="stylesheet">
 
+    <!--  favicon  -->
+    <link rel="icon" href="public/favicon.ico" />
+
 </head>
 
 <body>
@@ -45,23 +48,22 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <?php
-                        $categories = self::showCategories();
-                        foreach ($categories as $categorie)
-                        {
+                        if (!isset($categories)) {
+                            $categories = self::showCategories();
+                        }
+
+                        foreach ($categories as $categorie) {
                             echo '<a class="dropdown-item" href="index.php?page=category&id='.$categorie->getId().'">'.$categorie->getName().'</a>';
                         }
                         ?>
                     </div>
                 </li>
                 <?php
-                if(isset($_SESSION['id']))
-                {
+                if (isset($_SESSION['id'])) {
                     echo '<li class="nav-item">
                     <a class="nav-link" href="index.php?action=admin&page=login">Dashboard</a>
                 </li>';
-                }
-                else
-                {
+                } else {
                     echo '<li class="nav-item">
                     <a class="nav-link" href="index.php?action=admin&page=login">Login</a>
                 </li>';
@@ -84,7 +86,9 @@
             <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="<?= $classHeader ?>">
                     <h1><?= $h1 ?></h1>
-                    <?php if(isset($h2)) echo $h2 ?>
+                    <?php if (isset($h2)) {
+                    echo $h2;
+                } ?>
                     <?= $span ?>
                 </div>
             </div>
@@ -101,7 +105,9 @@
     </div>
 </div>
 
-<?php if(isset($more)) echo $more ?>
+<?php if (isset($more)) {
+                    echo $more;
+                } ?>
 
 <hr>
 

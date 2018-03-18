@@ -16,13 +16,11 @@ ob_start();
         <div class="row">
 
             <?php
-            if (isset($_SESSION['info']))
-            {
+            if (isset($_SESSION['info'])) {
                 echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                 unset($_SESSION['info']);
             }
-            if (isset($_SESSION['alerte']))
-            {
+            if (isset($_SESSION['alerte'])) {
                 echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
                 unset($_SESSION['alerte']);
             }
@@ -56,7 +54,7 @@ ob_start();
                         <div class="list-group">
                             <?php
                             foreach ($categories as $category) {
-                                echo '<span class="list-group-item"><i class="fa fa-cog fa-fw"></i> ' .$category->getName(). '<a href="index.php?action=admin&page=category&delete='.$category->getId().'"><span class="pull-right text-muted small text-danger"><em>Supprimer</em></span></a></span>';
+                                echo '<span class="list-group-item"><i class="fa fa-cog fa-fw"></i> ' .$category->getName(). '<a href="index.php?action=admin&page=category&delete='.$category->getId().'&token='.$_SESSION['token'].'"><span class="pull-right text-muted small text-danger"><em>Supprimer</em></span></a></span>';
                             }
                             ?>
                         </div>
@@ -76,4 +74,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

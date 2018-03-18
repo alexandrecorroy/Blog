@@ -17,16 +17,14 @@ ob_start();
         <div class="row">
             <div class="col-lg-12">
                 <?php
-                if (isset($_SESSION['info']))
-                {
+                if (isset($_SESSION['info'])) {
                     echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                     unset($_SESSION['info']);
                 }
                 ?>
 
                 <?php
-                if($requests!=null)
-                {
+                if ($requests!==null) {
                     foreach ($requests as $request) {
                         echo '                        <div class="panel panel-default mb-5">
                             <div class="panel-heading">
@@ -41,14 +39,12 @@ ob_start();
                             </div>
                             <!-- /.panel-body -->
                             <div class="panel-footer">
-                                <a href="index.php?action=admin&page=super_admin_response&response=true&id='.$request['request']->getId().'"><span class="btn btn-success mb-2">Accepter la demande</span></a>
-                                <a class="pull-right" href="index.php?action=admin&page=super_admin_response&response=false&id='.$request['request']->getId().'"><span class="btn btn-danger mb-2">Refuser la demande</span></a>
+                                <a href="index.php?action=admin&page=super_admin_response&response=true&id='.$request['request']->getId().'&token='.$_SESSION['token'].'"><span class="btn btn-success mb-2">Accepter la demande</span></a>
+                                <a class="pull-right" href="index.php?action=admin&page=super_admin_response&response=false&id='.$request['request']->getId().'&token='.$_SESSION['token'].'"><span class="btn btn-danger mb-2">Refuser la demande</span></a>
                             </div>
                         </div>';
                     }
-                }
-                else
-                {
+                } else {
                     echo'<p class="text-center">Aucune demande pour l\'instant</p>';
                 }
 
@@ -66,4 +62,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

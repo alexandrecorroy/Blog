@@ -9,7 +9,6 @@ namespace Model;
 
 class ArticleManager extends Manager
 {
-
     public function __construct()
     {
         $this->db = new Manager();
@@ -17,7 +16,8 @@ class ArticleManager extends Manager
 
     public function addArticle(Article $article, User $user)
     {
-        $this->db->execute("INSERT INTO article (title, header_text, content, creation_date, id_user, id_category)
+        $this->db->execute(
+            "INSERT INTO article (title, header_text, content, creation_date, id_user, id_category)
                             VALUES (:title, :header_text, :content, now(), :id_user, :id_category)",
             array(
                 'title' => $article->getTitle(),
@@ -25,15 +25,16 @@ class ArticleManager extends Manager
                 'content' => $article->getContent(),
                 'id_user' => $user->getId(),
                 'id_category' => $article->getIdCategory()
-            ));
+            )
+        );
 
         return $this->db->lastId();
     }
 
     public function editArticle(Article $article)
     {
-
-        $this->db->execute("UPDATE article
+        $this->db->execute(
+            "UPDATE article
                                     SET title = :title, header_text = :header_text, content = :content, edit_date = now(), id_category = :id_category
                                     WHERE id = :id",
             array(
@@ -42,7 +43,8 @@ class ArticleManager extends Manager
                 'content' => $article->getContent(),
                 'id_category' => $article->getIdCategory(),
                 'id' => $article->getId()
-            ));
+            )
+        );
 
         return $this->db->lastId();
     }
@@ -66,15 +68,34 @@ class ArticleManager extends Manager
         return $articles;
     }
 
+    public function getArticlesByUser($id)
+    {
+        $userManager = new UserManager();
+        $categoryManager = new CategoryManager();
+
+        $datas = $this->db->fetchAll("SELECT * FROM article WHERE id_user = :id_user ORDER BY id DESC", array(':id_user' => $id));
+
+        $i=0;
+        foreach ($datas as $data) {
+            $articles[$i]['article'] = new Article($data);
+            $articles[$i]['user'] = $userManager->getUserById($articles[$i]['article']->getIdUser());
+            $articles[$i]['category'] = $categoryManager->getCategoryById($articles[$i]['article']->getIdCategory());
+            $i++;
+        }
+
+        return $articles;
+    }
+
     public function getArticlesWithLimit($limit, $offset, $idCategory = null)
     {
         $userManager = new UserManager();
         $categoryManager = new CategoryManager();
 
-        if ($idCategory==null)
+        if ($idCategory===null) {
             $datas = $this->db->fetchAll("SELECT * FROM article ORDER BY id DESC LIMIT $limit OFFSET $offset");
-        else
+        } else {
             $datas = $this->db->fetchAll("SELECT * FROM article WHERE id_category = :idCategory ORDER BY id DESC LIMIT $limit OFFSET $offset", array('idCategory' => $idCategory));
+        }
 
 
         $articles = null;
@@ -92,6 +113,13 @@ class ArticleManager extends Manager
     public function countArticles()
     {
         $i = $this->db->fetch("SELECT COUNT(*) FROM article");
+
+        return $i['COUNT(*)'];
+    }
+
+    public function countArticlesByUser($id)
+    {
+        $i = $this->db->fetch("SELECT COUNT(*) FROM article WHERE id_user = :id_user", array(':id_user' => $id));
 
         return $i['COUNT(*)'];
     }
@@ -132,13 +160,13 @@ class ArticleManager extends Manager
 
     public function setNullArticleOnDeleteCategoryId($id)
     {
-        $this->db->execute("UPDATE article
+        $this->db->execute(
+            "UPDATE article
                                     SET id_category = 0
                                     WHERE id_category = :id",
             array(
                 'id' => $id
-            ));
+            )
+        );
     }
-
-
 }

@@ -34,6 +34,9 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!--  favicon  -->
+    <link rel="icon" href="public/favicon.ico" />
+
 </head>
 
 <body>
@@ -51,7 +54,9 @@
                 <span class="icon-bar"></span>
             </button>
             <div class="navbar-header">
-                <span class="navbar-brand"> <?= ucfirst($_SESSION['pseudo']) ?> <?php if(self::checkForAdminRequest()) echo '<a href="index.php?action=admin&page=super_admin_response" ><span class="text-danger"><i class="fa fa-exclamation-triangle"></i> (Demande Admin en attente)</span></a>' ?></span>
+                <span class="navbar-brand"> <?= ucfirst($_SESSION['pseudo']) ?> <?php if (self::checkForAdminRequest()) {
+    echo '<a href="index.php?action=admin&page=super_admin_response" ><span class="text-danger"><i class="fa fa-exclamation-triangle"></i> (Demande Admin en attente)</span></a>';
+} ?></span>
             </div>
         </div>
 
@@ -63,8 +68,8 @@
                     <li>
                         <a href="index.php"><i class="fa fa-home fa-fw"></i> Retour accueil du site</a>
                     </li>
-                    <?php if($_SESSION['role']>1)
-                        echo '<li>
+                    <?php if ($_SESSION['role']>1) {
+    echo '<li>
                         <a href="#"><i class="fa fa-sitemap fa-fw"></i> Gestion des membres<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -77,8 +82,9 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li><a href="index.php?action=admin&page=category"><i class="fa fa-cogs fa-fw"></i> Gestion des catégories</a></li>';
+}
                     ?>
-                    <?php if($_SESSION['role']>=1)
+                    <?php if ($_SESSION['role']>=1) {
                         echo '<li><a href="index.php?action=admin&page=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
                     <li>
                         <a href="index.php?action=admin&page=list_no_validated_comments"><i class="fa fa-comments fa-fw"></i> Commentaires à valider</a>
@@ -90,17 +96,26 @@
                                 <a href="index.php?action=admin&page=addOrEditArticle">Ajouter un article</a>
                             </li>
                             <li>
-                                <a href="index.php?action=admin&page=listArticle">Modification/Suppression d\'un article</a>
-                            </li>
-                        </ul>
+                                <a href="index.php?action=admin&page=listMyArticles">Modifier/Supprimer mes articles</a>
+                            </li>';
+
+                        if($_SESSION['role']==2)
+                            echo '<li>
+                                <a href="index.php?action=admin&page=listArticles">Liste des articles</a>
+                            </li>';
+
+                        echo'</ul>
                         <!-- /.nav-second-level -->
                     </li>';
+                    }
                     ?>
-                    <?php if($_SESSION['role']>=0)
+                    <?php if ($_SESSION['role']>=0) {
                         echo '<li><a href="index.php?action=admin&page=my_comments"><i class="fa fa-comment fa-fw"></i> Mes commentaires</a></li>';
+                    }
                     ?>
-                    <?php if($_SESSION['role']==0)
+                    <?php if ($_SESSION['role']==0) {
                         echo '<li><a href="index.php?action=admin&page=admin_request"><i class="fa fa-user-plus fa-fw"></i> Devenir Administrateur</a></li>';
+                    }
                     ?>
                     <li>
                         <a href="index.php?action=admin&page=logout"><i class="fa fa-sign-out fa-fw"></i> Déconnexion</a>
@@ -113,8 +128,9 @@
     </nav>
 <?php
 $menu = ob_get_clean();
-if($_GET['page']!= 'logout' && $_GET['page']!= 'login' && $_GET['page']!= 'signup' || (isset($_SESSION['id']) && $_GET['page']== 'login') || (isset($_SESSION['id']) && $_GET['page']== 'signup'))
+if ($_GET['page']!= 'logout' && $_GET['page']!= 'login' && $_GET['page']!= 'signup' || (isset($_SESSION['id']) && $_GET['page']== 'login') || (isset($_SESSION['id']) && $_GET['page']== 'signup')) {
     echo $menu;
+}
 ?>
 
 
@@ -132,7 +148,9 @@ if($_GET['page']!= 'logout' && $_GET['page']!= 'login' && $_GET['page']!= 'signu
     <!-- Morris Charts JavaScript -->
     <script src="public/backend/vendor/raphael/raphael.min.js"></script>
     <script src="public/backend/vendor/morrisjs/morris.min.js"></script>
-    <?php if(isset($script)) echo $script ?>
+    <?php if (isset($script)) {
+    echo $script;
+} ?>
 
     <!-- Custom Theme JavaScript -->
     <script src="public/backend/dist/js/sb-admin-2.js"></script>

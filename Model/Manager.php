@@ -21,7 +21,6 @@ class Manager
         $dbname = $json['db']['dbname'];
         $username = $json['db']['username'];
         $password = $json['db']['password'];
-
         $this->db = new \PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->db->exec("SET NAMES UTF8");
@@ -59,5 +58,4 @@ class Manager
     {
         return $this->db->lastInsertId();
     }
-
 }

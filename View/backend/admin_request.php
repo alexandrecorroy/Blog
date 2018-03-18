@@ -17,20 +17,18 @@ ob_start();
         <div class="row">
             <div class="col-lg-12">
                 <?php
-                if (isset($_SESSION['info']))
-                {
+                if (isset($_SESSION['info'])) {
                     echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                     unset($_SESSION['info']);
                 }
-                if (isset($_SESSION['alerte']))
-                {
+                if (isset($_SESSION['alerte'])) {
                     echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
                     unset($_SESSION['alerte']);
                 }
                 ?>
                 <div class="panel panel-default">
                     <?php
-                    if($request->getId()==null)
+                    if ($request->getId()===null) {
                         echo '<div class="panel-heading">
                         <i class="fa fa-pencil fa-fw"></i> Vos motivations
                     </div>
@@ -44,16 +42,19 @@ ob_start();
                         </form>
                         <!-- /.list-group -->
                     </div>';
-                    elseif($request->getId()!=null)
-                    {
+                    } elseif ($request->getId()!==null) {
                         echo '<div class="panel-heading">
                         <i class="fa fa-pencil fa-fw"></i> Votre demande
                     </div>
                     <!-- /.panel-heading -->
                         <p>'.$request->getRequest().'</p>
                         <p>Status de la demande : ';
-                        if($request->getStatus()==0) echo "En cours";
-                        if($request->getStatus()==1) echo "Refusée";
+                        if ($request->getStatus()==0) {
+                            echo "En cours";
+                        }
+                        if ($request->getStatus()==1) {
+                            echo "Refusée";
+                        }
                         echo '</p>
                         <p></div>';
                     }
@@ -72,4 +73,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

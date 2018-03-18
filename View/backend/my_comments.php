@@ -16,13 +16,11 @@ ob_start();
         <div class="row">
 
             <?php
-            if (isset($_SESSION['info']))
-            {
+            if (isset($_SESSION['info'])) {
                 echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                 unset($_SESSION['info']);
             }
-            if (isset($_SESSION['alerte']))
-            {
+            if (isset($_SESSION['alerte'])) {
                 echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
                 unset($_SESSION['alerte']);
             }
@@ -43,25 +41,26 @@ ob_start();
                 </thead>
                 <tbody>
                 <?php
-                if(!is_null($comments))
-                {
+                if (!is_null($comments)) {
                     foreach ($comments as $comment) {
                         echo '<tr>
                     <th scope="row">';
-                        if($comment->getIsValidated()) echo 'Publié'; else echo 'En attente';
+                        if ($comment->getStatus()) {
+                            echo 'Publié';
+                        } else {
+                            echo 'En attente';
+                        }
                         echo'</th>
                     <td>'.$comment->getTitle().'</td>
                     <td>'.$comment->getCreationDate().'</td>
                     <td>'.$comment->getEditDate().'</td>
                     <td><a href="index.php?action=admin&page=edit_my_comment&edit='.$comment->getId().'" class="text-info"><i>Modifier</i></a></td>
-                    <td><a href="index.php?action=admin&page=my_comments&delete='.$comment->getId().'" class="text-danger"><i>Supprimer</i></a></td>
+                    <td><a href="index.php?action=admin&page=my_comments&delete='.$comment->getId().'&token='.$_SESSION['token'].'" class="text-danger"><i>Supprimer</i></a></td>
                     <td><a href="index.php?page=show_article&id='.$comment->getIdArticle().'#comments" target="_blank" class="text-success"><i>Ouvrir</i></a></td>
 
                 </tr>';
                     }
-                }
-                else
-                {
+                } else {
                     echo '<td class="text-center" colspan="7">Vous n\'avez pas encore posté de commentaires !</td>';
                 }
 
@@ -80,4 +79,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

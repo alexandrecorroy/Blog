@@ -8,29 +8,26 @@
 
 namespace Model;
 
-
 class AdminRequest
 {
-
-    protected $id;
-    protected $idUser;
-    protected $request;
-    protected $status;
+    private $_id;
+    private $_idUser;
+    private $_request;
+    private $_status;
 
     public function __construct($valeurs = array())
     {
-        if(is_array($valeurs))
+        if (is_array($valeurs)) {
             $this->hydrate($valeurs);
+        }
     }
 
     public function hydrate($donnees)
     {
-        foreach ($donnees as $attribut => $valeur)
-        {
+        foreach ($donnees as $attribut => $valeur) {
             $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
 
-            if (is_callable(array($this, $methode)))
-            {
+            if (is_callable(array($this, $methode))) {
                 $this->$methode($valeur);
             }
         }
@@ -41,7 +38,7 @@ class AdminRequest
      */
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     /**
@@ -49,7 +46,7 @@ class AdminRequest
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     /**
@@ -57,7 +54,7 @@ class AdminRequest
      */
     public function getIdUser()
     {
-        return $this->idUser;
+        return $this->_idUser;
     }
 
     /**
@@ -65,7 +62,7 @@ class AdminRequest
      */
     public function setIdUser($idUser)
     {
-        $this->idUser = $idUser;
+        $this->_idUser = $idUser;
     }
 
     /**
@@ -73,7 +70,7 @@ class AdminRequest
      */
     public function getRequest()
     {
-        return htmlspecialchars($this->request);
+        return htmlspecialchars($this->_request);
     }
 
     /**
@@ -81,7 +78,7 @@ class AdminRequest
      */
     public function setRequest($request)
     {
-        $this->request = $request;
+        $this->_request = $request;
     }
 
     /**
@@ -89,7 +86,7 @@ class AdminRequest
      */
     public function getStatus()
     {
-        return $this->status;
+        return $this->_status;
     }
 
     /**
@@ -97,9 +94,6 @@ class AdminRequest
      */
     public function setStatus($status)
     {
-        $this->status = $status;
+        $this->_status = $status;
     }
-
-
-
 }

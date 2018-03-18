@@ -1,10 +1,11 @@
 <?php
 
 
-if(isset($article))
+if (isset($article)) {
     $title = "Modifier un article";
-else
+} else {
     $title = "Ajouter un article";
+}
 
 ob_start();
 ?>
@@ -28,6 +29,7 @@ ob_start();
     </script>
 <?php
 $script = ob_get_clean();
+ob_start();
 ?>
     <div id="page-wrapper">
         <div class="row">
@@ -41,36 +43,37 @@ $script = ob_get_clean();
         <div class="row">
 
             <?php
-            if (isset($_SESSION['info']))
-            {
+            if (isset($_SESSION['info'])) {
                 echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
                 unset($_SESSION['info']);
             }
-            if (isset($_SESSION['alerte']))
-            {
+            if (isset($_SESSION['alerte'])) {
                 echo '<div class="alert alert-danger" role="alert">'. $_SESSION['alerte'] .'</div>';
                 unset($_SESSION['alerte']);
             }
             ?>
 
             <form action="<?php
-            if(isset($article))
-                if(!is_null($article))
+            if (isset($article)) {
+                if (!is_null($article)) {
                     echo 'index.php?action=admin&page=addOrEditArticle&edit='.intval($article['article']->getId());
-                else
+                } else {
                     echo "index.php?action=admin&page=addOrEditArticle";
+                }
+            }
             ?>" method="post">
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Choisir catégorie</label>
                     <select class="form-control" name="idCategory" id="exampleFormControlSelect1">
                         <option value="0">Aucune</option>
                         <?php
-                        foreach ($categories as $category)
-                        {
+                        foreach ($categories as $category) {
                             $selected = '';
-                            if(isset($article))
-                                if($article['article']->getIdCategory()==$category->getId())
+                            if (isset($article)) {
+                                if ($article['article']->getIdCategory()==$category->getId()) {
                                     $selected = "Selected";
+                                }
+                            }
                             echo '<option value="' .$category->getId(). '"'.$selected.'>' .$category->getName(). '</option>';
                         }
                         ?>
@@ -78,21 +81,28 @@ $script = ob_get_clean();
                 </div>
                 <div class="form-group">
                     <label for="title">Titre</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Titre de l'article" <?php if(isset($article)) echo 'value="' .$article['article']->getTitle() .'"'; ?>>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Titre de l'article" <?php if (isset($article)) {
+                            echo 'value="' .$article['article']->getTitle() .'"';
+                        } ?>>
                 </div>
                 <div class="form-group">
                     <label for="entete">Entête</label>
-                    <textarea class="form-control" id="entete" name="headerText" placeholder="Votre phrase d'accroche"><?php if(isset($article)) echo $article['article']->getHeaderText(); ?></textarea>
+                    <textarea class="form-control" id="entete" name="headerText" placeholder="Votre phrase d'accroche"><?php if (isset($article)) {
+                            echo $article['article']->getHeaderText();
+                        } ?></textarea>
                 </div>
                 <div class="form-group">
                     <label for="summernote">Contenu de l'article</label>
-                    <textarea class="form-control" id="summernote" name="content" placeholder="Contenu de l'article" rows="15"><?php if(isset($article)) echo html_entity_decode($article['article']->getContent()); ?></textarea>
+                    <textarea class="form-control" id="summernote" name="content" placeholder="Contenu de l'article" rows="15"><?php if (isset($article)) {
+                            echo html_entity_decode($article['article']->getContent());
+                        } ?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary"><?php
-                    if(isset($article))
+                    if (isset($article)) {
                         echo "Modifier";
-                    else
+                    } else {
                         echo "Ajouter";
+                    }
                     ?></button>
             </form>
         </div>
@@ -100,4 +110,4 @@ $script = ob_get_clean();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";

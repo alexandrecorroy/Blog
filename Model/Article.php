@@ -11,31 +11,29 @@ use Helper\Helper;
 
 class Article
 {
-
-    protected $id;
-    protected $title;
-    protected $creationDate;
-    protected $editDate;
-    protected $headerText;
-    protected $content;
-    protected $idUser;
-    protected $idCategory;
+    private $_id;
+    private $_title;
+    private $_creationDate;
+    private $_editDate;
+    private $_headerText;
+    private $_content;
+    private $_idUser;
+    private $_idCategory;
 
 
     public function __construct($valeurs = array())
     {
-        if(is_array($valeurs))
+        if (is_array($valeurs)) {
             $this->hydrate($valeurs);
+        }
     }
 
     public function hydrate($donnees)
     {
-        foreach ($donnees as $attribut => $valeur)
-        {
+        foreach ($donnees as $attribut => $valeur) {
             $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
 
-            if (is_callable(array($this, $methode)))
-            {
+            if (is_callable(array($this, $methode))) {
                 $this->$methode($valeur);
             }
         }
@@ -46,7 +44,7 @@ class Article
      */
     public function getIdCategory()
     {
-        return $this->idCategory;
+        return $this->_idCategory;
     }
 
     /**
@@ -54,7 +52,7 @@ class Article
      */
     public function setIdCategory($idCategory)
     {
-        $this->idCategory = intval($idCategory);
+        $this->_idCategory = intval($idCategory);
     }
 
     /**
@@ -62,7 +60,7 @@ class Article
      */
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     /**
@@ -70,7 +68,7 @@ class Article
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     /**
@@ -78,7 +76,7 @@ class Article
      */
     public function getTitle()
     {
-        return htmlspecialchars($this->title);
+        return htmlspecialchars($this->_title);
     }
 
     /**
@@ -86,8 +84,9 @@ class Article
      */
     public function setTitle($title)
     {
-        if($title!='')
-        $this->title = htmlspecialchars($title);
+        if ($title!='') {
+            $this->_title = htmlspecialchars($title);
+        }
     }
 
     /**
@@ -96,7 +95,7 @@ class Article
     public function getEditDate()
     {
         $helper = new Helper();
-        return $helper->formatDate($this->editDate);
+        return $helper->formatDate($this->_editDate);
     }
 
     /**
@@ -104,7 +103,7 @@ class Article
      */
     public function setEditDate($editDate)
     {
-        $this->editDate = $editDate;
+        $this->_editDate = $editDate;
     }
 
     /**
@@ -112,7 +111,7 @@ class Article
      */
     public function getContent()
     {
-        return strip_tags($this->content, '<strike><sup><sub><a><p><br><li><table><tbody><tr><th><td></tr><u><i><b><span><h1><h2><h3><h4><h5><h6>');
+        return strip_tags($this->_content, '<strike><sup><sub><a><p><br><li><table><tbody><tr><th><td></tr><u><i><b><span><h1><h2><h3><h4><h5><h6>');
     }
 
     /**
@@ -120,7 +119,7 @@ class Article
      */
     public function setContent($content)
     {
-        $this->content = $content;
+        $this->_content = $content;
     }
 
     /**
@@ -128,7 +127,7 @@ class Article
      */
     public function getIdUser()
     {
-        return $this->idUser;
+        return $this->_idUser;
     }
 
     /**
@@ -136,7 +135,7 @@ class Article
      */
     public function setIdUser($idUser)
     {
-        $this->idUser = $idUser;
+        $this->_idUser = $idUser;
     }
 
     /**
@@ -145,7 +144,7 @@ class Article
     public function getCreationDate()
     {
         $helper = new Helper();
-        return $helper->formatDate($this->creationDate);
+        return $helper->formatDate($this->_creationDate);
     }
 
     /**
@@ -153,7 +152,7 @@ class Article
      */
     public function setCreationDate($creationDate)
     {
-        $this->creationDate = $creationDate;
+        $this->_creationDate = $creationDate;
     }
 
     /**
@@ -161,7 +160,7 @@ class Article
      */
     public function getHeaderText()
     {
-        return htmlspecialchars($this->headerText);
+        return htmlspecialchars($this->_headerText);
     }
 
     /**
@@ -169,10 +168,6 @@ class Article
      */
     public function setHeaderText($headerText)
     {
-        $this->headerText = $headerText;
+        $this->_headerText = $headerText;
     }
-
-
-
-
 }

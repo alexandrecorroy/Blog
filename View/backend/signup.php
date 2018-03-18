@@ -1,6 +1,11 @@
 <?php
 
 $title = 'Inscription';
+$script = "<script src='https://www.google.com/recaptcha/api.js'></script>";
+$json = file_get_contents("config.json");
+$json = json_decode($json, true);
+
+$publicKey = $json['captcha']['public'];
 
 ob_start();
 ?>
@@ -12,8 +17,7 @@ ob_start();
                         <h3 class="panel-title text-center">Inscription</h3>
                     </div>
                     <?php
-                    if(isset($_SESSION['alerte']))
-                    {
+                    if (isset($_SESSION['alerte'])) {
                         echo '<div class="alert alert-danger">'.$_SESSION['alerte'].'</div>';
                         unset($_SESSION['alerte']);
                     }
@@ -21,7 +25,7 @@ ob_start();
 
                     ?>
                     <div class="panel-body">
-                        <form role="form" action="index.php?action=admin&page=login" method="post">
+                        <form role="form" action="index.php?action=admin&page=signup" method="post">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Pseudo" name="pseudo" type="text" autofocus>
@@ -32,8 +36,10 @@ ob_start();
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="">
                                 </div>
+                                <div class="g-recaptcha" data-sitekey="<?= $publicKey ?>"></div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="submit" value="S'enregistrer" class="btn btn-lg btn-success btn-block">
+
                             </fieldset>
                         </form>
                     </div>
@@ -45,4 +51,4 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-require "View/Backend/template.php";
+require "View/backend/template.php";
