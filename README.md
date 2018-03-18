@@ -1,6 +1,6 @@
 # PHP Blog in POO
 
-A php blog for an openclassrooms project !
+A php blog for an Openclassrooms project !
 
 ## Getting Started
 
