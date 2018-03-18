@@ -26,18 +26,24 @@ PhpMyAdmin
 Google captcha keys
 ```
 
+Free SMTP Server : http://sendinblue.com
+
+Google Captcha : https://www.google.com/recaptcha/admin
+
+Download Composer : https://getcomposer.org/download/
+
 ### Installing
 
 A step by step series of examples that tell you have to get a development env running
 
-1. Install blog.sql in your database.
+1. Import blog.sql in your database. (a new database name "blog" will be create)
 
 2. Upload project in your server
 
-3. Run Composer Update
+3. Run Composer
 
 ```
-Composer Update
+Composer install
 ```
 
 Then rename "template_config.json" to "config.json" and change values :
@@ -67,6 +73,18 @@ Then rename "template_config.json" to "config.json" and change values :
 ```
 
 See demo : http://www.alexandrecorroy.fr/blog/
+
+## Secure config.json / folders
+
+You can create .htaccess file to secure access to config.json and folders
+
+```
+Options -Indexes
+<files "config.json">
+Order allow,deny
+Deny from all
+</files>
+```
 
 ## Sensiolabs Insight
 
