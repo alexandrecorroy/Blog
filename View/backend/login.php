@@ -1,4 +1,9 @@
-<?php include "View/backend/header.php";?>
+<?php
+
+$title = 'Connexion au panel d\'administration';
+
+ob_start();
+?>
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
@@ -28,9 +33,14 @@
                                 <input type="submit" value="Se connecter" class="btn btn-lg btn-success btn-block">
                             </fieldset>
                         </form>
+                        <a href="index.php?action=admin&page=signup" class="text-info">Pas encore de compte ? Devenir membre !</a>
                     </div>
                 </div>
+                <a href="index.php" class="text-info">&larr; Retour sur le site</a>
             </div>
         </div>
     </div>
-<?php include "View/backend/footer.php";?>
+<?php
+$content = ob_get_clean();
+
+require "View/Backend/template.php";

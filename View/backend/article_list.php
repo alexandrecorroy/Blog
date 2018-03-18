@@ -1,5 +1,9 @@
-<?php include "View/backend/header.php";?>
+<?php
 
+$title = 'Liste des articles';
+
+ob_start();
+?>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -25,7 +29,7 @@
                     <th scope="col">Id</th>
                     <th scope="col">Titre</th>
                     <th scope="col">Date création</th>
-                    <th scope="col">Date édition</th>
+                    <th scope="col">Dernière modification</th>
                     <th scope="col">Modifier</th>
                     <th scope="col">Supprimer</th>
 
@@ -50,5 +54,7 @@
 
         </div>
     </div>
+<?php
+$content = ob_get_clean();
 
-<?php include "View/backend/footer.php";?>
+require "View/Backend/template.php";

@@ -22,16 +22,23 @@ class Article
     protected $idCategory;
 
 
-    public function __construct(array $data = null)
+    public function __construct($valeurs = array())
     {
-        $this->id = intval($data['id']);
-        $this->title = $data['title'];
-        $this->creationDate = $data['creation_date'];
-        $this->editDate = $data['edit_date'];
-        $this->headerText = $data['header_text'];
-        $this->content = $data['content'];
-        $this->idUser = intval($data['id_user']);
-        $this->idCategory = intval($data['id_category']);
+        if(is_array($valeurs))
+            $this->hydrate($valeurs);
+    }
+
+    public function hydrate($donnees)
+    {
+        foreach ($donnees as $attribut => $valeur)
+        {
+            $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+
+            if (is_callable(array($this, $methode)))
+            {
+                $this->$methode($valeur);
+            }
+        }
     }
 
     /**
@@ -71,7 +78,7 @@ class Article
      */
     public function getTitle()
     {
-        return $this->title;
+        return htmlspecialchars($this->title);
     }
 
     /**
@@ -80,7 +87,7 @@ class Article
     public function setTitle($title)
     {
         if($title!='')
-        $this->title = htmlentities($title);
+        $this->title = htmlspecialchars($title);
     }
 
     /**
@@ -105,7 +112,7 @@ class Article
      */
     public function getContent()
     {
-        return $this->content;
+        return strip_tags($this->content, '<strike><sup><sub><a><p><br><li><table><tbody><tr><th><td></tr><u><i><b><span><h1><h2><h3><h4><h5><h6>');
     }
 
     /**
@@ -113,8 +120,7 @@ class Article
      */
     public function setContent($content)
     {
-        if($content!='')
-        $this->content = htmlentities($content);
+        $this->content = $content;
     }
 
     /**
@@ -155,7 +161,7 @@ class Article
      */
     public function getHeaderText()
     {
-        return $this->headerText;
+        return htmlspecialchars($this->headerText);
     }
 
     /**
@@ -163,8 +169,7 @@ class Article
      */
     public function setHeaderText($headerText)
     {
-        if($headerText!='')
-        $this->headerText = htmlentities($headerText);
+        $this->headerText = $headerText;
     }
 
 

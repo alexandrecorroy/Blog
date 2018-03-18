@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: alex
- * Date: 16/02/2018
- * Time: 21:41
+ * Date: 03/03/2018
+ * Time: 21:19
  */
 
 namespace Model;
 
 
-class Category
+class Role
 {
 
     protected $id;
@@ -32,6 +32,15 @@ class Category
                 $this->$methode($valeur);
             }
         }
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return htmlspecialchars($this->name);
     }
 
     /**
@@ -51,19 +60,10 @@ class Category
     }
 
     /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return htmlspecialchars($this->name);
-    }
-
-    /**
      * @param mixed $name
      */
     public function setName($name)
     {
-        if($name!='')
         $this->name = $name;
     }
 

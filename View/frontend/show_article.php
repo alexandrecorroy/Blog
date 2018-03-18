@@ -1,40 +1,26 @@
-<?php include "View/frontend/header.php";?>
-<!-- Page Header -->
-<header class="masthead" style="background-image: url('public/frontend/images/post-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
-                <div class="post-heading">
-                    <h1><?= $article['article']->getTitle() ?></h1>
-                    <h2 class="subheading"><?= $article['article']->getHeaderText() ?></h2>
-                    <span class="meta">Posté par
+<?php
+
+$title = $article['article']->getTitle();
+$h1 = $article['article']->getTitle();
+$h2 = '<h2 class="subheading">'.$article['article']->getHeaderText().'</h2>';
+$image = 'post-bg.jpg';
+$classHeader = 'post-heading';
+
+ob_start();
+?>
+<span class="meta"><?php if($article['article']->getEditDate()!='') echo 'Modifié '; else echo 'Posté '; ?>par
                 <?= ucfirst($article['user']->getPseudo()) ?> <?php if(!empty($article['category']->getName())) echo 'dans <a href="index.php?page=category&id='.$article['category']->getId().'">'.$article['category']->getName().'</a> '; ?>
-                le <?= $article['article']->getCreationDate() ?></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+                le <?php if($article['article']->getEditDate()!='') echo $article['article']->getEditDate(); else echo $article['article']->getCreationDate(); ?></span>
+<?php
+$span = ob_get_clean();
+$content = $article['article']->getContent();
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
-                <p><?= $article['article']->getContent() ?></p>
-            </div>
-        </div>
-    </div>
-</article>
-
-
-                <?php
+ob_start();
                 if($totalComments>0)
                 {
                     echo '<!-- Comments -->
 <hr>
-<aside>
+<aside id="comments">
     <div class="container">
         <div class="row">';
                     echo '<div class="col-lg-8 col-md-10 mx-auto"><h2 class="section-heading">'.$totalComments.' commentaire(s)</h2></div>';
@@ -43,7 +29,11 @@
                     <div class="post-description">
                         <h5>'.$comment['comment']->getTitle().'</h5>
                         <p>'.$comment['comment']->getContent().'</p>
-                        <p class="text-right"><em>Publié le '.$comment['comment']->getCreationDate().' par '.ucfirst($comment['user']->getPseudo()).'.</em></p>
+                        <p class="text-right"><em>';
+                        if($comment['comment']->getEditDate()!=null) echo 'Modifié '; else echo 'Publié ';
+                        echo 'le ';
+                        if($comment['comment']->getEditDate()!='') echo $comment['comment']->getEditDate(); else echo $comment['comment']->getCreationDate();
+                        echo ' par '.ucfirst($comment['user']->getPseudo()).'.</em></p>
                     </div>
                 </div></div>';
                     }
@@ -51,19 +41,16 @@
     </div>
 </aside>';
                 }
-                ?>
 
-
-<!-- Comments forms -->
+echo '<!-- Comments forms -->
 <hr>
 <aside id="comment" >
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-                <h2 class="section-heading">Ajouter un commentaire</h2>
-<?php
+                <h2 class="section-heading">Ajouter un commentaire</h2>';
 
-if(isset($_SESSION['id']))
+                if(isset($_SESSION['id']))
 {
     if (isset($_SESSION['info']))
     {
@@ -93,11 +80,6 @@ else
     echo '<p>Vous devez être <a href="index.php?action=admin&page=login">connecté</a> pour poster un commentaire !</p>';
 }
 
-?>
+$more = ob_get_clean();
 
-            </div>
-        </div>
-    </div>
-</aside>
-
-<?php include "View/frontend/footer.php";?>
+require "View/frontend/template.php";

@@ -23,17 +23,25 @@ class Comment
     protected $idUser;
     protected $isValidated;
 
-    public function __construct(array $data = null)
+    public function __construct($valeurs = array())
     {
-        $this->id = $data['id'];
-        $this->title = $data['title'];
-        $this->content = $data['content'];
-        $this->creationDate = $data['creation_date'];
-        $this->editDate = $data['edit_date'];
-        $this->idArticle = $data['id_article'];
-        $this->idUser = $data['id_user'];
-        $this->isValidated = $data['is_validated'];
+        if(is_array($valeurs))
+            $this->hydrate($valeurs);
     }
+
+    public function hydrate($donnees)
+    {
+        foreach ($donnees as $attribut => $valeur)
+        {
+            $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+
+            if (is_callable(array($this, $methode)))
+            {
+                $this->$methode($valeur);
+            }
+        }
+    }
+
 
     /**
      * @return mixed
@@ -56,7 +64,7 @@ class Comment
      */
     public function getTitle()
     {
-        return $this->title;
+        return htmlspecialchars($this->title);
     }
 
     /**
@@ -64,7 +72,7 @@ class Comment
      */
     public function setTitle($title)
     {
-        $this->title = htmlentities($title);
+        $this->title = $title;
     }
 
     /**
@@ -72,7 +80,7 @@ class Comment
      */
     public function getContent()
     {
-        return $this->content;
+        return htmlspecialchars($this->content);
     }
 
     /**
@@ -80,7 +88,7 @@ class Comment
      */
     public function setContent($content)
     {
-        $this->content = htmlentities($content);
+        $this->content = $content;
     }
 
     /**
@@ -152,7 +160,7 @@ class Comment
     /**
      * @return mixed
      */
-    public function getisValidated()
+    public function getIsValidated()
     {
         return $this->isValidated;
     }

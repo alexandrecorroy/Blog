@@ -1,12 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 13/02/2018
- * Time: 14:49
- */
+
+$title = 'Inscription';
+
+ob_start();
 ?>
-<?php include "View/backend/header.php";?>
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
@@ -24,7 +21,7 @@
 
                     ?>
                     <div class="panel-body">
-                        <form role="form" action="index.php?action=login" method="post">
+                        <form role="form" action="index.php?action=admin&page=login" method="post">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Pseudo" name="pseudo" type="text" autofocus>
@@ -41,7 +38,11 @@
                         </form>
                     </div>
                 </div>
+                <a href="index.php" class="text-info">&larr; Retour sur le site</a>
             </div>
         </div>
     </div>
-<?php include "View/backend/footer.php";?>
+<?php
+$content = ob_get_clean();
+
+require "View/Backend/template.php";

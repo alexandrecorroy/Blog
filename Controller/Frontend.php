@@ -9,6 +9,7 @@
 namespace Controller;
 
 
+use Helper\Helper;
 use Model\ArticleManager;
 use Model\CategoryManager;
 use Model\Comment;
@@ -62,7 +63,7 @@ class Frontend
             $articles = $articleManager->getArticlesWithLimit(intval(LIMIT), intval($offset), intval($idCategory));
             $pages = self::countPages($idCategory);
         }
-        require "/View/frontend/index.php";
+        require "View/frontend/index.php";
     }
 
     public function showArticle($id, $post = null)
@@ -83,7 +84,7 @@ class Frontend
                 $comment->setTitle($post['title']);
                 $comment->setContent($post['content']);
                 $comment->setIdUser($user->getId());
-                if($user->getRole() == 'admin' || $user->getRole() == 'superadmin')
+                if($user->getIdRole()>0)
                     $comment->setIsValidated(1);
                 else
                     $comment->setIsValidated(0);
@@ -91,7 +92,7 @@ class Frontend
 
                 $commentManager->addComment($comment);
 
-                if($user->getRole() == 'admin' || $user->getRole() == 'superadmin')
+                if($user->getIdRole()>0)
                     $_SESSION['info'] = 'Commentaire ajouté !';
                 else
                     $_SESSION['info'] = 'Commentaire en attente de validation par un administrateur !';
@@ -109,7 +110,7 @@ class Frontend
         $articleManager = new ArticleManager();
         $article = $articleManager->getArticleById($id);
 
-        require "/View/frontend/show_article.php";
+        require "View/frontend/show_article.php";
     }
 
     public function contact($post = null)
@@ -122,42 +123,15 @@ class Frontend
             }
             else
             {
-                $json = file_get_contents("config.json");
-                $json = json_decode($json, true);
-
-                // Create the Transport
-                $transport = (new \Swift_SmtpTransport($json['smtp']['host'], $json['smtp']['port']))
-                    ->setUsername($json['smtp']['username'])
-                    ->setPassword($json['smtp']['password'])
-                ;
-
-                // Create the Mailer using your created Transport
-                $mailer = new \Swift_Mailer($transport);
-
-                $message = (new \Swift_Message())
-
-
-                    // Give the message a subject
-                    ->setSubject($post['subject'])
-
-                    // Set the From address with an associative array
-                    ->setFrom([$post['email'] => $post['name']])
-
-                    // Set the To addresses with an associative array (setTo/setCc/setBcc)
-                    ->setTo([$json['smtp']['my_email']])
-
-                    // Give it a body
-                    ->setBody($post['message']);
-
-                // Send the message
-                $mailer->send($message);
+                $helper = new Helper();
+                $helper->sendMail($post['name'], $post['email'], $post['subject'], $post['message']);
                 $_SESSION['info'] = 'Le message a bien été envoyé !';
             }
         }
 
 
 
-        require "/View/frontend/contact.php";
+        require "View/frontend/contact.php";
 
     }
 

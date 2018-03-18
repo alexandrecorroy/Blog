@@ -1,23 +1,14 @@
-<?php include "View/frontend/header.php";?>
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('public/frontend/images/contact-bg.jpg')">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
-                    <div class="page-heading">
-                        <h1>Contactez Moi</h1>
-                        <span class="subheading">Vous avez une question ? J'ai une réponse.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-            <?php
+<?php
+
+$title = 'Contactez Moi';
+$h1 = 'Contactez Moi';
+$span = '<span class="subheading">Vous avez une question ? Nous avons une réponse.</span>';
+$image = 'contact-bg.jpg';
+$classHeader = 'site-heading';
+
+
+ob_start();
+
             if (isset($_SESSION['info']))
             {
                 echo '<div class="alert alert-info" role="alert">'. $_SESSION['info'] .'</div>';
@@ -66,7 +57,7 @@
                     <button type="submit" class="btn btn-primary" id="sendMessageButton">Envoyer</button>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-<?php include "View/frontend/footer.php";?>
+<?php
+$content = ob_get_clean();
+
+require "View/frontend/template.php";

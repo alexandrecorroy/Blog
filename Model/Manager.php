@@ -16,7 +16,13 @@ class Manager
     {
         $json = file_get_contents("config.json");
         $json = json_decode($json, true);
-        $this->db = new \PDO("mysql:host=".$json['db']['host'].".;dbname=".$json['db']['dbname']."", "".$json['db']['username']."", "".$json['db']['password']."");
+
+        $host = $json['db']['host'];
+        $dbname = $json['db']['dbname'];
+        $username = $json['db']['username'];
+        $password = $json['db']['password'];
+
+        $this->db = new \PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $this->db->exec("SET NAMES UTF8");
     }

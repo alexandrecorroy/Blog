@@ -1,4 +1,9 @@
-<?php include "View/backend/header.php";?>
+<?php
+
+$title = 'Gestion des catégories';
+
+ob_start();
+?>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
@@ -49,11 +54,11 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="list-group">
-                                <?php
-                                foreach ($categories as $category) {
-                                    echo '<span class="list-group-item"><i class="fa fa-cog fa-fw"></i> ' .$category->getName(). '<a href="index.php?action=admin&page=category&delete='.$category->getId().'"><span class="pull-right text-muted small text-danger"><em>Supprimer</em></span></a></span>';
-                                }
-                                ?>
+                            <?php
+                            foreach ($categories as $category) {
+                                echo '<span class="list-group-item"><i class="fa fa-cog fa-fw"></i> ' .$category->getName(). '<a href="index.php?action=admin&page=category&delete='.$category->getId().'"><span class="pull-right text-muted small text-danger"><em>Supprimer</em></span></a></span>';
+                            }
+                            ?>
                         </div>
                         <!-- /.list-group -->
                     </div>
@@ -68,5 +73,7 @@
 
     </div>
     <!-- /#wrapper -->
+<?php
+$content = ob_get_clean();
 
-<?php include "View/backend/footer.php";?>
+require "View/Backend/template.php";

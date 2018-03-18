@@ -2,19 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: alex
- * Date: 12/02/2018
- * Time: 17:41
+ * Date: 28/02/2018
+ * Time: 13:14
  */
+
 namespace Model;
 
-class User
+
+class AdminRequest
 {
 
     protected $id;
-    protected $pseudo;
-    protected $email;
-    protected $password;
-    protected $idRole;
+    protected $idUser;
+    protected $request;
+    protected $status;
 
     public function __construct($valeurs = array())
     {
@@ -54,65 +55,49 @@ class User
     /**
      * @return mixed
      */
-    public function getPseudo()
+    public function getIdUser()
     {
-        return htmlspecialchars($this->pseudo);
+        return $this->idUser;
     }
 
     /**
-     * @param mixed $pseudo
+     * @param mixed $idUser
      */
-    public function setPseudo($pseudo)
+    public function setIdUser($idUser)
     {
-        $this->pseudo = $pseudo;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return htmlspecialchars($this->email);
-    }
-
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
+        $this->idUser = $idUser;
     }
 
     /**
      * @return mixed
      */
-    public function getPassword()
+    public function getRequest()
     {
-        return $this->password;
+        return htmlspecialchars($this->request);
     }
 
     /**
-     * @param mixed $password
+     * @param mixed $request
      */
-    public function setPassword($password)
+    public function setRequest($request)
     {
-        $this->password = $password;
+        $this->request = $request;
     }
 
     /**
      * @return mixed
      */
-    public function getIdRole()
+    public function getStatus()
     {
-        return $this->idRole;
+        return $this->status;
     }
 
     /**
-     * @param mixed $idRole
+     * @param mixed $status
      */
-    public function setIdRole($idRole)
+    public function setStatus($status)
     {
-        $this->idRole = intval($idRole);
+        $this->status = $status;
     }
 
 

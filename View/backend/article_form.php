@@ -1,15 +1,38 @@
-<?php include "View/backend/header.php";?>
+<?php
+
+
+if(isset($article))
+    $title = "Modifier un article";
+else
+    $title = "Ajouter un article";
+
+ob_start();
+?>
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 500,
+                toolbar: [
+                    [ 'style', [ 'style' ] ],
+                    [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                    [ 'fontname', [ 'fontname' ] ],
+                    [ 'fontsize', [ 'fontsize' ] ],
+                    [ 'color', [ 'color' ] ],
+                    [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                    [ 'table', [ 'table' ] ],
+                    [ 'insert', [ 'link'] ],
+                    [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+                ]
+            });
+        });
+    </script>
+<?php
+$script = ob_get_clean();
+?>
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">
-                    <?php
-                        if(isset($article))
-                            echo "Modifier un article";
-                        else
-                            echo "Ajouter un article";
-                    ?>
-                </h1>
+                <h1 class="page-header"><?= $title ?></h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -33,9 +56,9 @@
             <form action="<?php
             if(isset($article))
                 if(!is_null($article))
-                echo 'index.php?action=admin&page=addOrEditArticle&edit='.intval($article['article']->getId());
-            else
-                echo "index.php?action=admin&page=addOrEditArticle";
+                    echo 'index.php?action=admin&page=addOrEditArticle&edit='.intval($article['article']->getId());
+                else
+                    echo "index.php?action=admin&page=addOrEditArticle";
             ?>" method="post">
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Choisir catégorie</label>
@@ -62,8 +85,8 @@
                     <textarea class="form-control" id="entete" name="headerText" placeholder="Votre phrase d'accroche"><?php if(isset($article)) echo $article['article']->getHeaderText(); ?></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="contenu">Contenu de l'article</label>
-                    <textarea class="form-control" id="contenu" name="content" placeholder="Contenu de l'article" rows="15"><?php if(isset($article)) echo $article['article']->getContent(); ?></textarea>
+                    <label for="summernote">Contenu de l'article</label>
+                    <textarea class="form-control" id="summernote" name="content" placeholder="Contenu de l'article" rows="15"><?php if(isset($article)) echo html_entity_decode($article['article']->getContent()); ?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary"><?php
                     if(isset($article))
@@ -74,5 +97,7 @@
             </form>
         </div>
     </div>
+<?php
+$content = ob_get_clean();
 
-<?php include "View/backend/footer.php";?>
+require "View/Backend/template.php";
