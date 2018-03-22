@@ -150,7 +150,16 @@
                         </a>
                     </li>
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Mon Blog 2018</p>
+                <p class="copyright text-muted">Copyright &copy; Mon Blog 2018
+                <br>
+                    <?php
+                    if (isset($_SESSION['id'])) {
+                        echo '<a class="alert-link" href="index.php?action=admin&page=login">Dashboard</a>';
+                    } else {
+                        echo '<a class="alert-link" href="index.php?action=admin&page=login">Login</a>';
+                    }
+                    ?>
+                </p>
             </div>
         </div>
     </div>

@@ -25,11 +25,12 @@ class Helper
             \IntlDateFormatter::LONG,
             \IntlDateFormatter::SHORT,
             'Europe/Paris',
-            \IntlDateFormatter::GREGORIAN
+            \IntlDateFormatter::GREGORIAN,
+            "dd MMM yyyy à H'h'mm"
         );
         $date = new \DateTime($dateTime);
         $date = $formatter->format($date);
-        return str_replace(':', 'h', $date);
+        return $date;
     }
 
     public function sendMail($name, $email, $subject, $content)
