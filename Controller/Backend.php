@@ -72,9 +72,9 @@ class Backend
             } else {
                 $_SESSION['alerte'] = 'Captcha obligatoire !';
             }
-        } else {
-            require "View/backend/signup.php";
         }
+
+        require "View/backend/signup.php";
     }
 
     public function login()
