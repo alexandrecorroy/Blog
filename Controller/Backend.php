@@ -48,32 +48,29 @@ class Backend
             $api_url = "https://www.google.com/recaptcha/api/siteverify?secret="
                 . $secretKey
                 . "&response=" . $response
-                . "&remoteip=" . $remoteip ;
+                . "&remoteip=" . $remoteip;
 
             $decode = json_decode(file_get_contents($api_url), true);
 
-            if ($decode['success'] === true) {
-                if ($post['pseudo']=='' || $post['email']=='' || $post['password']=='') {
-                    $_SESSION['alerte'] = 'Tous les champs sont requis !';
-                } else {
-                    if (!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $post['password'])) {
-                        $_SESSION['alerte'] = 'Le mot de passe doit contenir 8 caractères minimum (minuscule, MASJUSCLE, chiffre et caractères spéciaux).';
-                    } elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-                        $_SESSION['alerte'] = 'L\'adresse email est incorrect.';
-                    } elseif (strlen($post['pseudo'])<8) {
-                        $_SESSION['alerte'] = 'Le pseudo doit contenir 8 caractères minimum.';
-                    } else {
-                        $userManager = new UserManager();
-                        $user = new User($post);
-                        $userManager->addUser($user);
-                        $this::login();
-                    }
-                }
-            } else {
+            if ($decode['success'] === false) {
                 $_SESSION['alerte'] = 'Captcha obligatoire !';
+            } elseif ($post['pseudo'] == '' || $post['email'] == '' || $post['password'] == '') {
+                $_SESSION['alerte'] = 'Tous les champs sont requis !';
+            } else {
+                if (!preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $post['password'])) {
+                    $_SESSION['alerte'] = 'Le mot de passe doit contenir 8 caractères minimum (minuscule, MASJUSCLE, chiffre et caractères spéciaux).';
+                } elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+                    $_SESSION['alerte'] = 'L\'adresse email est incorrect.';
+                } elseif (strlen($post['pseudo']) < 8) {
+                    $_SESSION['alerte'] = 'Le pseudo doit contenir 8 caractères minimum.';
+                } else {
+                    $userManager = new UserManager();
+                    $user = new User($post);
+                    $userManager->addUser($user);
+                    header("Location: index.php?action=admin&page=login");
+                }
             }
         }
-
         require "View/backend/signup.php";
     }
 
