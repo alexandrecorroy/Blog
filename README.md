@@ -2,6 +2,13 @@
 
 A php blog for an Openclassrooms project !
 
+
+---
+
+![Aperçu de la page d'accueil](docs/screenshot-home.png)
+
+---
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -42,7 +49,7 @@ A step by step series of examples that tell you have to get a development env ru
 
 3. Run Composer
 
-```
+```bash
 Composer install
 ```
 
@@ -71,6 +78,16 @@ Then rename "template_config.json" to "config.json" and change values :
   }
 }
 ```
+
+### Docker
+
+You can also run the project with Docker in simple command line :
+
+```bash
+docke-compose up -d
+```
+
+-> The project can be found at http://localhost:8080
 
 See demo : http://www.alexandrecorroy.fr/blog/
 

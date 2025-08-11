@@ -15,5 +15,10 @@
             "Controller\\":"Controller/",
             "Helper\\":"Helper/"
         }
+    },
+    "config": {
+        "platform": {
+            "php": "7.2.0"
+        }
     }
 }

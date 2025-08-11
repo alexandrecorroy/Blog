@@ -1,0 +1,18 @@
+{
+  "db": {
+    "host": "db",
+    "dbname": "blog",
+    "username": "blog",
+    "password": "blog"
+  },
+  "smtp": {
+    "host": "",
+    "port": "",
+    "username": "",
+    "password": ""
+  },
+  "captcha": {
+    "secret": "your_google_captcha_secret_key",
+    "public": "your_google_captcha_public_key"
+  }
+}

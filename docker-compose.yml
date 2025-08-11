@@ -1,0 +1,44 @@
+services:
+  php:
+    image: yorkknew/blog-img:1.0
+    environment:
+      DB_HOST: db
+      DB_NAME: blog
+      DB_USER: blog
+      DB_PASS: blog
+    depends_on:
+      - db
+    networks:
+      - blognet
+
+  web:
+    image: nginx:alpine
+    volumes:
+      - .:/var/www/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - php
+    networks:
+      - blognet
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: blog
+      MYSQL_DATABASE: blog
+      MYSQL_USER: blog
+      MYSQL_PASSWORD: blog
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./blog.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - blognet
+
+volumes:
+  db_data:
+
+networks:
+  blognet:
